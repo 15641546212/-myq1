@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--
+  作者：倪铭浩
+  建立时间：2026-11-02 13:39
+  使用模型：GLM-5.3-Flash
+  功能名称及简介：tab_news.html —— 新闻 Tab 选项卡页面
+  说明：四个选项卡（国内新闻 / 省内新闻 / 国际新闻 / 最热新闻），
+        国内新闻为默认选中项；Tab 切换逻辑由 js/nmh_tab.js 提供，
+        该 JS 为可复用组件（nmh_initTabs），本页仅做初始化调用。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新闻选项卡 · Tab 组件练习</title>
+<style>
+  :root {
+    --nmh_bg: #f4f6fa;
+    --nmh_card: #ffffff;
+    --nmh_ink: #1f2733;
+    --nmh_ink_soft: #5b6472;
+    --nmh_line: #e7eaf0;
+    --nmh_primary: #5b7cfa;
+    --nmh_primary_d: #3f5fd9;
+    --nmh_hot: #ff7a59;
+    --nmh_radius: 14px;
+    --nmh_shadow: 0 10px 30px rgba(20, 28, 48, .14);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+    background: var(--nmh_bg); color: var(--nmh_ink); line-height: 1.6;
+    min-height: 100vh; padding: 24px;
+  }
+  .nmh_wrap { max-width: 760px; margin: 0 auto; }
+
+  /* 顶部：标题与回首页链接 */
+  .nmh_head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .nmh_head h1 { font-size: 22px; }
+  .nmh_head .nmh_sub { color: var(--nmh_ink_soft); font-size: 13px; }
+  .nmh_home_link {
+    font-size: 13px; font-weight: 600; color: var(--nmh_primary); text-decoration: none;
+    border: 1px solid var(--nmh_primary); border-radius: 20px; padding: 5px 14px; transition: all .18s;
+  }
+  .nmh_home_link:hover { background: var(--nmh_primary); color: #fff; }
+
+  /* 选项卡整体卡片 */
+  .nmh_tab_card { background: var(--nmh_card); border-radius: var(--nmh_radius); box-shadow: var(--nmh_shadow); overflow: hidden; }
+
+  /* 选项卡按钮条 */
+  .nmh_tabs_box { display: flex; border-bottom: 1px solid var(--nmh_line); background: #f9fafc; }
+  .nmh_tab {
+    flex: 1; border: none; background: transparent; cursor: pointer;
+    padding: 14px 8px; font-size: 15px; color: var(--nmh_ink_soft);
+    position: relative; transition: color .18s, background .18s;
+  }
+  .nmh_tab:hover { color: var(--nmh_primary); background: #f1f4ff; }
+  .nmh_tab.nmh_active { color: var(--nmh_primary); font-weight: 700; background: var(--nmh_card); }
+  .nmh_tab.nmh_active::after {          /* 选中态底部指示条 */
+    content: ""; position: absolute; left: 20%; right: 20%; bottom: -1px;
+    height: 3px; border-radius: 3px; background: var(--nmh_primary);
+  }
+  .nmh_tab.nmh_hot_tab.nmh_active { color: var(--nmh_hot); }
+  .nmh_tab.nmh_hot_tab.nmh_active::after { background: var(--nmh_hot); }
+
+  /* 面板区：默认隐藏，选中显示 */
+  .nmh_panel { display: none; padding: 18px 22px; }
+  .nmh_panel.nmh_active { display: block; animation: nmh_fade .28s ease; }
+  @keyframes nmh_fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* 新闻列表 */
+  .nmh_news_list { list-style: none; }
+  .nmh_news_list li {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 10px 2px; border-bottom: 1px dashed var(--nmh_line); font-size: 14px;
+  }
+  .nmh_news_list li:last-child { border-bottom: none; }
+  .nmh_news_list .nmh_tag {
+    flex: none; font-size: 12px; color: var(--nmh_primary);
+    border: 1px solid currentColor; border-radius: 4px; padding: 0 6px;
+  }
+  .nmh_news_list .nmh_time { margin-left: auto; flex: none; color: var(--nmh_ink_soft); font-size: 12px; }
+  .nmh_panel_foot { margin-top: 12px; text-align: right; font-size: 12px; color: var(--nmh_ink_soft); }
+
+  footer.nmh_foot { text-align: center; color: var(--nmh_ink_soft); font-size: 12px; padding: 16px 0; }
+</style>
+</head>
+<body>
+<div class="nmh_wrap">
+
+  <header class="nmh_head">
+    <div>
+      <h1>今日要闻</h1>
+      <div class="nmh_sub">Tab 选项卡练习 · 切换逻辑见 js/nmh_tab.js（可复用组件）</div>
+    </div>
+    <a class="nmh_home_link" href="index.html">返回首页</a>
+  </header>
+
+  <main class="nmh_tab_card">
+    <!-- 选项卡按钮条：data-nmh-tab 的值 = 面板索引（从 0 开始） -->
+    <div class="nmh_tabs_box" id="nmh_newsTabs" role="tablist">
+      <button class="nmh_tab nmh_active" data-nmh-tab="0">国内新闻</button>
+      <button class="nmh_tab" data-nmh-tab="1">省内新闻</button>
+      <button class="nmh_tab" data-nmh-tab="2">国际新闻</button>
+      <button class="nmh_tab nmh_hot_tab" data-nmh-tab="3">最热新闻</button>
+    </div>
+
+    <!-- 内容面板：子元素顺序与按钮一一对应 -->
+    <div id="nmh_newsPanels">
+      <section class="nmh_panel nmh_active">
+        <ul class="nmh_news_list">
+          <li><span class="nmh_tag">国内</span>全国秋粮收获过八成，主产区机械化收割进度快于往年<span class="nmh_time">09:20</span></li>
+          <li><span class="nmh_tag">国内</span>新一轮降温预警发布，北方多地迎来今冬第一场雪<span class="nmh_time">10:05</span></li>
+          <li><span class="nmh_tag">国内</span>多地推出消费补贴新举措，带动服务零售持续回暖<span class="nmh_time">11:32</span></li>
+          <li><span class="nmh_tag">国内</span>国家层面再部署：推进中小企业数字化转型试点扩围<span class="nmh_time">13:47</span></li>
+        </ul>
+        <p class="nmh_panel_foot">共 4 条 · 更新于 13:47</p>
+      </section>
+
+      <section class="nmh_panel">
+        <ul class="nmh_news_list">
+          <li><span class="nmh_tag">省内</span>我省出台新政策，支持高校毕业生基层就业创业<span class="nmh_time">08:45</span></li>
+          <li><span class="nmh_tag">省内</span>全省高速公路服务区完成智能化改造，充电桩实现全覆盖<span class="nmh_time">10:18</span></li>
+          <li><span class="nmh_tag">省内</span>省运会进入倒计时，主场馆通过竣工验收<span class="nmh_time">14:02</span></li>
+        </ul>
+        <p class="nmh_panel_foot">共 3 条 · 更新于 14:02</p>
+      </section>
+
+      <section class="nmh_panel">
+        <ul class="nmh_news_list">
+          <li><span class="nmh_tag">国际</span>多国代表呼吁加强数字经济领域国际合作<span class="nmh_time">07:56</span></li>
+          <li><span class="nmh_tag">国际</span>国际航展闭幕，绿色低碳机型成为展会焦点<span class="nmh_time">12:11</span></li>
+          <li><span class="nmh_tag">国际</span>海外高校访问团开启秋季巡讲，留学交流热度回升<span class="nmh_time">15:30</span></li>
+        </ul>
+        <p class="nmh_panel_foot">共 3 条 · 更新于 15:30</p>
+      </section>
+
+      <section class="nmh_panel">
+        <ul class="nmh_news_list">
+          <li><span class="nmh_tag">最热</span>高校课堂引入 AI 助教，学生出勤率与互动率双提升<span class="nmh_time">13:05</span></li>
+          <li><span class="nmh_tag">最热</span>城市马拉松本周末开跑，赛道沿线实施临时交通管制<span class="nmh_time">13:58</span></li>
+          <li><span class="nmh_tag">最热</span>一部手机游全省平台上线，首日访问量突破百万<span class="nmh_time">16:20</span></li>
+        </ul>
+        <p class="nmh_panel_foot">共 3 条 · 更新于 16:20</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="nmh_foot">高级网页设计课堂实践 · Tab 选项卡组件（可复用）</footer>
+</div>
+
+<!-- Tab 逻辑：全部外部引用，页面无内联脚本 -->
+<script src="js/nmh_tab.js"></script>
+<script src="js/nmh_news_init.js"></script>
+</body>
+</html>

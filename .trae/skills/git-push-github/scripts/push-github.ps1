@@ -1,4 +1,4 @@
-﻿# push-github.ps1 — 提交到 GitHub skill 的确定性执行脚本（PowerShell 5 兼容，SSH 公钥认证）
+﻿﻿# push-github.ps1 — 提交到 GitHub skill 的确定性执行脚本（PowerShell 5 兼容，SSH 公钥认证）
 # 用法:
 #   预检:        .\push-github.ps1 -Check
 #   提交并推送:  .\push-github.ps1 -Message "改动说明"
