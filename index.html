@@ -1,213 +1,255 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="倪铭浩的《高级网页设计》课堂实践目录">
-    <title>课堂档案 · 倪铭浩</title>
-    <style>
-        :root {
-            --ink: #18332f;
-            --green: #245b4f;
-            --mint: #dce9df;
-            --coral: #e9785c;
-            --cream: #f7f1e7;
-            --paper: #fffdf8;
-            --line: #d8d5c9;
-            --muted: #6e746d;
-        }
+<meta charset="UTF-8">
+<title>音乐手机</title>
+<style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            margin: 0;
-            color: var(--ink);
-            background: var(--cream);
-            font-family: "Songti SC", "STSong", Georgia, serif;
-            line-height: 1.7;
-        }
-        a { color: inherit; text-decoration: none; }
-        .page { min-height: 100vh; background: linear-gradient(120deg, #f7f1e7 0%, #fffdf8 55%, #e9f0e6 100%); }
-        .wrap { width: min(1120px, calc(100% - 44px)); margin: 0 auto; }
+body {
+  font-family: "SimSun", "宋体", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
 
-        header { padding: 26px 0 84px; background: var(--green); color: #fffdf8; }
-        .topbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-        .brand { display: flex; align-items: center; gap: 12px; font-size: 17px; }
-        .brand-mark { display: grid; width: 38px; height: 38px; place-items: center; color: var(--green); background: var(--coral); border-radius: 50%; font-family: Georgia, serif; font-size: 20px; font-weight: bold; }
-        nav { display: flex; gap: 26px; font-size: 14px; }
-        nav a { border-bottom: 1px solid transparent; }
-        nav a:hover { color: #ffd2c6; border-color: #ffd2c6; }
-        .hero { position: relative; padding-top: 82px; }
-        .hero::after { position: absolute; right: 7%; top: 52px; width: 130px; height: 130px; border: 1px solid rgba(255,255,255,.3); border-radius: 50%; content: ""; box-shadow: 28px 22px 0 -1px rgba(255,255,255,.12); }
-        .eyebrow { margin: 0 0 13px; color: #ffd2c6; font-family: Arial, sans-serif; font-size: 12px; letter-spacing: 3px; }
-        h1 { max-width: 680px; margin: 0; font-size: clamp(42px, 8vw, 84px); line-height: 1.06; font-weight: 600; letter-spacing: 1px; }
-        .hero-copy { max-width: 570px; margin: 26px 0 0; color: #d7e7d9; font-size: 17px; }
+/* 模块容器 */
+.module {
+  width: 510px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
 
-        main { padding: 0 0 76px; }
-        .overview { display: grid; grid-template-columns: 1fr 280px; gap: 38px; align-items: end; padding: 62px 0 34px; }
-        .kicker { margin: 0 0 6px; color: var(--coral); font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; letter-spacing: 2px; }
-        h2 { margin: 0; font-size: 34px; line-height: 1.2; font-weight: 600; }
-        .overview-note { margin: 0; color: var(--muted); font-size: 14px; }
-        .stats { display: flex; gap: 10px; margin-top: 24px; }
-        .stat { padding: 9px 15px; border-left: 3px solid var(--coral); background: rgba(255,255,255,.62); }
-        .stat strong { display: block; font-family: Arial, sans-serif; font-size: 22px; line-height: 1.1; }
-        .stat span { color: var(--muted); font-size: 12px; }
+/* 标题栏 */
+.module-header {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 2px solid #e60012;
+  background: url("img/bg21.gif") repeat-x left bottom;
+}
 
-        .catalog { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .card { display: flex; min-height: 250px; flex-direction: column; padding: 25px; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; box-shadow: 7px 7px 0 rgba(36, 91, 79, .08); transition: transform 180ms ease, box-shadow 180ms ease; }
-        .card:hover { transform: translate(-3px, -5px); box-shadow: 12px 13px 0 rgba(36, 91, 79, .14); }
-        .card-number { color: var(--coral); font-family: Arial, sans-serif; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
-        .card h3 { margin: 20px 0 7px; font-size: 24px; font-weight: 600; }
-        .card p { margin: 0; color: var(--muted); font-size: 14px; }
-        .card-link { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 22px; color: var(--green); font-family: Arial, sans-serif; font-size: 13px; font-weight: bold; }
-        .card-link span { transition: transform 180ms ease; }
-        .card:hover .card-link span { transform: translateX(5px); }
-        .pending { background: transparent; border-style: dashed; box-shadow: none; }
-        .pending:hover { box-shadow: none; transform: translateY(-3px); }
-        .pending h3, .pending .card-number { color: var(--muted); }
-        .status { align-self: flex-start; margin-top: auto; padding-top: 22px; color: var(--coral); font-family: Arial, sans-serif; font-size: 12px; }
+/* 左侧标题 */
+.module-title {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #1e4e9c;
+  letter-spacing: 1px;
+}
 
-        .prompt { display: grid; grid-template-columns: .7fr 1.3fr; gap: 38px; align-items: start; margin-top: 66px; padding: 34px 38px; background: var(--mint); border-left: 7px solid var(--coral); }
-        .prompt h2 { font-size: 27px; }
-        .prompt-intro { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
-        blockquote { margin: 0; padding: 2px 0 2px 24px; border-left: 1px solid var(--green); font-size: 15px; }
-        footer { padding: 25px 0 32px; color: var(--muted); border-top: 1px solid var(--line); font-family: Arial, sans-serif; font-size: 12px; }
-        footer .wrap { display: flex; justify-content: space-between; gap: 20px; }
+/* 右侧Tab导航 */
+.tab-nav {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  height: 30px;
+}
 
-        @media (max-width: 760px) {
-            .wrap { width: min(100% - 28px, 620px); }
-            header { padding-bottom: 64px; }
-            nav { gap: 12px; }
-            nav a:first-child { display: none; }
-            .hero { padding-top: 62px; }
-            .hero::after { right: 3%; top: 38px; width: 80px; height: 80px; }
-            .overview, .prompt { grid-template-columns: 1fr; gap: 20px; }
-            .overview { padding-top: 46px; }
-            .catalog { grid-template-columns: 1fr; }
-            .card { min-height: 210px; }
-            .prompt { margin-top: 46px; padding: 26px 22px; }
-            footer .wrap { display: block; }
-            footer p { margin: 5px 0; }
-        }
-    </style>
+.tab-nav li {
+  float: left;
+  list-style: none;
+  margin-left: 2px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  background: url("img/bg20.gif") repeat-x;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  top: 2px;
+}
+
+.tab-nav li:hover {
+  color: #1e4e9c;
+}
+
+.tab-nav li.active {
+  background: url("img/bg22.gif") repeat-x;
+  color: #333;
+  font-weight: bold;
+  border-color: #e60012;
+  border-bottom: 1px solid #fff;
+  top: 2px;
+}
+
+/* 内容区域 */
+.module-body {
+  padding: 8px 12px 10px;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* 新闻列表 */
+.news-list {
+  list-style: none;
+}
+
+.news-list li {
+  height: 24px;
+  line-height: 24px;
+  border-bottom: 1px dashed #e8e8e8;
+  position: relative;
+  padding-left: 12px;
+}
+
+.news-list li:last-child {
+  border-bottom: none;
+}
+
+.news-list li .dot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -3px;
+  width: 7px;
+  height: 7px;
+  background: url("img/dot.gif") no-repeat center;
+}
+
+.news-list li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 55px;
+}
+
+.news-list li a:hover {
+  color: #e60012;
+  text-decoration: underline;
+}
+
+.news-list li .date {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #999;
+  font-size: 12px;
+}
+</style>
 </head>
 <body>
-    <div class="page">
-        <header>
-            <div class="wrap">
-                <div class="topbar">
-                    <a class="brand" href="index.html" aria-label="返回课堂首页">
-                        <span class="brand-mark">N</span>
-                        <span>倪铭浩 / 课堂档案</span>
-                    </a>
-                    <nav aria-label="页面导航">
-                        <a href="#catalog">课堂目录</a>
-                        <a href="#prompt">创作要求</a>
-                    </nav>
-                </div>
-                <div class="hero">
-                    <p class="eyebrow">ADVANCED WEB DESIGN · 2026</p>
-                    <h1>倪铭浩的<br>
-						《高级网页设计》课堂实践</h1>
-                    <p class="hero-copy">这里记录倪铭浩在《高级网页设计》课程中的每一步。本页面将持续更新。</p>
-                </div>
-            </div>
-        </header>
 
-        <main class="wrap">
-            <section id="catalog" aria-labelledby="catalog-title">
-                <div class="overview">
-                    <div>
-                        <p class="kicker">CLASS INDEX / 01</p>
-                        <h2 id="catalog-title">课堂目录</h2>
-                        <div class="stats" aria-label="课程进度">
-                            <div class="stat"><strong>08</strong><span>已完成</span></div>
-                            <div class="stat"><strong>01</strong><span>待更新</span></div>
-                        </div>
-                    </div>
-                    <p class="overview-note">每张卡片都通向一个独立网页。点击进入练习，看看代码如何变成页面。</p>
-                </div>
+<div class="module">
+  <!-- 标题栏 -->
+  <div class="module-header">
+    <h2 class="module-title">音乐手机</h2>
+    <ul class="tab-nav" id="tabNav">
+      <li class="active" data-tab="hangqing">行情</li>
+      <li data-tab="daogou">导购</li>
+      <li data-tab="xinpin">新品</li>
+      <li data-tab="pingce">评测</li>
+    </ul>
+  </div>
 
-                <div class="catalog">
-                    <a class="card" href="html_basic001.html">
-                        <span class="card-number">01 / HTML</span>
-                        <h3>HTML 基础</h3>
-                        <p>标题、段落、图片、列表、表格、表单与 H5 语义标签的入门练习。</p>
-                        <span class="card-link">进入练习 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="html_self.html">
-                        <span class="card-number">02 / PROFILE</span>
-                        <h3>自我介绍网页</h3>
-                        <p>用 HTML 组织个人信息、兴趣爱好、学习计划和联系表单。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="stack004.html">
-                        <span class="card-number">03 / CSS</span>
-                        <h3>层叠与继承+盒模型</h3>
-                        <p>认识层叠、继承与盒模型，观察 CSS 如何改变元素的空间关系。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="picture_above004.html">
-                        <span class="card-number">04 / LAYOUT</span>
-                        <h3>上图下文和图上文字</h3>
-                        <p>使用图片与文字的不同排列方式，练习上图下文和图上文字的页面布局。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="layout004.html">
-                        <span class="card-number">05 / LAYOUT</span>
-                        <h3>网页整体布局</h3>
-                        <p>学习 header、nav、main、aside、footer 组合方式，建立页面的整体结构。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="grid.html">
-                        <span class="card-number">06 / GRID</span>
-                        <h3>网格布局</h3>
-                        <p>使用 CSS Grid 创建多列网格，练习网格间距与跨行、跨列布局。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="css3.html">
-                        <span class="card-number">07 / CSS3</span>
-                        <h3>CSS3 选择器与动画</h3>
-                        <p>练习 CSS3 选择器，并通过动画效果观察样式变化。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="svg004.html">
-                        <span class="card-number">08 / SVG</span>
-                        <h3>SVG 图标</h3>
-                        <p>使用 SVG 图标构建底部标签导航，认识图标与导航状态的呈现。</p>
-                        <span class="card-link">查看作品 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <a class="card" href="tab_news.html">
-                        <span class="card-number">09 / JS TAB</span>
-                        <h3>新闻选项卡</h3>
-                        <p>四个新闻分类的 Tab 切换，外部引用可复用 JS 组件，练习事件监听与选中状态管理。</p>
-                        <span class="card-link">进入练习 <span aria-hidden="true">→</span></span>
-                    </a>
-                    <div class="card pending">
-                        <span class="card-number">10 / COMING SOON</span>
-                        <h3>后续模块</h3>
-                        <p>更多 CSS 页面美化、JavaScript 交互等课堂实践内容，将在学习后继续加入。</p>
-                        <span class="status">待更新 · 期待下一页</span>
-                    </div>
-                </div>
-            </section>
+  <!-- 内容区域 -->
+  <div class="module-body">
 
-            <section class="prompt" id="prompt" aria-labelledby="prompt-title">
-                <div>
-                    <p class="kicker">CREATIVE BRIEF / 02</p>
-                    <h2 id="prompt-title">本次页面要求</h2>
-                    <p class="prompt-intro">完整保留这份提示词，作为本次课堂实践的创作记录。</p>
-                </div>
-                <blockquote>创建一个新页面，包括本目录下的所有网页的超链接，使用原生代码，不使用cdn，新页面名称为index.html，主题为倪铭浩的《高级网页设计》课堂实践，美化页面，课堂目录中包含HTML基础、自我介绍网页、stack基础、其余模块后续在增加。页面中包括本提示词。</blockquote>
-            </section>
-        </main>
-
-        <footer>
-            <div class="wrap">
-                <p>倪铭浩的《高级网页设计》课堂实践</p>
-                <p>Local code · No CDN · 2026</p>
-            </div>
-        </footer>
+    <!-- 行情 -->
+    <div class="tab-panel active" id="hangqing">
+      <ul class="news-list">
+        <li><span class="dot"></span><a href="#">音乐强机苹果iPhone 5s价格稳定</a><span class="date">12/19</span></li>
+        <li><span class="dot"></span><a href="#">高性能四核音乐机 魅族MX3低价热卖</a><span class="date">12/19</span></li>
+        <li><span class="dot"></span><a href="#">音乐品质最出色 vivo X3促销2199</a><span class="date">12/12</span></li>
+        <li><span class="dot"></span><a href="#">时尚音乐手机 vivo Xplay济南2798元</a><span class="date">11/27</span></li>
+        <li><span class="dot"></span><a href="#">好音乐好拍照 OPPO Find5特价2580元</a><span class="date">08/27</span></li>
+        <li><span class="dot"></span><a href="#">1.5GHz四核1080p OPPO Find5 降价热卖</a><span class="date">06/21</span></li>
+        <li><span class="dot"></span><a href="#">彩色呼吸带双核机 索尼M35h促销2299</a><span class="date">06/08</span></li>
+        <li><span class="dot"></span><a href="#">1.7GHz四核1080p屏 vivo Xplay热卖中</a><span class="date">06/07</span></li>
+      </ul>
     </div>
+
+    <!-- 导购 -->
+    <div class="tab-panel" id="daogou">
+      <ul class="news-list">
+        <li><span class="dot"></span><a href="#">优秀音效漂亮外观 诺基亚音乐手机盘点</a><span class="date">09/13</span></li>
+        <li><span class="dot"></span><a href="#">不要虚得耳朵 8款独特音的音乐手机推荐</a><span class="date">09/13</span></li>
+        <li><span class="dot"></span><a href="#">最低只要799 9款高性能音乐手机推荐</a><span class="date">09/13</span></li>
+        <li><span class="dot"></span><a href="#">长假主导高考后时代 奖励孩子的智能手机全攻略</a><span class="date">08/13</span></li>
+        <li><span class="dot"></span><a href="#">降价不限时段 端午后值得关注降价四核机推荐</a><span class="date">08/13</span></li>
+        <li><span class="dot"></span><a href="#">高考之后尽情狂欢! 学生超强手机推荐</a><span class="date">08/13</span></li>
+        <li><span class="dot"></span><a href="#">上半年看这里 最热1080P四核旗舰手机</a><span class="date">08/13</span></li>
+        <li><span class="dot"></span><a href="#">最终不过1.99毫米 热门超薄强机大搜罗</a><span class="date">09/08</span></li>
+      </ul>
+    </div>
+
+    <!-- 新品 -->
+    <div class="tab-panel" id="xinpin">
+      <ul class="news-list">
+        <li><span class="dot"></span><a href="#">无限接近完美! vivo Xplay3S现场体验</a><span class="date">12/19</span></li>
+        <li><span class="dot"></span><a href="#">入门音乐机 诺基亚Lumia 525现身工信部</a><span class="date">11/05</span></li>
+        <li><span class="dot"></span><a href="#">传诺基亚下月将推首款WP音乐机Glee</a><span class="date">10/23</span></li>
+        <li><span class="dot"></span><a href="#">软硬兼施 vivo Xtudio Hi-Fi音乐图解</a><span class="date">08/23</span></li>
+        <li><span class="dot"></span><a href="#">没有中国 谷歌All Access音乐服务登陆欧洲</a><span class="date">08/07</span></li>
+        <li><span class="dot"></span><a href="#">Hi-Fi录音棚 vivo Xplay3S Hi-Fi音乐系统</a><span class="date">08/07</span></li>
+        <li><span class="dot"></span><a href="#">Hi-Fi不够vivo又录录音棚 X3音乐处理方案曝光</a><span class="date">08/06</span></li>
+        <li><span class="dot"></span><a href="#">小伙伴都惊呆了 薄至6mm以下vivo X3终露面</a><span class="date">07/31</span></li>
+      </ul>
+    </div>
+
+    <!-- 评测 -->
+    <div class="tab-panel" id="pingce">
+      <ul class="news-list">
+        <li><span class="dot"></span><a href="#">音乐历久弥新 TD版魅族M3评测</a><span class="date">12/19</span></li>
+        <li><span class="dot"></span><a href="#">极致影音完美音质 步步高vivo Xplay移动版图赏</a><span class="date">07/24</span></li>
+        <li><span class="dot"></span><a href="#">都是大屏有不同? 三星Mega/Mega静态评测</a><span class="date">07/09</span></li>
+        <li><span class="dot"></span><a href="#">超值四核智能机 HTC Desire 608t评测</a><span class="date">07/09</span></li>
+        <li><span class="dot"></span><a href="#">完美融合微博体 魅族MX2 Flyme 2.2.体验</a><span class="date">06/19</span></li>
+        <li><span class="dot"></span><a href="#">1080p屏Hi-Fi旗舰 vivo Xplay娱乐体验</a><span class="date">06/19</span></li>
+        <li><span class="dot"></span><a href="#">5.7英寸高清巨屏 酷派9070+影音体验</a><span class="date">06/06</span></li>
+        <li><span class="dot"></span><a href="#">悬浮窗口播放 vivo Xplay视频功能体验</a><span class="date">06/06</span></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+(function() {
+  var nav = document.getElementById('tabNav');
+  var tabs = nav.getElementsByTagName('li');
+  var panels = document.querySelectorAll('.tab-panel');
+
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].onclick = function() {
+      // 切换Tab状态
+      for (var j = 0; j < tabs.length; j++) {
+        tabs[j].className = '';
+      }
+      this.className = 'active';
+
+      // 切换内容面板
+      var target = this.getAttribute('data-tab');
+      for (var k = 0; k < panels.length; k++) {
+        panels[k].className = 'tab-panel';
+        if (panels[k].id === target) {
+          panels[k].classList.add('active');
+        }
+      }
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
