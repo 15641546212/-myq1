@@ -1,3 +1,12 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-02 15:00
+  使用模型：Trae
+  功能名称及简介：index.html —— 音乐手机「行情 / 导购 / 新品 / 评测」选项卡
+  说明：样式与文字按参考图片 1.jpg~4.jpg 一比一还原（门户新闻列表风格）；
+        Tab 切换逻辑采用原生 JavaScript 实现，
+        事件监听 → 清除所有选中状态 → 设置当前元素选中状态。
+-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -19,14 +28,14 @@ body {
 }
 
 /* 模块容器 */
-.module {
+.wy_module {
   width: 510px;
   background: #fff;
   border: 1px solid #e0e0e0;
 }
 
 /* 标题栏 */
-.module-header {
+.wy_module_header {
   position: relative;
   height: 30px;
   line-height: 30px;
@@ -35,7 +44,7 @@ body {
 }
 
 /* 左侧标题 */
-.module-title {
+.wy_module_title {
   position: absolute;
   left: 12px;
   top: 0;
@@ -46,14 +55,14 @@ body {
 }
 
 /* 右侧Tab导航 */
-.tab-nav {
+.wy_tab_nav {
   position: absolute;
   right: 10px;
   top: 0;
   height: 30px;
 }
 
-.tab-nav li {
+.wy_tab_nav li {
   float: left;
   list-style: none;
   margin-left: 2px;
@@ -71,11 +80,11 @@ body {
   top: 2px;
 }
 
-.tab-nav li:hover {
+.wy_tab_nav li:hover {
   color: #1e4e9c;
 }
 
-.tab-nav li.active {
+.wy_tab_nav li.wy_active {
   background: url("img/bg22.gif") repeat-x;
   color: #333;
   font-weight: bold;
@@ -85,24 +94,24 @@ body {
 }
 
 /* 内容区域 */
-.module-body {
+.wy_module_body {
   padding: 8px 12px 10px;
 }
 
-.tab-panel {
+.wy_tab_panel {
   display: none;
 }
 
-.tab-panel.active {
+.wy_tab_panel.wy_active {
   display: block;
 }
 
 /* 新闻列表 */
-.news-list {
+.wy_news_list {
   list-style: none;
 }
 
-.news-list li {
+.wy_news_list li {
   height: 24px;
   line-height: 24px;
   border-bottom: 1px dashed #e8e8e8;
@@ -110,11 +119,11 @@ body {
   padding-left: 12px;
 }
 
-.news-list li:last-child {
+.wy_news_list li:last-child {
   border-bottom: none;
 }
 
-.news-list li .dot {
+.wy_news_list li .wy_dot {
   position: absolute;
   left: 0;
   top: 50%;
@@ -124,7 +133,7 @@ body {
   background: url("img/dot.gif") no-repeat center;
 }
 
-.news-list li a {
+.wy_news_list li a {
   color: #333;
   text-decoration: none;
   display: block;
@@ -134,12 +143,12 @@ body {
   padding-right: 55px;
 }
 
-.news-list li a:hover {
+.wy_news_list li a:hover {
   color: #e60012;
   text-decoration: underline;
 }
 
-.news-list li .date {
+.wy_news_list li .wy_date {
   position: absolute;
   right: 0;
   top: 0;
@@ -150,74 +159,74 @@ body {
 </head>
 <body>
 
-<div class="module">
+<div class="wy_module">
   <!-- 标题栏 -->
-  <div class="module-header">
-    <h2 class="module-title">音乐手机</h2>
-    <ul class="tab-nav" id="tabNav">
-      <li class="active" data-tab="hangqing">行情</li>
-      <li data-tab="daogou">导购</li>
-      <li data-tab="xinpin">新品</li>
-      <li data-tab="pingce">评测</li>
+  <div class="wy_module_header">
+    <h2 class="wy_module_title">音乐手机</h2>
+    <ul class="wy_tab_nav" id="wy_tab_nav">
+      <li class="wy_active" data-tab="wy_hangqing">行情</li>
+      <li data-tab="wy_daogou">导购</li>
+      <li data-tab="wy_xinpin">新品</li>
+      <li data-tab="wy_pingce">评测</li>
     </ul>
   </div>
 
   <!-- 内容区域 -->
-  <div class="module-body">
+  <div class="wy_module_body">
 
     <!-- 行情 -->
-    <div class="tab-panel active" id="hangqing">
-      <ul class="news-list">
-        <li><span class="dot"></span><a href="#">音乐强机苹果iPhone 5s价格稳定</a><span class="date">12/19</span></li>
-        <li><span class="dot"></span><a href="#">高性能四核音乐机 魅族MX3低价热卖</a><span class="date">12/19</span></li>
-        <li><span class="dot"></span><a href="#">音乐品质最出色 vivo X3促销2199</a><span class="date">12/12</span></li>
-        <li><span class="dot"></span><a href="#">时尚音乐手机 vivo Xplay济南2798元</a><span class="date">11/27</span></li>
-        <li><span class="dot"></span><a href="#">好音乐好拍照 OPPO Find5特价2580元</a><span class="date">08/27</span></li>
-        <li><span class="dot"></span><a href="#">1.5GHz四核1080p OPPO Find5 降价热卖</a><span class="date">06/21</span></li>
-        <li><span class="dot"></span><a href="#">彩色呼吸带双核机 索尼M35h促销2299</a><span class="date">06/08</span></li>
-        <li><span class="dot"></span><a href="#">1.7GHz四核1080p屏 vivo Xplay热卖中</a><span class="date">06/07</span></li>
+    <div class="wy_tab_panel wy_active" id="wy_hangqing">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">音乐强机苹果iPhone 5s价格稳定</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">高性能四核音乐机 魅族MX3低价热卖</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">音乐品质最出色 vivo X3促销2199</a><span class="wy_date">12/12</span></li>
+        <li><span class="wy_dot"></span><a href="#">时尚音乐手机 vivo Xplay济南2798元</a><span class="wy_date">11/27</span></li>
+        <li><span class="wy_dot"></span><a href="#">好音乐好拍照 OPPO Find5特价2580元</a><span class="wy_date">08/27</span></li>
+        <li><span class="wy_dot"></span><a href="#">1.5GHz四核1080p OPPO Find5 降价热卖</a><span class="wy_date">06/21</span></li>
+        <li><span class="wy_dot"></span><a href="#">彩色呼吸带双核机 索尼M35h促销2299</a><span class="wy_date">06/08</span></li>
+        <li><span class="wy_dot"></span><a href="#">1.7GHz四核1080p屏 vivo Xplay热卖中</a><span class="wy_date">06/07</span></li>
       </ul>
     </div>
 
     <!-- 导购 -->
-    <div class="tab-panel" id="daogou">
-      <ul class="news-list">
-        <li><span class="dot"></span><a href="#">优秀音效漂亮外观 诺基亚音乐手机盘点</a><span class="date">09/13</span></li>
-        <li><span class="dot"></span><a href="#">不要虚得耳朵 8款独特音的音乐手机推荐</a><span class="date">09/13</span></li>
-        <li><span class="dot"></span><a href="#">最低只要799 9款高性能音乐手机推荐</a><span class="date">09/13</span></li>
-        <li><span class="dot"></span><a href="#">长假主导高考后时代 奖励孩子的智能手机全攻略</a><span class="date">08/13</span></li>
-        <li><span class="dot"></span><a href="#">降价不限时段 端午后值得关注降价四核机推荐</a><span class="date">08/13</span></li>
-        <li><span class="dot"></span><a href="#">高考之后尽情狂欢! 学生超强手机推荐</a><span class="date">08/13</span></li>
-        <li><span class="dot"></span><a href="#">上半年看这里 最热1080P四核旗舰手机</a><span class="date">08/13</span></li>
-        <li><span class="dot"></span><a href="#">最终不过1.99毫米 热门超薄强机大搜罗</a><span class="date">09/08</span></li>
+    <div class="wy_tab_panel" id="wy_daogou">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">优秀音效漂亮外观 诺基亚音乐手机盘点</a><span class="wy_date">09/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">不要虚得耳朵 8款独特音的音乐手机推荐</a><span class="wy_date">09/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">最低只要799 9款高性能音乐手机推荐</a><span class="wy_date">09/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">长假主导高考后时代 奖励孩子的智能手机全攻略</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">降价不限时段 端午后值得关注降价四核机推荐</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">高考之后尽情狂欢! 学生超强手机推荐</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">上半年看这里 最热1080P四核旗舰手机</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">最终不过1.99毫米 热门超薄强机大搜罗</a><span class="wy_date">09/08</span></li>
       </ul>
     </div>
 
     <!-- 新品 -->
-    <div class="tab-panel" id="xinpin">
-      <ul class="news-list">
-        <li><span class="dot"></span><a href="#">无限接近完美! vivo Xplay3S现场体验</a><span class="date">12/19</span></li>
-        <li><span class="dot"></span><a href="#">入门音乐机 诺基亚Lumia 525现身工信部</a><span class="date">11/05</span></li>
-        <li><span class="dot"></span><a href="#">传诺基亚下月将推首款WP音乐机Glee</a><span class="date">10/23</span></li>
-        <li><span class="dot"></span><a href="#">软硬兼施 vivo Xtudio Hi-Fi音乐图解</a><span class="date">08/23</span></li>
-        <li><span class="dot"></span><a href="#">没有中国 谷歌All Access音乐服务登陆欧洲</a><span class="date">08/07</span></li>
-        <li><span class="dot"></span><a href="#">Hi-Fi录音棚 vivo Xplay3S Hi-Fi音乐系统</a><span class="date">08/07</span></li>
-        <li><span class="dot"></span><a href="#">Hi-Fi不够vivo又录录音棚 X3音乐处理方案曝光</a><span class="date">08/06</span></li>
-        <li><span class="dot"></span><a href="#">小伙伴都惊呆了 薄至6mm以下vivo X3终露面</a><span class="date">07/31</span></li>
+    <div class="wy_tab_panel" id="wy_xinpin">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">无限接近完美! vivo Xplay3S现场体验</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">入门音乐机 诺基亚Lumia 525现身工信部</a><span class="wy_date">11/05</span></li>
+        <li><span class="wy_dot"></span><a href="#">传诺基亚下月将推首款WP音乐机Glee</a><span class="wy_date">10/23</span></li>
+        <li><span class="wy_dot"></span><a href="#">软硬兼施 vivo Xtudio Hi-Fi音乐图解</a><span class="wy_date">08/23</span></li>
+        <li><span class="wy_dot"></span><a href="#">没有中国 谷歌All Access音乐服务登陆欧洲</a><span class="wy_date">08/07</span></li>
+        <li><span class="wy_dot"></span><a href="#">Hi-Fi录音棚 vivo Xplay3S Hi-Fi音乐系统</a><span class="wy_date">08/07</span></li>
+        <li><span class="wy_dot"></span><a href="#">Hi-Fi不够vivo又录录音棚 X3音乐处理方案曝光</a><span class="wy_date">08/06</span></li>
+        <li><span class="wy_dot"></span><a href="#">小伙伴都惊呆了 薄至6mm以下vivo X3终露面</a><span class="wy_date">07/31</span></li>
       </ul>
     </div>
 
     <!-- 评测 -->
-    <div class="tab-panel" id="pingce">
-      <ul class="news-list">
-        <li><span class="dot"></span><a href="#">音乐历久弥新 TD版魅族M3评测</a><span class="date">12/19</span></li>
-        <li><span class="dot"></span><a href="#">极致影音完美音质 步步高vivo Xplay移动版图赏</a><span class="date">07/24</span></li>
-        <li><span class="dot"></span><a href="#">都是大屏有不同? 三星Mega/Mega静态评测</a><span class="date">07/09</span></li>
-        <li><span class="dot"></span><a href="#">超值四核智能机 HTC Desire 608t评测</a><span class="date">07/09</span></li>
-        <li><span class="dot"></span><a href="#">完美融合微博体 魅族MX2 Flyme 2.2.体验</a><span class="date">06/19</span></li>
-        <li><span class="dot"></span><a href="#">1080p屏Hi-Fi旗舰 vivo Xplay娱乐体验</a><span class="date">06/19</span></li>
-        <li><span class="dot"></span><a href="#">5.7英寸高清巨屏 酷派9070+影音体验</a><span class="date">06/06</span></li>
-        <li><span class="dot"></span><a href="#">悬浮窗口播放 vivo Xplay视频功能体验</a><span class="date">06/06</span></li>
+    <div class="wy_tab_panel" id="wy_pingce">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">音乐历久弥新 TD版魅族M3评测</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">极致影音完美音质 步步高vivo Xplay移动版图赏</a><span class="wy_date">07/24</span></li>
+        <li><span class="wy_dot"></span><a href="#">都是大屏有不同? 三星Mega/Mega静态评测</a><span class="wy_date">07/09</span></li>
+        <li><span class="wy_dot"></span><a href="#">超值四核智能机 HTC Desire 608t评测</a><span class="wy_date">07/09</span></li>
+        <li><span class="wy_dot"></span><a href="#">完美融合微博体 魅族MX2 Flyme 2.2.体验</a><span class="wy_date">06/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">1080p屏Hi-Fi旗舰 vivo Xplay娱乐体验</a><span class="wy_date">06/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">5.7英寸高清巨屏 酷派9070+影音体验</a><span class="wy_date">06/06</span></li>
+        <li><span class="wy_dot"></span><a href="#">悬浮窗口播放 vivo Xplay视频功能体验</a><span class="wy_date">06/06</span></li>
       </ul>
     </div>
 
@@ -226,24 +235,24 @@ body {
 
 <script type="text/javascript">
 (function() {
-  var nav = document.getElementById('tabNav');
-  var tabs = nav.getElementsByTagName('li');
-  var panels = document.querySelectorAll('.tab-panel');
+  var wy_nav = document.getElementById('wy_tab_nav');
+  var wy_tabs = wy_nav.getElementsByTagName('li');
+  var wy_panels = document.querySelectorAll('.wy_tab_panel');
 
-  for (var i = 0; i < tabs.length; i++) {
-    tabs[i].onclick = function() {
+  for (var wy_i = 0; wy_i < wy_tabs.length; wy_i++) {
+    wy_tabs[wy_i].onclick = function() {
       // 切换Tab状态
-      for (var j = 0; j < tabs.length; j++) {
-        tabs[j].className = '';
+      for (var wy_j = 0; wy_j < wy_tabs.length; wy_j++) {
+        wy_tabs[wy_j].className = '';
       }
-      this.className = 'active';
+      this.className = 'wy_active';
 
       // 切换内容面板
-      var target = this.getAttribute('data-tab');
-      for (var k = 0; k < panels.length; k++) {
-        panels[k].className = 'tab-panel';
-        if (panels[k].id === target) {
-          panels[k].classList.add('active');
+      var wy_target = this.getAttribute('data-tab');
+      for (var wy_k = 0; wy_k < wy_panels.length; wy_k++) {
+        wy_panels[wy_k].className = 'wy_tab_panel';
+        if (wy_panels[wy_k].id === wy_target) {
+          wy_panels[wy_k].classList.add('wy_active');
         }
       }
     };
