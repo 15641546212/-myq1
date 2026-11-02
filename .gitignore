@@ -1,3 +1,5 @@
 # 防止 Gitee 令牌随项目提交（git-push-gitee skill 含私人令牌）
 .trae/skills/git-push-gitee/
 .gitee-token.local
+# Trae 分享功能自动生成的压缩包，不入库
+.trae-html-share-packages/
