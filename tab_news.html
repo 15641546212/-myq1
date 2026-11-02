@@ -1,160 +1,264 @@
-<!DOCTYPE html>
 <!--
-  作者：倪铭浩
-  建立时间：2026-11-02 13:39
-  使用模型：GLM-5.3-Flash
-  功能名称及简介：tab_news.html —— 新闻 Tab 选项卡页面
-  说明：四个选项卡（国内新闻 / 省内新闻 / 国际新闻 / 最热新闻），
-        国内新闻为默认选中项；Tab 切换逻辑由 js/nmh_tab.js 提供，
-        该 JS 为可复用组件（nmh_initTabs），本页仅做初始化调用。
+  作者：马宇乾
+  建立时间：2026-11-02 15:00
+  使用模型：Trae
+  功能名称及简介：index.html —— 音乐手机「行情 / 导购 / 新品 / 评测」选项卡
+  说明：样式与文字按参考图片 1.jpg~4.jpg 一比一还原（门户新闻列表风格）；
+        Tab 切换逻辑采用原生 JavaScript 实现，
+        事件监听 → 清除所有选中状态 → 设置当前元素选中状态。
 -->
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>新闻选项卡 · Tab 组件练习</title>
-<style>
-  :root {
-    --nmh_bg: #f4f6fa;
-    --nmh_card: #ffffff;
-    --nmh_ink: #1f2733;
-    --nmh_ink_soft: #5b6472;
-    --nmh_line: #e7eaf0;
-    --nmh_primary: #5b7cfa;
-    --nmh_primary_d: #3f5fd9;
-    --nmh_hot: #ff7a59;
-    --nmh_radius: 14px;
-    --nmh_shadow: 0 10px 30px rgba(20, 28, 48, .14);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
-    background: var(--nmh_bg); color: var(--nmh_ink); line-height: 1.6;
-    min-height: 100vh; padding: 24px;
-  }
-  .nmh_wrap { max-width: 760px; margin: 0 auto; }
+<title>音乐手机</title>
+<style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  /* 顶部：标题与回首页链接 */
-  .nmh_head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
-  .nmh_head h1 { font-size: 22px; }
-  .nmh_head .nmh_sub { color: var(--nmh_ink_soft); font-size: 13px; }
-  .nmh_home_link {
-    font-size: 13px; font-weight: 600; color: var(--nmh_primary); text-decoration: none;
-    border: 1px solid var(--nmh_primary); border-radius: 20px; padding: 5px 14px; transition: all .18s;
-  }
-  .nmh_home_link:hover { background: var(--nmh_primary); color: #fff; }
+body {
+  font-family: "SimSun", "宋体", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  font-size: 12px;
+  color: #333;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
 
-  /* 选项卡整体卡片 */
-  .nmh_tab_card { background: var(--nmh_card); border-radius: var(--nmh_radius); box-shadow: var(--nmh_shadow); overflow: hidden; }
+/* 模块容器 */
+.wy_module {
+  width: 510px;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+}
 
-  /* 选项卡按钮条 */
-  .nmh_tabs_box { display: flex; border-bottom: 1px solid var(--nmh_line); background: #f9fafc; }
-  .nmh_tab {
-    flex: 1; border: none; background: transparent; cursor: pointer;
-    padding: 14px 8px; font-size: 15px; color: var(--nmh_ink_soft);
-    position: relative; transition: color .18s, background .18s;
-  }
-  .nmh_tab:hover { color: var(--nmh_primary); background: #f1f4ff; }
-  .nmh_tab.nmh_active { color: var(--nmh_primary); font-weight: 700; background: var(--nmh_card); }
-  .nmh_tab.nmh_active::after {          /* 选中态底部指示条 */
-    content: ""; position: absolute; left: 20%; right: 20%; bottom: -1px;
-    height: 3px; border-radius: 3px; background: var(--nmh_primary);
-  }
-  .nmh_tab.nmh_hot_tab.nmh_active { color: var(--nmh_hot); }
-  .nmh_tab.nmh_hot_tab.nmh_active::after { background: var(--nmh_hot); }
+/* 标题栏 */
+.wy_module_header {
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 2px solid #e60012;
+  background: url("img/bg21.gif") repeat-x left bottom;
+}
 
-  /* 面板区：默认隐藏，选中显示 */
-  .nmh_panel { display: none; padding: 18px 22px; }
-  .nmh_panel.nmh_active { display: block; animation: nmh_fade .28s ease; }
-  @keyframes nmh_fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+/* 左侧标题 */
+.wy_module_title {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #1e4e9c;
+  letter-spacing: 1px;
+}
 
-  /* 新闻列表 */
-  .nmh_news_list { list-style: none; }
-  .nmh_news_list li {
-    display: flex; align-items: baseline; gap: 10px;
-    padding: 10px 2px; border-bottom: 1px dashed var(--nmh_line); font-size: 14px;
-  }
-  .nmh_news_list li:last-child { border-bottom: none; }
-  .nmh_news_list .nmh_tag {
-    flex: none; font-size: 12px; color: var(--nmh_primary);
-    border: 1px solid currentColor; border-radius: 4px; padding: 0 6px;
-  }
-  .nmh_news_list .nmh_time { margin-left: auto; flex: none; color: var(--nmh_ink_soft); font-size: 12px; }
-  .nmh_panel_foot { margin-top: 12px; text-align: right; font-size: 12px; color: var(--nmh_ink_soft); }
+/* 右侧Tab导航 */
+.wy_tab_nav {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  height: 30px;
+}
 
-  footer.nmh_foot { text-align: center; color: var(--nmh_ink_soft); font-size: 12px; padding: 16px 0; }
+.wy_tab_nav li {
+  float: left;
+  list-style: none;
+  margin-left: 2px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  background: url("img/bg20.gif") repeat-x;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+  border-radius: 3px 3px 0 0;
+  position: relative;
+  top: 2px;
+}
+
+.wy_tab_nav li:hover {
+  color: #1e4e9c;
+}
+
+.wy_tab_nav li.wy_active {
+  background: url("img/bg22.gif") repeat-x;
+  color: #333;
+  font-weight: bold;
+  border-color: #e60012;
+  border-bottom: 1px solid #fff;
+  top: 2px;
+}
+
+/* 内容区域 */
+.wy_module_body {
+  padding: 8px 12px 10px;
+}
+
+.wy_tab_panel {
+  display: none;
+}
+
+.wy_tab_panel.wy_active {
+  display: block;
+}
+
+/* 新闻列表 */
+.wy_news_list {
+  list-style: none;
+}
+
+.wy_news_list li {
+  height: 24px;
+  line-height: 24px;
+  border-bottom: 1px dashed #e8e8e8;
+  position: relative;
+  padding-left: 12px;
+}
+
+.wy_news_list li:last-child {
+  border-bottom: none;
+}
+
+.wy_news_list li .wy_dot {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: -3px;
+  width: 7px;
+  height: 7px;
+  background: url("img/dot.gif") no-repeat center;
+}
+
+.wy_news_list li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 55px;
+}
+
+.wy_news_list li a:hover {
+  color: #e60012;
+  text-decoration: underline;
+}
+
+.wy_news_list li .wy_date {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #999;
+  font-size: 12px;
+}
 </style>
 </head>
 <body>
-<div class="nmh_wrap">
 
-  <header class="nmh_head">
-    <div>
-      <h1>今日要闻</h1>
-      <div class="nmh_sub">Tab 选项卡练习 · 切换逻辑见 js/nmh_tab.js（可复用组件）</div>
+<div class="wy_module">
+  <!-- 标题栏 -->
+  <div class="wy_module_header">
+    <h2 class="wy_module_title">音乐手机</h2>
+    <ul class="wy_tab_nav" id="wy_tab_nav">
+      <li class="wy_active" data-tab="wy_hangqing">行情</li>
+      <li data-tab="wy_daogou">导购</li>
+      <li data-tab="wy_xinpin">新品</li>
+      <li data-tab="wy_pingce">评测</li>
+    </ul>
+  </div>
+
+  <!-- 内容区域 -->
+  <div class="wy_module_body">
+
+    <!-- 行情 -->
+    <div class="wy_tab_panel wy_active" id="wy_hangqing">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">音乐强机苹果iPhone 5s价格稳定</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">高性能四核音乐机 魅族MX3低价热卖</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">音乐品质最出色 vivo X3促销2199</a><span class="wy_date">12/12</span></li>
+        <li><span class="wy_dot"></span><a href="#">时尚音乐手机 vivo Xplay济南2798元</a><span class="wy_date">11/27</span></li>
+        <li><span class="wy_dot"></span><a href="#">好音乐好拍照 OPPO Find5特价2580元</a><span class="wy_date">08/27</span></li>
+        <li><span class="wy_dot"></span><a href="#">1.5GHz四核1080p OPPO Find5 降价热卖</a><span class="wy_date">06/21</span></li>
+        <li><span class="wy_dot"></span><a href="#">彩色呼吸带双核机 索尼M35h促销2299</a><span class="wy_date">06/08</span></li>
+        <li><span class="wy_dot"></span><a href="#">1.7GHz四核1080p屏 vivo Xplay热卖中</a><span class="wy_date">06/07</span></li>
+      </ul>
     </div>
-    <a class="nmh_home_link" href="index.html">返回首页</a>
-  </header>
 
-  <main class="nmh_tab_card">
-    <!-- 选项卡按钮条：data-nmh-tab 的值 = 面板索引（从 0 开始） -->
-    <div class="nmh_tabs_box" id="nmh_newsTabs" role="tablist">
-      <button class="nmh_tab nmh_active" data-nmh-tab="0">国内新闻</button>
-      <button class="nmh_tab" data-nmh-tab="1">省内新闻</button>
-      <button class="nmh_tab" data-nmh-tab="2">国际新闻</button>
-      <button class="nmh_tab nmh_hot_tab" data-nmh-tab="3">最热新闻</button>
+    <!-- 导购 -->
+    <div class="wy_tab_panel" id="wy_daogou">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">优秀音效漂亮外观 诺基亚音乐手机盘点</a><span class="wy_date">09/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">不要虚得耳朵 8款独特音的音乐手机推荐</a><span class="wy_date">09/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">最低只要799 9款高性能音乐手机推荐</a><span class="wy_date">09/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">长假主导高考后时代 奖励孩子的智能手机全攻略</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">降价不限时段 端午后值得关注降价四核机推荐</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">高考之后尽情狂欢! 学生超强手机推荐</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">上半年看这里 最热1080P四核旗舰手机</a><span class="wy_date">08/13</span></li>
+        <li><span class="wy_dot"></span><a href="#">最终不过1.99毫米 热门超薄强机大搜罗</a><span class="wy_date">09/08</span></li>
+      </ul>
     </div>
 
-    <!-- 内容面板：子元素顺序与按钮一一对应 -->
-    <div id="nmh_newsPanels">
-      <section class="nmh_panel nmh_active">
-        <ul class="nmh_news_list">
-          <li><span class="nmh_tag">国内</span>全国秋粮收获过八成，主产区机械化收割进度快于往年<span class="nmh_time">09:20</span></li>
-          <li><span class="nmh_tag">国内</span>新一轮降温预警发布，北方多地迎来今冬第一场雪<span class="nmh_time">10:05</span></li>
-          <li><span class="nmh_tag">国内</span>多地推出消费补贴新举措，带动服务零售持续回暖<span class="nmh_time">11:32</span></li>
-          <li><span class="nmh_tag">国内</span>国家层面再部署：推进中小企业数字化转型试点扩围<span class="nmh_time">13:47</span></li>
-        </ul>
-        <p class="nmh_panel_foot">共 4 条 · 更新于 13:47</p>
-      </section>
-
-      <section class="nmh_panel">
-        <ul class="nmh_news_list">
-          <li><span class="nmh_tag">省内</span>我省出台新政策，支持高校毕业生基层就业创业<span class="nmh_time">08:45</span></li>
-          <li><span class="nmh_tag">省内</span>全省高速公路服务区完成智能化改造，充电桩实现全覆盖<span class="nmh_time">10:18</span></li>
-          <li><span class="nmh_tag">省内</span>省运会进入倒计时，主场馆通过竣工验收<span class="nmh_time">14:02</span></li>
-        </ul>
-        <p class="nmh_panel_foot">共 3 条 · 更新于 14:02</p>
-      </section>
-
-      <section class="nmh_panel">
-        <ul class="nmh_news_list">
-          <li><span class="nmh_tag">国际</span>多国代表呼吁加强数字经济领域国际合作<span class="nmh_time">07:56</span></li>
-          <li><span class="nmh_tag">国际</span>国际航展闭幕，绿色低碳机型成为展会焦点<span class="nmh_time">12:11</span></li>
-          <li><span class="nmh_tag">国际</span>海外高校访问团开启秋季巡讲，留学交流热度回升<span class="nmh_time">15:30</span></li>
-        </ul>
-        <p class="nmh_panel_foot">共 3 条 · 更新于 15:30</p>
-      </section>
-
-      <section class="nmh_panel">
-        <ul class="nmh_news_list">
-          <li><span class="nmh_tag">最热</span>高校课堂引入 AI 助教，学生出勤率与互动率双提升<span class="nmh_time">13:05</span></li>
-          <li><span class="nmh_tag">最热</span>城市马拉松本周末开跑，赛道沿线实施临时交通管制<span class="nmh_time">13:58</span></li>
-          <li><span class="nmh_tag">最热</span>一部手机游全省平台上线，首日访问量突破百万<span class="nmh_time">16:20</span></li>
-        </ul>
-        <p class="nmh_panel_foot">共 3 条 · 更新于 16:20</p>
-      </section>
+    <!-- 新品 -->
+    <div class="wy_tab_panel" id="wy_xinpin">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">无限接近完美! vivo Xplay3S现场体验</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">入门音乐机 诺基亚Lumia 525现身工信部</a><span class="wy_date">11/05</span></li>
+        <li><span class="wy_dot"></span><a href="#">传诺基亚下月将推首款WP音乐机Glee</a><span class="wy_date">10/23</span></li>
+        <li><span class="wy_dot"></span><a href="#">软硬兼施 vivo Xtudio Hi-Fi音乐图解</a><span class="wy_date">08/23</span></li>
+        <li><span class="wy_dot"></span><a href="#">没有中国 谷歌All Access音乐服务登陆欧洲</a><span class="wy_date">08/07</span></li>
+        <li><span class="wy_dot"></span><a href="#">Hi-Fi录音棚 vivo Xplay3S Hi-Fi音乐系统</a><span class="wy_date">08/07</span></li>
+        <li><span class="wy_dot"></span><a href="#">Hi-Fi不够vivo又录录音棚 X3音乐处理方案曝光</a><span class="wy_date">08/06</span></li>
+        <li><span class="wy_dot"></span><a href="#">小伙伴都惊呆了 薄至6mm以下vivo X3终露面</a><span class="wy_date">07/31</span></li>
+      </ul>
     </div>
-  </main>
 
-  <footer class="nmh_foot">高级网页设计课堂实践 · Tab 选项卡组件（可复用）</footer>
+    <!-- 评测 -->
+    <div class="wy_tab_panel" id="wy_pingce">
+      <ul class="wy_news_list">
+        <li><span class="wy_dot"></span><a href="#">音乐历久弥新 TD版魅族M3评测</a><span class="wy_date">12/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">极致影音完美音质 步步高vivo Xplay移动版图赏</a><span class="wy_date">07/24</span></li>
+        <li><span class="wy_dot"></span><a href="#">都是大屏有不同? 三星Mega/Mega静态评测</a><span class="wy_date">07/09</span></li>
+        <li><span class="wy_dot"></span><a href="#">超值四核智能机 HTC Desire 608t评测</a><span class="wy_date">07/09</span></li>
+        <li><span class="wy_dot"></span><a href="#">完美融合微博体 魅族MX2 Flyme 2.2.体验</a><span class="wy_date">06/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">1080p屏Hi-Fi旗舰 vivo Xplay娱乐体验</a><span class="wy_date">06/19</span></li>
+        <li><span class="wy_dot"></span><a href="#">5.7英寸高清巨屏 酷派9070+影音体验</a><span class="wy_date">06/06</span></li>
+        <li><span class="wy_dot"></span><a href="#">悬浮窗口播放 vivo Xplay视频功能体验</a><span class="wy_date">06/06</span></li>
+      </ul>
+    </div>
+
+  </div>
 </div>
 
-<!-- Tab 逻辑：外部引用 js 文件夹中的可复用组件 -->
-<script src="js/nmh_tab.js"></script>
-<script>
-  /* 作者：倪铭浩 | 建立时间：2026-11-02 13:39 | 使用模型：GLM-5.3-Flash
-     功能：页面初始化 —— 调用可复用组件 nmh_initTabs 绑定本页选项卡 */
-  nmh_initTabs("nmh_newsTabs", "nmh_newsPanels");
+<script type="text/javascript">
+(function() {
+  var wy_nav = document.getElementById('wy_tab_nav');
+  var wy_tabs = wy_nav.getElementsByTagName('li');
+  var wy_panels = document.querySelectorAll('.wy_tab_panel');
+
+  for (var wy_i = 0; wy_i < wy_tabs.length; wy_i++) {
+    wy_tabs[wy_i].onclick = function() {
+      // 切换Tab状态
+      for (var wy_j = 0; wy_j < wy_tabs.length; wy_j++) {
+        wy_tabs[wy_j].className = '';
+      }
+      this.className = 'wy_active';
+
+      // 切换内容面板
+      var wy_target = this.getAttribute('data-tab');
+      for (var wy_k = 0; wy_k < wy_panels.length; wy_k++) {
+        wy_panels[wy_k].className = 'wy_tab_panel';
+        if (wy_panels[wy_k].id === wy_target) {
+          wy_panels[wy_k].classList.add('wy_active');
+        }
+      }
+    };
+  }
+})();
 </script>
+
 </body>
 </html>

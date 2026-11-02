@@ -5,14 +5,14 @@ description: 将当前项目提交commit并push到GitHub远端仓库. Use when t
 
 # GitHub Push
 
-将当前工作目录的变更提交到 GitHub 远端仓库 `git@github.com:15641546212/mayuqian.git`。
+将当前工作目录的变更提交到 GitHub 远端仓库 `git@github.com:15641546212/-myq1.git`。
 
 ## 前置检查
 
 1. 确认当前目录是否已是 git 仓库（`git rev-parse --is-inside-work-tree`）。若不是，执行 `git init`。
 2. 确认远端是否已配置（`git remote -v`）。若无 origin，执行：
    ```
-   git remote add origin git@ssh.github.com:15641546212/mayuqian.git
+   git remote add origin git@ssh.github.com:15641546212/-myq1.git
    ```
 3. 检查本地 user.name 和 user.email 是否已设置。
 
