@@ -1,0 +1,517 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-05
+  使用模型：Trae 专有模型
+  功能名称：Swiper 课堂课后作业（任务一·提示词工程师 / 任务二·creative 仿写 / 任务三·综合创作）
+  功能简介：完成 Swiper 课堂课后三个作业任务。任务一展示两轮提示词迭代让 AI 生成指定 Swiper 配置；任务二实现 Swiper 第7种 effect——creative 电影墙效果；任务三为光影展厅添加第六件展品爱达·魔都号并加入 parallax 视差能力。页面底部提供提示词记录访问入口。
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swiper 课后作业 · 大国重器光影展 · 马宇乾</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<style>
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：全局基础样式
+    功能简介：重置默认边距、设置页面背景色与字体，统一盒模型
+  */
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;background:#f6f8fc;color:#1f2937;line-height:1.6}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：页面容器与头部
+    功能简介：限定最大宽度居中布局，头部使用深蓝渐变背景突出作业主题
+  */
+  .myq_wrap{max-width:1000px;margin:0 auto;padding:40px 20px 60px}
+  .myq_head{background:linear-gradient(135deg,#0f2b5b,#1d5bbf);border-radius:20px;padding:36px 38px;color:#fff;margin-bottom:24px;box-shadow:0 12px 30px rgba(15,43,91,.3)}
+  .myq_head .myq_badge{display:inline-block;padding:5px 14px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);font-size:13px;letter-spacing:2px;margin-bottom:14px}
+  .myq_head h1{font-size:28px;letter-spacing:1px;line-height:1.4}
+  .myq_head h1 b{color:#ffd166}
+  .myq_head p{margin-top:12px;font-size:14.5px;color:#d9e3f5;line-height:2}
+  .myq_goals{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .myq_goals i{font-style:normal;font-size:13px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);padding:6px 14px;border-radius:8px}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：任务章节卡片
+    功能简介：每个任务用白色圆角卡片展示，左侧蓝色色条区分
+  */
+  .myq_sec{background:#fff;border-radius:18px;padding:28px 30px;margin-bottom:26px;border:1px solid #e8ecf5;box-shadow:0 4px 14px rgba(31,41,55,.06);position:relative;overflow:hidden}
+  .myq_sec::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(#0f2b5b,#1d5bbf)}
+  .myq_sec_head{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .myq_sec_head .myq_no{flex:none;width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#0f2b5b,#1d5bbf);color:#fff;font-size:19px;font-weight:bold;display:flex;align-items:center;justify-content:center}
+  .myq_sec_head h2{font-size:20px;color:#111827}
+  .myq_sec_head small{display:block;font-weight:normal;color:#9ca3af;font-size:13px;margin-top:3px}
+  .myq_sec p.myq_txt{font-size:14.5px;color:#374151;line-height:2;margin-bottom:10px}
+  .myq_sec p.myq_txt b{color:#0f2b5b}
+  .myq_sec code{background:#eef2ff;color:#1d4ed8;padding:1px 7px;border-radius:5px;font-family:Consolas,monospace;font-size:13px}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：要求卡与验证标准
+    功能简介：绿色虚线边框卡片展示任务要求与验证标准
+  */
+  .myq_req{background:#f0fdf4;border:1.5px dashed #16a34a;border-radius:12px;padding:14px 18px;margin:14px 0}
+  .myq_req h3{font-size:14.5px;color:#15803d;margin-bottom:6px}
+  .myq_req p{font-size:13.5px;color:#166534;line-height:2}
+  .myq_req code{background:#dcfce7;color:#15803d}
+  .myq_req .myq_star{color:#e8890c;font-size:13px;display:block;margin-top:6px}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：提示词对话展示区
+    功能简介：任务一专用，左右气泡分别展示用户提示词与AI回答
+  */
+  .myq_chat{margin:16px 0}
+  .myq_chat_row{display:flex;margin-bottom:12px}
+  .myq_chat_row.myq_user{justify-content:flex-end}
+  .myq_bubble{max-width:80%;padding:12px 16px;border-radius:14px;font-size:13.5px;line-height:1.9}
+  .myq_user .myq_bubble{background:#dbeafe;color:#1e3a8a;border-bottom-right-radius:4px}
+  .myq_ai .myq_bubble{background:#f3f4f6;color:#1f2937;border-bottom-left-radius:4px}
+  .myq_bubble b{color:#0f2b5b}
+  .myq_bubble pre{background:#1e293b;color:#e2e8f0;padding:10px 14px;border-radius:8px;margin-top:8px;overflow-x:auto;font-size:12.5px;line-height:1.7}
+  .myq_round_tag{display:inline-block;font-size:12px;color:#0f2b5b;background:#e8f0ff;border:1px solid #c7d8f8;border-radius:999px;padding:3px 12px;margin-bottom:8px}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：Swiper 演示台样式
+    功能简介：统一所有轮播演示区的尺寸、圆角、阴影与字幕样式
+  */
+  .myq_demo{margin:18px 0}
+  .myq_demo_tag{display:inline-block;font-size:12.5px;color:#0f2b5b;background:#e8f0ff;border:1px solid #c7d8f8;border-radius:999px;padding:4px 14px;margin-bottom:12px}
+  .myq_swiper{width:100%;max-width:760px;margin:0 auto;border-radius:16px;overflow:visible!important}
+  .myq_swiper .swiper{border-radius:16px;box-shadow:0 10px 26px rgba(15,43,91,.18)}
+  .myq_swiper .swiper-slide{position:relative;height:300px}
+  .myq_swiper .swiper-slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .myq_swiper .myq_cap{position:absolute;left:0;right:0;bottom:0;padding:34px 20px 14px;color:#fff;background:linear-gradient(transparent,rgba(5,15,35,.82))}
+  .myq_swiper .myq_cap h3{font-size:18px;letter-spacing:1px}
+  .myq_swiper .myq_cap p{font-size:13px;color:#dbe6f8;margin-top:4px}
+  .myq_swiper .swiper-pagination-bullet{background:#0f2b5b;opacity:.35}
+  .myq_swiper .swiper-pagination-bullet-active{background:#e8890c;opacity:1;width:22px;border-radius:6px}
+  .myq_swiper .swiper-button-next,.myq_swiper .swiper-button-prev{width:42px;height:42px;border-radius:50%;background:rgba(15,43,91,.65);color:#fff;--swiper-navigation-size:18px;transition:background .2s}
+  .myq_swiper .swiper-button-next:hover,.myq_swiper .swiper-button-prev:hover{background:#e8890c}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：效果切换按钮组
+    功能简介：任务二与任务三共用的 effect 切换按钮，激活态为深蓝渐变
+  */
+  .myq_fx{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .myq_fx button{border:1.5px solid #c7d8f8;background:#fff;color:#1d5bbf;font-size:13.5px;padding:8px 18px;border-radius:999px;cursor:pointer;transition:all .2s;font-family:inherit}
+  .myq_fx button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(29,91,191,.18)}
+  .myq_fx button.myq_on{background:linear-gradient(135deg,#0f2b5b,#1d5bbf);color:#fff;border-color:transparent}
+
+  /*
+    作者：马宇乾
+    建立时间：2026-11-05
+    使用模型：Trae 专有模型
+    功能名称：视差字幕与返回入口
+    功能简介：任务三 parallax 视差字幕样式，以及底部提示词记录访问入口
+  */
+  .myq_parallax_title{font-size:22px;font-weight:bold;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+  .myq_parallax_sub{font-size:14px;color:#dbe6f8;margin-top:6px}
+  .myq_footer_link{text-align:center;margin-top:28px}
+  .myq_footer_link a{display:inline-block;text-decoration:none;color:#0f2b5b;font-size:14.5px;font-weight:bold;background:#fff;border:1px solid #dbe4ff;border-radius:999px;padding:10px 26px;transition:transform .2s,box-shadow .2s;margin:0 6px}
+  .myq_footer_link a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,43,91,.15)}
+  footer{text-align:center;margin-top:34px;color:#9ca3af;font-size:13px;line-height:2}
+</style>
+</head>
+<body>
+<div class="myq_wrap">
+
+  <!-- 头部 -->
+  <div class="myq_head">
+    <span class="myq_badge">高 职 · 高 级 网 页 设 计 · 课 后 作 业</span>
+    <h1>Swiper 轮播组件 · <b>大国重器光影展（课后作业）</b></h1>
+    <p>作者：<b>马宇乾</b>　｜　本页完成课后三个任务：提示词工程师、creative 仿写、综合创作。</p>
+    <div class="myq_goals">
+      <i>任务一 · 提示词工程师</i>
+      <i>任务二 · creative 电影墙</i>
+      <i>任务三 · 光影展厅 + 视差</i>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 任务一 · 提示词工程师 -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="myq_sec">
+    <div class="myq_sec_head">
+      <span class="myq_no">1</span>
+      <h2>提示词工程师<small>让 AI 听懂需求 · 两轮迭代</small></h2>
+    </div>
+    <p class="myq_txt">本次<b>不写代码</b>，写提示词把需求"翻译"给 AI，让它生成 <code>new Swiper('#myqSwiper', {...})</code> 配置：
+    ① 无循环 ② 3.2 秒自动翻页且手动操作后不停 ③ 圆点分页器可点击 ④ 初始效果 cube。</p>
+
+    <div class="myq_req">
+      <h3>✍️ 任务一要求</h3>
+      <p>至少迭代 <b>2 轮</b>提示词，保留每轮提示词与 AI 回答；亲自粘进页面验证每项需求。</p>
+      <span class="myq_star">⭐ 验证标准：无循环、3.2s 自动翻、手滑后不停、圆点可点、初始 cube</span>
+    </div>
+
+    <!-- 第一轮对话 -->
+    <div class="myq_chat">
+      <span class="myq_round_tag">第 1 轮</span>
+      <div class="myq_chat_row myq_user">
+        <div class="myq_bubble">
+          <b>用户提示词：</b><br>
+          帮我写一个 Swiper 配置，要求：不循环，3.2秒自动翻页，圆点分页器可以点击跳转，初始效果是 cube。
+        </div>
+      </div>
+      <div class="myq_chat_row myq_ai">
+        <div class="myq_bubble">
+          <b>AI 回答：</b><br>
+          好的，以下是满足需求的 Swiper 配置：
+<pre>new Swiper('#myqSwiper', {
+  loop: false,
+  effect: 'cube',
+  autoplay: {
+    delay: 3200
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true
+  }
+});</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第二轮对话 -->
+    <div class="myq_chat">
+      <span class="myq_round_tag">第 2 轮（修正）</span>
+      <div class="myq_chat_row myq_user">
+        <div class="myq_bubble">
+          <b>用户提示词：</b><br>
+          上一版有问题：用户手动滑动后自动播放会<b>停止</b>。请加上 <code>disableOnInteraction: false</code>，
+          让手动操作后自动播放不停止。其他要求不变：无循环、3.2秒自动翻页、圆点分页器可点击、初始效果 cube。
+        </div>
+      </div>
+      <div class="myq_chat_row myq_ai">
+        <div class="myq_bubble">
+          <b>AI 回答（修正后）：</b><br>
+          已补充 <code>disableOnInteraction: false</code>，修正后的配置如下：
+<pre>new Swiper('#myqSwiper', {
+  loop: false,
+  effect: 'cube',
+  autoplay: {
+    delay: 3200,
+    disableOnInteraction: false
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true
+  }
+});</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- 验证演示 -->
+    <div class="myq_demo">
+      <span class="myq_demo_tag">🎛️ 验证演示 · 最终配置（无循环 + 3.2s + 手滑不停 + 圆点可点 + cube）</span>
+      <div class="myq_swiper">
+        <div class="swiper" id="myqTask1">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"><div class="myq_cap"><h3>天宫空间站</h3><p>验证 cube 3D 效果</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号"><div class="myq_cap"><h3>复兴号</h3><p>3.2 秒自动翻页</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919"><div class="myq_cap"><h3>C919</h3><p>手滑后自动播放不停</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"><div class="myq_cap"><h3>奋斗者号</h3><p>圆点可点击跳转</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="myq_cap"><h3>中国天眼</h3><p>无循环（到最后一张停）</p></div></div>
+          </div>
+          <div class="swiper-pagination" id="myqPag1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 任务二 · creative 仿写 -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="myq_sec">
+    <div class="myq_sec_head">
+      <span class="myq_no">2</span>
+      <h2>creative 仿写<small>课堂没讲，AI 教你 · 第 7 种 effect</small></h2>
+    </div>
+    <p class="myq_txt">Swiper 还有第 7 种 effect——<b>creative</b>（自定义变换）。通过 <code>creativeEffect.prev</code> 和
+    <code>creativeEffect.next</code> 分别控制上一张和下一张的 <code>translate</code>（位移）与 <code>rotate</code>（旋转），
+    实现"电影选片墙"效果。</p>
+
+    <div class="myq_req">
+      <h3>✍️ 任务二要求</h3>
+      <p>打开官方示例 <code>swiper/demo/257-effect-creative.html</code>，配合 AI 读懂 <code>creativeEffect</code> 的
+      <code>transform</code> 写法，为效果实验台新增第 7 个按钮 <b>[creative 电影墙]</b>。</p>
+      <span class="myq_star">⭐ 效果要求：上一张缩小左移并带角度、下一张放大右移进场（像电影选片墙）</span>
+    </div>
+
+    <!-- 效果切换按钮 -->
+    <div class="myq_fx" id="myqFxBar">
+      <button data-fx="slide">slide 平推</button>
+      <button data-fx="fade">fade 淡入淡出</button>
+      <button data-fx="cube">cube 立方体</button>
+      <button data-fx="coverflow">coverflow 画廊</button>
+      <button data-fx="flip">flip 翻页</button>
+      <button data-fx="cards">cards 卡片</button>
+      <button class="myq_on" data-fx="creative">creative 电影墙 ★</button>
+    </div>
+
+    <div class="myq_demo">
+      <span class="myq_demo_tag">🎛️ 演示 · 效果实验台（点按钮切换 effect，默认 creative 电影墙）</span>
+      <div class="myq_swiper">
+        <div class="swiper" id="myqTask2">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"><div class="myq_cap"><h3>天宫空间站</h3><p>试试向左/右拖动</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号"><div class="myq_cap"><h3>复兴号</h3><p>prev：缩小左移带角度</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919"><div class="myq_cap"><h3>C919</h3><p>next：放大右移进场</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"><div class="myq_cap"><h3>奋斗者号</h3><p>像电影选片墙</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="myq_cap"><h3>中国天眼</h3><p>transform 自定义变换</p></div></div>
+          </div>
+          <div class="swiper-pagination" id="myqPag2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- creativeEffect 说明 -->
+    <div class="myq_req" style="background:#fffbea;border-color:#fde68a">
+      <h3 style="color:#b45309">💡 creativeEffect 参数说明（向 AI 追问后的理解）</h3>
+      <p style="color:#7c5e10">
+        <b>prev</b>：控制<b>上一张</b>（当前 slide 左侧）的变换——<code>translate: ['-25%', 0, -300]</code> 表示左移 25% 并向 z 轴后退 300px（缩小），<code>rotate: [0, 0, -12]</code> 表示绕 z 轴向左倾斜 12 度。<br>
+        <b>next</b>：控制<b>下一张</b>（当前 slide 右侧）的变换——<code>translate: ['100%', 0, 0]</code> 表示从右侧 100% 位置进场，<code>rotate: [0, 0, 8]</code> 表示微微向右倾斜 8 度。<br>
+        <b>百分号基准</b>：transform 里的百分号是相对<b>当前 slide 自身尺寸</b>的。
+      </p>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 任务三 · 综合创作 -->
+  <!-- ════════════════════════════════════════════════════ -->
+  <div class="myq_sec">
+    <div class="myq_sec_head">
+      <span class="myq_no">3</span>
+      <h2>综合创作<small>光影展厅 + 第六件展品 + parallax 视差</small></h2>
+    </div>
+    <p class="myq_txt">① 为光影展厅添加第六件展品<b>爱达·魔都号</b>（首艘国产大型邮轮，2024 年 1 月首航），图片用 AI 生成（横版 16:9），
+    slide 结构完整；② 加入课堂没讲过的 Swiper 能力——<b>parallax 视差</b>，让背景图与文字产生层叠位移。</p>
+
+    <div class="myq_req">
+      <h3>✍️ 任务三要求</h3>
+      <p>添加第六件展品爱达·魔都号，slide 结构完整（图 + 标题 + 简介）；加入 <b>parallax</b> 视差效果（课堂未讲）。</p>
+      <span class="myq_star">⭐ 验证标准：6 件展品齐全、切换时背景与文字有视差动效</span>
+    </div>
+
+    <div class="myq_demo">
+      <span class="myq_demo_tag">🎛️ 光影展厅 · 6 件大国重器（parallax 视差 · 左右切换看层叠效果）</span>
+      <div class="myq_swiper">
+        <div class="swiper" id="myqTask3">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站">
+              <div class="myq_cap">
+                <h3 data-swiper-parallax="-300">天宫空间站</h3>
+                <p data-swiper-parallax="-200">2022 年全面建成 · 中国人的太空家园</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组">
+              <div class="myq_cap">
+                <h3 data-swiper-parallax="-300">复兴号动车组</h3>
+                <p data-swiper-parallax="-200">350 km/h · 世界商业运营最高时速</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="swiper-imgs/c919_1.jpg" alt="C919大飞机">
+              <div class="myq_cap">
+                <h3 data-swiper-parallax="-300">C919 大飞机</h3>
+                <p data-swiper-parallax="-200">2023 年商业首航 · 国产干线客机翱翔蓝天</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号">
+              <div class="myq_cap">
+                <h3 data-swiper-parallax="-300">奋斗者号</h3>
+                <p data-swiper-parallax="-200">10909 米 · 触碰地球第四极马里亚纳海沟</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="swiper-imgs/fast_1.jpg" alt="中国天眼">
+              <div class="myq_cap">
+                <h3 data-swiper-parallax="-300">中国天眼 FAST</h3>
+                <p data-swiper-parallax="-200">500 米口径 · 世界最大单口径射电望远镜</p>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <img src="swiper-imgs/modu_1.jpg" alt="爱达·魔都号">
+              <div class="myq_cap">
+                <h3 data-swiper-parallax="-300">爱达·魔都号</h3>
+                <p data-swiper-parallax="-200">2024 年 1 月首航 · 首艘国产大型邮轮</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination" id="myqPag3"></div>
+          <div class="swiper-button-prev" id="myqPrev3"></div>
+          <div class="swiper-button-next" id="myqNext3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提示词记录访问入口 -->
+  <div class="myq_footer_link">
+    <a href="myq_prompt.md" target="_blank">📝 查看提示词记录（myq_prompt.md）</a>
+    <a href="swiper-task.html">← 返回课堂操作任务</a>
+  </div>
+
+  <footer>Swiper 课后作业 · 大国重器光影展 · 马宇乾 · 高级网页设计 · 2026-11-05</footer>
+</div>
+
+<script>
+/*
+  作者：马宇乾
+  建立时间：2026-11-05
+  使用模型：Trae 专有模型
+  功能名称：课后作业 JS 初始化
+  功能简介：依次初始化三个任务的 Swiper 实例。任务一：无循环 + cube + 3.2s 自动播放手滑不停；任务二：creative 电影墙效果（含 7 种 effect 切换）；任务三：光影展厅 6 件展品 + parallax 视差。
+*/
+
+/**
+ * 作者：马宇乾
+ * 建立时间：2026-11-05
+ * 使用模型：Trae 专有模型
+ * 功能名称：初始化任务一轮播
+ * 功能简介：使用任务一最终确定的配置：无循环(loop:false)、cube 效果、3.2 秒自动播放且手动操作后不停(disableOnInteraction:false)、圆点分页器可点击
+ * @returns {Swiper} 返回任务一的 Swiper 实例
+ */
+function myq_initTask1() {
+  return new Swiper("#myqTask1", {
+    loop: false,
+    effect: 'cube',
+    autoplay: {
+      delay: 3200,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: "#myqPag1",
+      clickable: true
+    }
+  });
+}
+
+/**
+ * 作者：马宇乾
+ * 建立时间：2026-11-05
+ * 使用模型：Trae 专有模型
+ * 功能名称：构建指定效果的 Swiper 配置
+ * 功能简介：根据传入的 effect 名称返回对应配置。当 effect 为 creative 时，附加 creativeEffect 参数实现电影墙效果（prev 缩小左移带角度，next 放大右移进场）
+ * @param {string} myq_effect - 效果名称，如 slide / fade / cube / creative 等
+ * @returns {Object} Swiper 配置对象
+ */
+function myq_buildTask2Config(myq_effect) {
+  var myq_config = {
+    loop: true,
+    speed: 800,
+    effect: myq_effect,
+    grabCursor: true,
+    autoplay: {
+      delay: 3200,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: "#myqPag2",
+      clickable: true
+    }
+  };
+  // 仅当选择 creative 效果时，附加电影墙变换参数
+  if (myq_effect === 'creative') {
+    myq_config.creativeEffect = {
+      prev: {
+        shadow: true,
+        translate: ['-25%', 0, -300],
+        rotate: [0, 0, -12]
+      },
+      next: {
+        shadow: true,
+        translate: ['100%', 0, 0],
+        rotate: [0, 0, 8]
+      }
+    };
+  }
+  return myq_config;
+}
+
+/**
+ * 作者：马宇乾
+ * 建立时间：2026-11-05
+ * 使用模型：Trae 专有模型
+ * 功能名称：初始化任务二 creative 电影墙轮播
+ * 功能简介：默认以 creative 效果初始化，并绑定 7 个效果切换按钮的点击事件。点击按钮时先销毁旧实例再用新 effect 重建，确保动态切换生效
+ * @returns {Swiper} 返回任务二的 Swiper 实例
+ */
+function myq_initTask2() {
+  var myq_sw2 = new Swiper("#myqTask2", myq_buildTask2Config('creative'));
+  var myq_btns = document.querySelectorAll('#myqFxBar button');
+  myq_btns.forEach(function (myq_btn) {
+    myq_btn.addEventListener('click', function () {
+      // 高亮当前按钮
+      myq_btns.forEach(function (b) { b.classList.remove('myq_on'); });
+      myq_btn.classList.add('myq_on');
+      // 销毁旧实例（false 保留 DOM），用新 effect 重建
+      myq_sw2.destroy(false);
+      myq_sw2 = new Swiper("#myqTask2", myq_buildTask2Config(myq_btn.dataset.fx));
+    });
+  });
+  return myq_sw2;
+}
+
+/**
+ * 作者：马宇乾
+ * 建立时间：2026-11-05
+ * 使用模型：Trae 专有模型
+ * 功能名称：初始化任务三光影展厅轮播
+ * 功能简介：展示 6 件大国重器展品（含新增的爱达·魔都号），开启 parallax 视差效果，使字幕与背景产生层叠位移；同时支持循环、自动播放、圆点与箭头导航
+ * @returns {Swiper} 返回任务三的 Swiper 实例
+ */
+function myq_initTask3() {
+  return new Swiper("#myqTask3", {
+    loop: true,
+    speed: 700,
+    parallax: true,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: "#myqPag3",
+      clickable: true
+    },
+    navigation: {
+      nextEl: "#myqNext3",
+      prevEl: "#myqPrev3"
+    }
+  });
+}
+
+// ── 页面加载完成后依次初始化三个任务 ──
+myq_initTask1();
+myq_initTask2();
+myq_initTask3();
+</script>
+</body>
+</html>
