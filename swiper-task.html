@@ -217,14 +217,13 @@
       <span class="wy-demo-tag">🎛️ 演示四 · 效果实验台（点按钮切换 effect）</span>
       <div class="wy-swiper">
         <div class="swiper" id="wySw4">
-          <!-- parallax 视差：img 与 .wy-cap 设置不同视差速度，切换时分层移动 -->
           <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站" data-swiper-parallax="-23%"><div class="wy-cap" data-swiper-parallax="-300"><h3>天宫空间站</h3><p>试试上面的效果按钮</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组" data-swiper-parallax="-23%"><div class="wy-cap" data-swiper-parallax="-300"><h3>复兴号动车组</h3><p>同一组照片，七种讲述方式</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机" data-swiper-parallax="-23%"><div class="wy-cap" data-swiper-parallax="-300"><h3>C919 大飞机</h3><p>企业官网爱用 fade</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号" data-swiper-parallax="-23%"><div class="wy-cap" data-swiper-parallax="-300"><h3>奋斗者号</h3><p>游戏网站爱用 cube</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼" data-swiper-parallax="-23%"><div class="wy-cap" data-swiper-parallax="-300"><h3>中国天眼 FAST</h3><p>相册页面爱用 coverflow</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号" data-swiper-parallax="-23%"><div class="wy-cap" data-swiper-parallax="-300"><h3>爱达·魔都号</h3><p>第六件展品 · 光影展新成员</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"><div class="wy-cap"><h3>天宫空间站</h3><p>试试上面的效果按钮</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组"><div class="wy-cap"><h3>复兴号动车组</h3><p>同一组照片，七种讲述方式</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"><div class="wy-cap"><h3>C919 大飞机</h3><p>企业官网爱用 fade</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"><div class="wy-cap"><h3>奋斗者号</h3><p>游戏网站爱用 cube</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="wy-cap"><h3>中国天眼 FAST</h3><p>相册页面爱用 coverflow</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号"><div class="wy-cap"><h3>爱达·魔都号</h3><p>第六件展品 · 光影展新成员</p></div></div>
           </div>
           <div class="swiper-pagination" id="wyPag4"></div>
         </div>
@@ -283,7 +282,15 @@
       speed: 800,                                       
       autoplay: { delay: 3200, disableOnInteraction: false }, 
       pagination: { el: "#wyPag4", clickable: true },
-      parallax: true,                             // 视差：配合 slide 内 data-swiper-parallax 属性分层移动
+      // mousewheel 滚轮翻页：参数调校让手感自然（每项原理见行尾注释）
+      mousewheel: {
+        forceToAxis: false,      // 常规鼠标滚轮用默认；触控板横滑时改为 true 更跟手
+        invert: false,           // 滚轮向下 = 下一张（符合直觉，不反转）
+        sensitivity: 1,          // 灵敏度 1：一格滚轮 = 一张，过大会一滚跳多张
+        thresholdDelta: 30,      // 滚动增量 < 30 忽略：过滤触控板微抖，避免误触
+        thresholdTime: 200,      // 200ms 内的连续滚动只算一次：防止高速滚动连翻多张
+        releaseOnEdges: true,    // 到达边界时把滚轮还给页面（loop 模式无边界，主要对非 loop 生效）
+      },
       // creative（电影墙）专属参数，参考官方 demo 257-effect-creative 第 5 例；仅 effect="creative" 时生效
       creativeEffect: {
         prev: { shadow: true, translate: ["-125%", 0, -800], rotate: [0, 0, -90] },
@@ -316,7 +323,15 @@
         speed: 800,
         autoplay: { delay: 3200, disableOnInteraction: false },
         pagination: { el: "#wyPag4", clickable: true },
-        parallax: true,                         // 重建实例时同样开启视差
+        // mousewheel 与初始配置保持一致（阈值过滤连滚，一格一张不跳页）
+        mousewheel: {
+          forceToAxis: false,
+          invert: false,
+          sensitivity: 1,
+          thresholdDelta: 30,
+          thresholdTime: 200,
+          releaseOnEdges: true,
+        },
         // creative（电影墙）专属参数，与初始配置保持一致（其它效果会忽略它）
         creativeEffect: {
           prev: { shadow: true, translate: ["-125%", 0, -800], rotate: [0, 0, -90] },
