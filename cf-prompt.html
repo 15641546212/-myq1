@@ -1,0 +1,395 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-09 15:10
+  使用模型：GLM-5.3-Flash
+  功能名称及简介：cf-prompt 提示词工程展示页 —— 任务一的提示词两轮对照，效果演示与代码并排展示，含中文需求→Swiper 参数对照表
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cf-prompt · 提示词工程两轮对照 — 马宇乾</title>
+  <link rel="stylesheet" href="swiper/swiper-bundle.min.css">
+  <style>
+    /* ===== 全局重置 ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      background: #f5f6fa;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    /* ===== 顶部栏 ===== */
+    .myq_topbar {
+      background: linear-gradient(135deg, #1677ff 0%, #4096ff 100%);
+      color: #fff;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(22,119,255,.2);
+    }
+    .myq_topbar h1 { font-size: 22px; font-weight: 700; }
+    .myq_topbar h1 small { font-size: 13px; font-weight: 400; opacity: .85; margin-left: 10px; }
+    .myq_home_link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 7px 18px;
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .myq_home_link:hover { background: #fff; color: #1677ff; }
+    .myq_back_link {
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      padding: 7px 14px;
+      margin-right: 8px;
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .myq_back_link:hover { background: rgba(255,255,255,.15); }
+
+    /* ===== 主体容器 ===== */
+    .myq_container { max-width: 1280px; margin: 28px auto; padding: 0 24px; }
+
+    /* ===== 页面说明 ===== */
+    .myq_intro {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      border-left: 4px solid #1677ff;
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .myq_intro h2 { font-size: 18px; color: #1677ff; margin-bottom: 8px; }
+    .myq_intro p { font-size: 14px; color: #555; }
+
+    /* ===== 两轮对照 ===== */
+    .myq_rounds {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .myq_card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      border: 1px solid #eee;
+    }
+    .myq_card_head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .myq_round_label { font-size: 15px; font-weight: 700; color: #333; }
+    .myq_badge {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .myq_badge_bad { background: #fff1f0; color: #cf1322; border: 1px solid #ffa39e; }
+    .myq_badge_good { background: #f6ffed; color: #389e0d; border: 1px solid #b7eb8f; }
+    .myq_card_title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .myq_card_desc { font-size: 14px; color: #555; margin-bottom: 16px; line-height: 1.7; }
+
+    /* ===== 提示词原文 ===== */
+    .myq_prompt_box {
+      background: #f0f5ff;
+      border: 1px dashed #adc6ff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: #1d39c4;
+    }
+    .myq_prompt_box b { color: #10239e; }
+
+    /* ===== Swiper 演示区 ===== */
+    .myq_swiper_box {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      background: #000;
+    }
+    .myq_swiper_box .swiper-slide img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .myq_swiper_box .swiper-pagination {
+      position: static;
+      margin-top: 8px;
+      padding-bottom: 10px;
+    }
+
+    /* ===== 结果反馈 ===== */
+    .myq_result {
+      background: #fafafa;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      border-left: 3px solid #ddd;
+    }
+    .myq_result.bad { border-left-color: #cf1322; color: #cf1322; }
+    .myq_result.good { border-left-color: #389e0d; color: #389e0d; }
+
+    /* ===== 代码块 ===== */
+    .myq_code {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 8px;
+      padding: 16px;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+    .myq_code .myq_key { color: #9cdcfe; }
+    .myq_code .myq_str { color: #ce9178; }
+    .myq_code .myq_num { color: #b5cea8; }
+    .myq_code .myq_cmt { color: #6a9955; }
+    .myq_code .myq_hl { color: #569cd6; font-weight: 700; }
+
+    /* ===== 参数对照表 ===== */
+    .myq_table_sec { margin-top: 40px; }
+    .myq_table_sec h2 { font-size: 22px; margin-bottom: 6px; }
+    .myq_table_sec .myq_sub { font-size: 14px; color: #888; margin-bottom: 20px; }
+    .myq_table {
+      width: 100%;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      border-collapse: collapse;
+    }
+    .myq_table th {
+      background: #1677ff;
+      color: #fff;
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .myq_table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+      vertical-align: top;
+    }
+    .myq_table tr:last-child td { border-bottom: none; }
+    .myq_table tr:hover td { background: #fafafa; }
+    .myq_table .myq_param {
+      font-family: "Consolas", monospace;
+      color: #c7254e;
+      background: #f9f2f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 768px) {
+      .myq_rounds { grid-template-columns: 1fr; }
+      .myq_topbar { flex-direction: column; gap: 10px; text-align: center; }
+      .myq_container { padding: 0 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 顶部栏 -->
+  <div class="myq_topbar">
+    <h1>cf-prompt · 提示词工程两轮对照 <small>任务一 · 马宇乾</small></h1>
+    <div>
+      <a href="swiper-task.html" class="myq_back_link">← 返回任务页</a>
+      <a href="index.html" class="myq_home_link">返回首页</a>
+    </div>
+  </div>
+
+  <div class="myq_container">
+
+    <!-- 页面说明 -->
+    <div class="myq_intro">
+      <h2>📋 任务一：提示词工程师 —— 让 AI 听懂需求</h2>
+      <p>本任务不写代码，写提示词。把"无缝循环、3.2 秒自动翻页且手动操作后不停、圆点分页器可点击、初始效果为 cube"翻译成 <code>new Swiper('#wySw4', {...})</code> 配置。下面展示两轮提示词的差异：第 1 轮漏了 <code>clickable</code>，第 2 轮补齐。</p>
+    </div>
+
+    <!-- 两轮对照 -->
+    <div class="myq_rounds">
+
+      <!-- 第 1 轮：漏了需求 -->
+      <div class="myq_card">
+        <div class="myq_card_head">
+          <span class="myq_round_label">第 1 轮</span>
+          <span class="myq_badge myq_badge_bad">漏了需求</span>
+        </div>
+        <div class="myq_card_title">圆点只能看，不能点</div>
+        <div class="myq_prompt_box">
+          <b>提示词原文：</b>初始化一个 Swiper，无缝循环，3.2 秒自动翻页，圆点分页器，初始效果 cube。
+        </div>
+        <p class="myq_card_desc">
+          提示词里只写了"圆点分页器"。AI 理解为"把圆点画出来"，于是只给了 <code>el</code>，没给 <code>clickable</code>。结果：圆点显示出来了，但点击没反应。
+        </p>
+
+        <!-- 演示：不可点击的分页器 -->
+        <div class="myq_swiper_box">
+          <div class="swiper myqSwiperBad">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼FAST"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"></div>
+            </div>
+            <div class="swiper-pagination myqPagBad"></div>
+          </div>
+        </div>
+
+        <div class="myq_result bad">点第 3 个圆点 → 当前索引 <span class="myq_bad_idx">2</span>，没有跳转</div>
+
+        <pre class="myq_code"><span class="myq_key">pagination</span>: {
+  <span class="myq_key">el</span>: <span class="myq_str">'.myqPagBad'</span>
+  <span class="myq_cmt">// ❌ 漏了 clickable: true</span>
+}</pre>
+      </div>
+
+      <!-- 第 2 轮：补齐需求 -->
+      <div class="myq_card">
+        <div class="myq_card_head">
+          <span class="myq_round_label">第 2 轮</span>
+          <span class="myq_badge myq_badge_good">补齐需求</span>
+        </div>
+        <div class="myq_card_title">圆点是遥控器，不是装饰</div>
+        <div class="myq_prompt_box">
+          <b>提示词原文：</b>初始化一个 Swiper，无缝循环，3.2 秒自动翻页且手动操作后不停，<b>圆点分页器必须可点击跳转</b>，初始效果 cube。
+        </div>
+        <p class="myq_card_desc">
+          第二轮把需求改写成"圆点必须能点击直接跳转，不能只是能看"。同一个 AI，立刻补上了 <code>clickable: true</code>。结果：点击圆点可以切换幻灯片。
+        </p>
+
+        <!-- 演示：可点击的分页器 -->
+        <div class="myq_swiper_box">
+          <div class="swiper myqSwiperGood">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼FAST"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"></div>
+            </div>
+            <div class="swiper-pagination myqPagGood"></div>
+          </div>
+        </div>
+
+        <div class="myq_result good">点第 3 个圆点 → 当前索引 <span class="myq_good_idx">0</span>，已跳转</div>
+
+        <pre class="myq_code"><span class="myq_key">pagination</span>: {
+  <span class="myq_key">el</span>: <span class="myq_str">'.myqPagGood'</span>,
+  <span class="myq_hl">clickable</span>: <span class="myq_num">true</span>  <span class="myq_cmt">// ✅ 补齐需求</span>
+}</pre>
+      </div>
+
+    </div>
+
+    <!-- 中文需求 → Swiper 参数对照表 -->
+    <div class="myq_table_sec">
+      <h2>把中文需求翻译成参数</h2>
+      <p class="myq_sub">答辩时最容易被追问的是"这句话对应哪个参数"。这张表就是交卷前该背下来的东西。</p>
+      <table class="myq_table">
+        <thead>
+          <tr>
+            <th style="width:26%">老师的要求</th>
+            <th style="width:44%">对应参数</th>
+            <th>为什么</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>无缝循环</td>
+            <td><span class="myq_param">loop: true</span></td>
+            <td>最后一张滑到第一张，无缝衔接，不会停在末尾</td>
+          </tr>
+          <tr>
+            <td>3.2 秒自动翻页，手动操作后不停</td>
+            <td><span class="myq_param">autoplay: { delay: 3200, disableOnInteraction: false }</span></td>
+            <td>delay 单位毫秒；默认 disableOnInteraction 为 true（手动操作后停止），设为 false 才不会停</td>
+          </tr>
+          <tr>
+            <td>圆点分页器可点击</td>
+            <td><span class="myq_param">pagination: { el: '.myqPag', clickable: true }</span></td>
+            <td>el 只负责"画"圆点；clickable: true 才让圆点变成可点击的遥控器</td>
+          </tr>
+          <tr>
+            <td>初始效果为 cube</td>
+            <td><span class="myq_param">effect: 'cube'</span></td>
+            <td>Swiper 内置 6 种 effect：slide / fade / cube / coverflow / flip / cards</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script src="swiper/swiper-bundle.min.js"></script>
+  <script>
+    /* 作者：马宇乾 | 建立时间：2026-11-09 15:10 | 使用模型：GLM-5.3-Flash
+       功能：myqInitBadSwiper —— 初始化第 1 轮"漏需求"演示 Swiper，pagination 不加 clickable，点击圆点不跳转 */
+    function myqInitBadSwiper() {
+      var myqBad = new Swiper(".myqSwiperBad", {
+        loop: true,
+        effect: "cube",
+        speed: 800,
+        autoplay: { delay: 3200, disableOnInteraction: false },
+        pagination: {
+          el: ".myqPagBad"
+          // 故意不加 clickable: true —— 演示"漏了需求"
+        }
+      });
+      // 监听 slideChange，实时更新结果文字中的当前索引
+      myqBad.on("slideChange", function () {
+        document.querySelector(".myq_bad_idx").textContent = myqBad.realIndex;
+      });
+    }
+
+    /* 作者：马宇乾 | 建立时间：2026-11-09 15:10 | 使用模型：GLM-5.3-Flash
+       功能：myqInitGoodSwiper —— 初始化第 2 轮"补齐需求"演示 Swiper，pagination 加 clickable: true，点击圆点可跳转 */
+    function myqInitGoodSwiper() {
+      var myqGood = new Swiper(".myqSwiperGood", {
+        loop: true,
+        effect: "cube",
+        speed: 800,
+        autoplay: { delay: 3200, disableOnInteraction: false },
+        pagination: {
+          el: ".myqPagGood",
+          clickable: true  // 补齐需求：圆点可点击
+        }
+      });
+      // 监听 slideChange，实时更新结果文字中的当前索引
+      myqGood.on("slideChange", function () {
+        document.querySelector(".myq_good_idx").textContent = myqGood.realIndex;
+      });
+    }
+
+    // 页面加载完成后初始化两个 Swiper
+    window.addEventListener("load", function () {
+      myqInitBadSwiper();
+      myqInitGoodSwiper();
+    });
+  </script>
+</body>
+</html>
