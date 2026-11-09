@@ -81,6 +81,44 @@
   .wy-back a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,43,91,.15)}
 
   footer{text-align:center;margin-top:34px;color:#9ca3af;font-size:13px;line-height:2}
+
+  /* ===== 任务一 · 提示词工程两轮对照 ===== */
+  .myq-prompt-block{margin-top:24px;padding:24px;background:#fff;border:1px solid #e8ecf3;border-radius:14px;box-shadow:0 2px 12px rgba(15,43,91,.06)}
+  .myq-prompt-block h3{font-size:18px;color:#0f2b5b;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .myq-prompt-sub{font-size:13.5px;color:#6b7280;margin-bottom:18px}
+  .myq-rounds{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .myq-card{background:#fff;border-radius:12px;padding:20px;border:1px solid #eee;box-shadow:0 1px 8px rgba(0,0,0,.05)}
+  .myq-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .myq-round-label{font-size:14px;font-weight:700;color:#333}
+  .myq-badge{font-size:11px;padding:3px 10px;border-radius:10px;font-weight:600}
+  .myq-badge-bad{background:#fff1f0;color:#cf1322;border:1px solid #ffa39e}
+  .myq-badge-good{background:#f6ffed;color:#389e0d;border:1px solid #b7eb8f}
+  .myq-card-title{font-size:16px;font-weight:700;margin-bottom:8px;color:#1a1a1a}
+  .myq-card-desc{font-size:13px;color:#555;margin-bottom:14px;line-height:1.7}
+  .myq-prompt-box{background:#f0f5ff;border:1px dashed #adc6ff;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12.5px;color:#1d39c4;line-height:1.6}
+  .myq-prompt-box b{color:#10239e}
+  .myq-swiper-box{border-radius:10px;overflow:hidden;margin-bottom:12px;background:#000}
+  .myq-swiper-box .swiper-slide img{width:100%;height:180px;object-fit:cover;display:block}
+  .myq-swiper-box .swiper-pagination{position:static;margin-top:8px;padding-bottom:10px}
+  .myq-result{background:#fafafa;border-radius:6px;padding:10px 14px;font-size:13px;margin-bottom:14px;border-left:3px solid #ddd}
+  .myq-result.bad{border-left-color:#cf1322;color:#cf1322}
+  .myq-result.good{border-left-color:#389e0d;color:#389e0d}
+  .myq-code{background:#1e1e1e;color:#d4d4d4;border-radius:8px;padding:14px 16px;font-family:"Consolas","Monaco",monospace;font-size:13px;overflow-x:auto;line-height:1.6}
+  .myq-code .myq-key{color:#9cdcfe}
+  .myq-code .myq-str{color:#ce9178}
+  .myq-code .myq-num{color:#b5cea8}
+  .myq-code .myq-cmt{color:#6a9955}
+  .myq-code .myq-hl{color:#569cd6;font-weight:700}
+  .myq-table-sec{margin-top:28px}
+  .myq-table-sec h4{font-size:16px;color:#0f2b5b;margin-bottom:6px}
+  .myq-table-sec .myq-table-sub{font-size:13px;color:#888;margin-bottom:14px}
+  .myq-table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px;overflow:hidden;border:1px solid #eee}
+  .myq-table th{background:#0f2b5b;color:#fff;padding:12px 14px;text-align:left;font-size:13px;font-weight:600}
+  .myq-table td{padding:12px 14px;border-bottom:1px solid #f0f0f0;font-size:13px;vertical-align:top}
+  .myq-table tr:last-child td{border-bottom:none}
+  .myq-table tr:hover td{background:#f8faff}
+  .myq-table .myq-param{font-family:"Consolas",monospace;color:#c7254e;background:#f9f2f4;padding:2px 6px;border-radius:4px;font-size:12.5px}
+  @media(max-width:768px){.myq-rounds{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -126,6 +164,105 @@
             <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="wy-cap"><h3>中国天眼 FAST</h3><p>500 米口径 · 世界最大单口径射电望远镜</p></div></div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- 任务一 · 提示词工程两轮对照 -->
+    <div class="myq-prompt-block">
+      <h3>📝 提示词工程 · 两轮对照</h3>
+      <p class="myq-prompt-sub">把"无缝循环、3.2 秒自动翻页且手动操作后不停、圆点分页器可点击、初始效果为 cube"翻译成 Swiper 配置。第 1 轮漏了 <code>clickable</code>，第 2 轮补齐。</p>
+      <div class="myq-rounds">
+        <!-- 第 1 轮：漏了需求 -->
+        <div class="myq-card">
+          <div class="myq-card-head">
+            <span class="myq-round-label">第 1 轮</span>
+            <span class="myq-badge myq-badge-bad">漏了需求</span>
+          </div>
+          <div class="myq-card-title">圆点只能看，不能点</div>
+          <div class="myq-prompt-box"><b>提示词：</b>初始化一个 Swiper，无缝循环，3.2 秒自动翻页，圆点分页器，初始效果 cube。</div>
+          <p class="myq-card-desc">提示词里只写了"圆点分页器"。AI 理解为"把圆点画出来"，于是只给了 <code>el</code>，没给 <code>clickable</code>。结果：圆点显示出来了，但点击没反应。</p>
+          <div class="myq-swiper-box">
+            <div class="swiper myqSwiperBad">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼FAST"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"></div>
+              </div>
+              <div class="swiper-pagination myqPagBad"></div>
+            </div>
+          </div>
+          <div class="myq-result bad">点第 3 个圆点 → 当前索引 <span class="myq-bad-idx">2</span>，没有跳转</div>
+          <pre class="myq-code"><span class="myq-key">pagination</span>: {
+  <span class="myq-key">el</span>: <span class="myq-str">'.myqPagBad'</span>
+  <span class="myq-cmt">// ❌ 漏了 clickable: true</span>
+}</pre>
+        </div>
+        <!-- 第 2 轮：补齐需求 -->
+        <div class="myq-card">
+          <div class="myq-card-head">
+            <span class="myq-round-label">第 2 轮</span>
+            <span class="myq-badge myq-badge-good">补齐需求</span>
+          </div>
+          <div class="myq-card-title">圆点是遥控器，不是装饰</div>
+          <div class="myq-prompt-box"><b>提示词：</b>初始化一个 Swiper，无缝循环，3.2 秒自动翻页且手动操作后不停，<b>圆点分页器必须可点击跳转</b>，初始效果 cube。</div>
+          <p class="myq-card-desc">第二轮把需求改写成"圆点必须能点击直接跳转，不能只是能看"。同一个 AI，立刻补上了 <code>clickable: true</code>。结果：点击圆点可以切换幻灯片。</p>
+          <div class="myq-swiper-box">
+            <div class="swiper myqSwiperGood">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼FAST"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号"></div>
+                <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"></div>
+              </div>
+              <div class="swiper-pagination myqPagGood"></div>
+            </div>
+          </div>
+          <div class="myq-result good">点第 3 个圆点 → 当前索引 <span class="myq-good-idx">0</span>，已跳转</div>
+          <pre class="myq-code"><span class="myq-key">pagination</span>: {
+  <span class="myq-key">el</span>: <span class="myq-str">'.myqPagGood'</span>,
+  <span class="myq-hl">clickable</span>: <span class="myq-num">true</span>  <span class="myq-cmt">// ✅ 补齐需求</span>
+}</pre>
+        </div>
+      </div>
+
+      <!-- 中文需求 → Swiper 参数对照表 -->
+      <div class="myq-table-sec">
+        <h4>02 · 把中文需求翻译成参数</h4>
+        <p class="myq-table-sub">答辩时最容易被追问的是"这句话对应哪个参数"。这张表就是交卷前该背下来的东西。</p>
+        <table class="myq-table">
+          <thead>
+            <tr>
+              <th style="width:26%">老师的要求</th>
+              <th style="width:42%">对应参数</th>
+              <th>为什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>无缝循环</td>
+              <td><span class="myq-param">loop: true</span></td>
+              <td>最后一张滑到第一张，无缝衔接，不会停在末尾</td>
+            </tr>
+            <tr>
+              <td>3.2 秒自动翻页，手动操作后不停</td>
+              <td><span class="myq-param">autoplay: { delay: 3200, disableOnInteraction: false }</span></td>
+              <td>delay 单位毫秒；默认 disableOnInteraction 为 true（手动操作后停止），设为 false 才不会停</td>
+            </tr>
+            <tr>
+              <td>圆点分页器可点击</td>
+              <td><span class="myq-param">pagination: { el: '.myqPag', clickable: true }</span></td>
+              <td>el 只负责"画"圆点；clickable: true 才让圆点变成可点击的遥控器</td>
+            </tr>
+            <tr>
+              <td>初始效果为 cube</td>
+              <td><span class="myq-param">effect: 'cube'</span></td>
+              <td>Swiper 内置 6 种 effect：slide / fade / cube / coverflow / flip / cards</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -346,6 +483,38 @@
 
     });
   });
+
+  /* 作者：马宇乾 | 建立时间：2026-11-09 | 使用模型：GLM-5.3-Flash
+     功能：myqInitPromptSwipers —— 初始化任务一提示词工程两轮对照的两个演示 Swiper
+     第 1 轮 pagination 不加 clickable（漏需求），第 2 轮加 clickable: true（补齐需求） */
+  function myqInitPromptSwipers() {
+    // 第 1 轮：漏了 clickable
+    var myqBad = new Swiper(".myqSwiperBad", {
+      loop: true,
+      effect: "cube",
+      speed: 800,
+      autoplay: { delay: 3200, disableOnInteraction: false },
+      pagination: { el: ".myqPagBad" }
+    });
+    myqBad.on("slideChange", function () {
+      var el = document.querySelector(".myq-bad-idx");
+      if (el) el.textContent = myqBad.realIndex;
+    });
+
+    // 第 2 轮：补齐 clickable
+    var myqGood = new Swiper(".myqSwiperGood", {
+      loop: true,
+      effect: "cube",
+      speed: 800,
+      autoplay: { delay: 3200, disableOnInteraction: false },
+      pagination: { el: ".myqPagGood", clickable: true }
+    });
+    myqGood.on("slideChange", function () {
+      var el = document.querySelector(".myq-good-idx");
+      if (el) el.textContent = myqGood.realIndex;
+    });
+  }
+  myqInitPromptSwipers();
 </script>
 </body>
 </html>
