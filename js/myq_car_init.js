@@ -1,14 +1,14 @@
 /* ============================================================
-   作者：倪铭浩
+   作者：马宇乾
    建立时间：2026-11-02 14:27
    使用模型：GLM-5.3-Flash
-   功能名称及简介：nmh_car_init.js —— tab_car.html 页面初始化
+   功能名称及简介：myq_car_init.js —— tab_car.html 页面初始化
    说明：本文件由 tab_car.html 外部引用（无内联脚本），
-         调用可复用组件 js/nmh_tab.js 的 nmh_initTabs，
+         调用可复用组件 js/myq_tab.js 的 myq_initTabs，
          绑定「最新上市 / 即将上市」选项卡。
    ============================================================ */
 "use strict";
 
-/* 作者：倪铭浩 | 建立时间：2026-11-02 14:27 | 使用模型：GLM-5.3-Flash
+/* 作者：马宇乾 | 建立时间：2026-11-02 14:27 | 使用模型：GLM-5.3-Flash
    功能：初始化汽车选项卡 —— 本页脚本在 body 末尾加载，DOM 已就绪 */
-nmh_initTabs("nmh_carTabs", "nmh_carPanels");
+myq_initTabs("myq_carTabs", "myq_carPanels");

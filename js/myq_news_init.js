@@ -1,14 +1,14 @@
 /* ============================================================
-   作者：倪铭浩
+   作者：马宇乾
    建立时间：2026-11-02 14:27
    使用模型：GLM-5.3-Flash
-   功能名称及简介：nmh_news_init.js —— tab_news.html 页面初始化
+   功能名称及简介：myq_news_init.js —— tab_news.html 页面初始化
    说明：本文件由 tab_news.html 外部引用（无内联脚本），
-         调用可复用组件 js/nmh_tab.js 的 nmh_initTabs，
+         调用可复用组件 js/myq_tab.js 的 myq_initTabs，
          绑定「国内 / 省内 / 国际 / 最热」四个新闻选项卡。
    ============================================================ */
 "use strict";
 
-/* 作者：倪铭浩 | 建立时间：2026-11-02 14:27 | 使用模型：GLM-5.3-Flash
+/* 作者：马宇乾 | 建立时间：2026-11-02 14:27 | 使用模型：GLM-5.3-Flash
    功能：初始化新闻选项卡 —— 本页脚本在 body 末尾加载，DOM 已就绪 */
-nmh_initTabs("nmh_newsTabs", "nmh_newsPanels");
+myq_initTabs("myq_newsTabs", "myq_newsPanels");

@@ -9,26 +9,26 @@
 <style>
     /* ========== 活字图谱 · 纸墨朱砂 ========== */
     :root {
-        --nmh_paper: #FAF8F3;
-        --nmh_ink: #211E1B;
-        --nmh_ink_soft: #6F675D;
-        --nmh_cinnabar: #AE2E24;
-        --nmh_rule: rgba(33, 30, 27, 0.16);
+        --myq_paper: #FAF8F3;
+        --myq_ink: #211E1B;
+        --myq_ink_soft: #6F675D;
+        --myq_cinnabar: #AE2E24;
+        --myq_rule: rgba(33, 30, 27, 0.16);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-        background: var(--nmh_paper);
+        background: var(--myq_paper);
         /* 基线栅：极淡的横线，如稿纸 */
         background-image: repeating-linear-gradient(
             to bottom, transparent 0, transparent 27px,
             rgba(33, 30, 27, 0.035) 27px, rgba(33, 30, 27, 0.035) 28px);
-        color: var(--nmh_ink);
+        color: var(--myq_ink);
         font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         font-size: 16px;
         line-height: 1.75;
         min-height: 100vh;
     }
-    .nmh_sheet {
+    .myq_sheet {
         max-width: 1080px;
         margin: 0 auto;
         padding: 56px 28px 72px;
@@ -38,277 +38,277 @@
     }
 
     /* ---- 书脊：竖排标题 ---- */
-    .nmh_rail {
+    .myq_rail {
         flex: 0 0 auto;
-        border-right: 1px solid var(--nmh_rule);
+        border-right: 1px solid var(--myq_rule);
         padding-right: 26px;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 18px;
     }
-    .nmh_rail_title {
+    .myq_rail_title {
         writing-mode: vertical-rl;
         font-family: "KaiTi", "STKaiti", "SimSun", serif;
         font-size: 30px;
         font-weight: 400;
         letter-spacing: 0.35em;
-        color: var(--nmh_ink);
+        color: var(--myq_ink);
     }
-    .nmh_rail_sub {
+    .myq_rail_sub {
         writing-mode: vertical-rl;
         font-size: 12px;
-        color: var(--nmh_ink_soft);
+        color: var(--myq_ink_soft);
         letter-spacing: 0.28em;
     }
 
     /* ---- 内容栏 ---- */
-    .nmh_content { flex: 1 1 auto; min-width: 0; }
+    .myq_content { flex: 1 1 auto; min-width: 0; }
 
     /* ---- 卷首：巨字 + 印 ---- */
-    .nmh_hero {
+    .myq_hero {
         position: relative;
         padding: 8px 0 34px;
-        border-bottom: 2px solid var(--nmh_ink);
+        border-bottom: 2px solid var(--myq_ink);
     }
-    .nmh_hero_eyebrow {
+    .myq_hero_eyebrow {
         font-size: 13px;
-        color: var(--nmh_ink_soft);
+        color: var(--myq_ink_soft);
         letter-spacing: 0.12em;
         margin-bottom: 6px;
     }
-    .nmh_hero_row {
+    .myq_hero_row {
         display: flex;
         align-items: flex-start;
         gap: 34px;
     }
-    .nmh_hero_char {
+    .myq_hero_char {
         font-family: "KaiTi", "STKaiti", "SimSun", serif;
         font-size: 148px;
         line-height: 1.05;
-        color: var(--nmh_ink);
-        animation: nmh_stamp 0.5s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+        color: var(--myq_ink);
+        animation: myq_stamp 0.5s cubic-bezier(0.2, 0.8, 0.3, 1) both;
     }
-    .nmh_seal {
+    .myq_seal {
         width: 52px;
         height: 52px;
         margin-top: 14px;
-        background: var(--nmh_cinnabar);
+        background: var(--myq_cinnabar);
         color: #FAF8F3;
         font-family: "KaiTi", "STKaiti", serif;
         font-size: 30px;
         line-height: 52px;
         text-align: center;
         transform: rotate(-3deg);
-        animation: nmh_stamp 0.4s cubic-bezier(0.2, 0.8, 0.3, 1) 0.4s both;
+        animation: myq_stamp 0.4s cubic-bezier(0.2, 0.8, 0.3, 1) 0.4s both;
     }
-    .nmh_hero_text { flex: 1 1 auto; min-width: 0; padding-top: 14px; }
-    .nmh_hero_text p { max-width: 34em; color: var(--nmh_ink); }
-    .nmh_hero_text p + p { margin-top: 10px; color: var(--nmh_ink_soft); font-size: 14.5px; }
-    .nmh_hero_code {
+    .myq_hero_text { flex: 1 1 auto; min-width: 0; padding-top: 14px; }
+    .myq_hero_text p { max-width: 34em; color: var(--myq_ink); }
+    .myq_hero_text p + p { margin-top: 10px; color: var(--myq_ink_soft); font-size: 14.5px; }
+    .myq_hero_code {
         display: inline-block;
         margin-top: 16px;
         font-family: Consolas, monospace;
         font-size: 13.5px;
-        color: var(--nmh_cinnabar);
+        color: var(--myq_cinnabar);
         background: rgba(174, 46, 36, 0.06);
         padding: 6px 12px;
     }
-    @keyframes nmh_stamp {
+    @keyframes myq_stamp {
         from { opacity: 0; transform: scale(1.14); }
         to   { opacity: 1; transform: scale(1); }
     }
-    .nmh_seal { animation-name: nmh_stamp_seal; }
-    @keyframes nmh_stamp_seal {
+    .myq_seal { animation-name: myq_stamp_seal; }
+    @keyframes myq_stamp_seal {
         from { opacity: 0; transform: rotate(-3deg) scale(1.3); }
         to   { opacity: 1; transform: rotate(-3deg) scale(1); }
     }
 
     /* ---- 分部标题 ---- */
-    .nmh_group { margin-top: 40px; }
-    .nmh_group_head {
+    .myq_group { margin-top: 40px; }
+    .myq_group_head {
         display: flex;
         align-items: baseline;
         gap: 14px;
         margin-bottom: 4px;
     }
-    .nmh_group_title {
+    .myq_group_title {
         font-family: "KaiTi", "STKaiti", "SimSun", serif;
         font-size: 24px;
         font-weight: 400;
         letter-spacing: 0.18em;
     }
-    .nmh_group_note { font-size: 13px; color: var(--nmh_ink_soft); }
-    .nmh_group_desc { font-size: 14px; color: var(--nmh_ink_soft); margin-bottom: 14px; }
+    .myq_group_note { font-size: 13px; color: var(--myq_ink_soft); }
+    .myq_group_desc { font-size: 14px; color: var(--myq_ink_soft); margin-bottom: 14px; }
 
     /* ---- 标本格：行线分隔，非卡片 ---- */
-    .nmh_glyphs {
+    .myq_glyphs {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
-        border-top: 1px solid var(--nmh_rule);
+        border-top: 1px solid var(--myq_rule);
     }
-    .nmh_glyph {
+    .myq_glyph {
         padding: 24px 6px 14px;
         text-align: center;
-        border-bottom: 1px solid var(--nmh_rule);
+        border-bottom: 1px solid var(--myq_rule);
     }
-    .nmh_glyph i {
+    .myq_glyph i {
         font-size: 34px;
-        color: var(--nmh_ink);
+        color: var(--myq_ink);
         display: block;
         transition: color 0.18s ease, transform 0.18s ease;
     }
-    .nmh_glyph:hover i { color: var(--nmh_cinnabar); transform: scale(1.12); }
-    .nmh_glyph_name {
+    .myq_glyph:hover i { color: var(--myq_cinnabar); transform: scale(1.12); }
+    .myq_glyph_name {
         display: block;
         margin-top: 10px;
         font-family: Consolas, monospace;
         font-size: 11.5px;
-        color: var(--nmh_ink_soft);
+        color: var(--myq_ink_soft);
         word-break: break-all;
         line-height: 1.4;
     }
 
     /* ---- 页脚 ---- */
-    .nmh_footer {
+    .myq_footer {
         margin-top: 52px;
         padding-top: 20px;
-        border-top: 2px solid var(--nmh_ink);
+        border-top: 2px solid var(--myq_ink);
         display: flex;
         gap: 30px;
         align-items: center;
         flex-wrap: wrap;
     }
-    .nmh_footer_note { font-size: 13px; color: var(--nmh_ink_soft); margin-right: auto; }
-    .nmh_home_link, .nmh_alt_link {
-        color: var(--nmh_ink);
+    .myq_footer_note { font-size: 13px; color: var(--myq_ink_soft); margin-right: auto; }
+    .myq_home_link, .myq_alt_link {
+        color: var(--myq_ink);
         text-decoration: none;
         font-size: 15px;
         padding-bottom: 3px;
-        border-bottom: 2px solid var(--nmh_ink);
+        border-bottom: 2px solid var(--myq_ink);
         transition: color 0.15s ease, border-color 0.15s ease;
     }
-    .nmh_home_link:hover, .nmh_alt_link:hover {
-        color: var(--nmh_cinnabar);
-        border-color: var(--nmh_cinnabar);
+    .myq_home_link:hover, .myq_alt_link:hover {
+        color: var(--myq_cinnabar);
+        border-color: var(--myq_cinnabar);
     }
-    .nmh_home_link:focus-visible, .nmh_alt_link:focus-visible,
-    .nmh_glyph:focus-visible {
-        outline: 2px dashed var(--nmh_cinnabar);
+    .myq_home_link:focus-visible, .myq_alt_link:focus-visible,
+    .myq_glyph:focus-visible {
+        outline: 2px dashed var(--myq_cinnabar);
         outline-offset: 3px;
     }
 
     /* ---- 响应式 ---- */
     @media (max-width: 760px) {
-        .nmh_sheet { flex-direction: column; gap: 28px; padding: 36px 18px 56px; }
-        .nmh_rail {
+        .myq_sheet { flex-direction: column; gap: 28px; padding: 36px 18px 56px; }
+        .myq_rail {
             flex-direction: row;
             border-right: 0;
-            border-bottom: 1px solid var(--nmh_rule);
+            border-bottom: 1px solid var(--myq_rule);
             padding: 0 0 14px;
             gap: 16px;
             align-items: baseline;
         }
-        .nmh_rail_title, .nmh_rail_sub { writing-mode: horizontal-tb; letter-spacing: 0.22em; }
-        .nmh_rail_title { font-size: 24px; }
-        .nmh_hero_char { font-size: 96px; }
-        .nmh_hero_row { flex-wrap: wrap; gap: 18px; }
+        .myq_rail_title, .myq_rail_sub { writing-mode: horizontal-tb; letter-spacing: 0.22em; }
+        .myq_rail_title { font-size: 24px; }
+        .myq_hero_char { font-size: 96px; }
+        .myq_hero_row { flex-wrap: wrap; gap: 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .nmh_hero_char, .nmh_seal { animation: none; }
-        .nmh_glyph i { transition: none; }
+        .myq_hero_char, .myq_seal { animation: none; }
+        .myq_glyph i { transition: none; }
     }
 </style>
 </head>
 <body>
-<div class="nmh_sheet">
+<div class="myq_sheet">
 
-    <aside class="nmh_rail">
-        <h1 class="nmh_rail_title">字学图谱</h1>
-        <span class="nmh_rail_sub">字体图标 · Font Awesome 6</span>
+    <aside class="myq_rail">
+        <h1 class="myq_rail_title">字学图谱</h1>
+        <span class="myq_rail_sub">字体图标 · Font Awesome 6</span>
     </aside>
 
-    <main class="nmh_content">
+    <main class="myq_content">
 
-        <header class="nmh_hero">
-            <p class="nmh_hero_eyebrow">图标即文字，同贮一个字体文件</p>
-            <div class="nmh_hero_row">
-                <div class="nmh_hero_char" aria-hidden="true">字</div>
-                <div class="nmh_seal" aria-hidden="true">活</div>
-                <div class="nmh_hero_text">
+        <header class="myq_hero">
+            <p class="myq_hero_eyebrow">图标即文字，同贮一个字体文件</p>
+            <div class="myq_hero_row">
+                <div class="myq_hero_char" aria-hidden="true">字</div>
+                <div class="myq_seal" aria-hidden="true">活</div>
+                <div class="myq_hero_text">
                     <p>把每一个图标当作一个「字」——它们被铸进同一枚字体文件，浏览器以渲染文字的方式渲染图标。改字号、改颜色，图标随之而变。</p>
                     <p>活字有阳文阴文之分，图标亦有实心与线框之别。下列诸格，皆以类名取用。</p>
-                    <code class="nmh_hero_code">&lt;i class="fa-solid fa-heart"&gt;&lt;/i&gt;</code>
+                    <code class="myq_hero_code">&lt;i class="fa-solid fa-heart"&gt;&lt;/i&gt;</code>
                 </div>
             </div>
         </header>
 
-        <section class="nmh_group">
-            <div class="nmh_group_head">
-                <h2 class="nmh_group_title">阳文之部</h2>
-                <span class="nmh_group_note">fa-solid · 实心</span>
+        <section class="myq_group">
+            <div class="myq_group_head">
+                <h2 class="myq_group_title">阳文之部</h2>
+                <span class="myq_group_note">fa-solid · 实心</span>
             </div>
-            <p class="nmh_group_desc">笔画涂满，如阳文之印，落纸即黑。</p>
-            <div class="nmh_glyphs">
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-house"></i><span class="nmh_glyph_name">fa-house</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-user"></i><span class="nmh_glyph_name">fa-user</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-heart"></i><span class="nmh_glyph_name">fa-heart</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-star"></i><span class="nmh_glyph_name">fa-star</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-magnifying-glass"></i><span class="nmh_glyph_name">fa-magnifying-glass</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-camera"></i><span class="nmh_glyph_name">fa-camera</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-music"></i><span class="nmh_glyph_name">fa-music</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-envelope"></i><span class="nmh_glyph_name">fa-envelope</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-phone"></i><span class="nmh_glyph_name">fa-phone</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-cart-shopping"></i><span class="nmh_glyph_name">fa-cart-shopping</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-lock"></i><span class="nmh_glyph_name">fa-lock</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-gear"></i><span class="nmh_glyph_name">fa-gear</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-download"></i><span class="nmh_glyph_name">fa-download</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-upload"></i><span class="nmh_glyph_name">fa-upload</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-bell"></i><span class="nmh_glyph_name">fa-bell</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-solid fa-bookmark"></i><span class="nmh_glyph_name">fa-bookmark</span></div>
-            </div>
-        </section>
-
-        <section class="nmh_group">
-            <div class="nmh_group_head">
-                <h2 class="nmh_group_title">阴文之部</h2>
-                <span class="nmh_group_note">fa-regular · 线框</span>
-            </div>
-            <p class="nmh_group_desc">只留轮廓，如阴文之刻，字凹而底平。</p>
-            <div class="nmh_glyphs">
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-heart"></i><span class="nmh_glyph_name">fa-heart</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-star"></i><span class="nmh_glyph_name">fa-star</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-envelope"></i><span class="nmh_glyph_name">fa-envelope</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-bookmark"></i><span class="nmh_glyph_name">fa-bookmark</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-user"></i><span class="nmh_glyph_name">fa-user</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-calendar"></i><span class="nmh_glyph_name">fa-calendar</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-file"></i><span class="nmh_glyph_name">fa-file</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-regular fa-comment"></i><span class="nmh_glyph_name">fa-comment</span></div>
+            <p class="myq_group_desc">笔画涂满，如阳文之印，落纸即黑。</p>
+            <div class="myq_glyphs">
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-house"></i><span class="myq_glyph_name">fa-house</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-user"></i><span class="myq_glyph_name">fa-user</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-heart"></i><span class="myq_glyph_name">fa-heart</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-star"></i><span class="myq_glyph_name">fa-star</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-magnifying-glass"></i><span class="myq_glyph_name">fa-magnifying-glass</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-camera"></i><span class="myq_glyph_name">fa-camera</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-music"></i><span class="myq_glyph_name">fa-music</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-envelope"></i><span class="myq_glyph_name">fa-envelope</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-phone"></i><span class="myq_glyph_name">fa-phone</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-cart-shopping"></i><span class="myq_glyph_name">fa-cart-shopping</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-lock"></i><span class="myq_glyph_name">fa-lock</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-gear"></i><span class="myq_glyph_name">fa-gear</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-download"></i><span class="myq_glyph_name">fa-download</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-upload"></i><span class="myq_glyph_name">fa-upload</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-bell"></i><span class="myq_glyph_name">fa-bell</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-solid fa-bookmark"></i><span class="myq_glyph_name">fa-bookmark</span></div>
             </div>
         </section>
 
-        <section class="nmh_group">
-            <div class="nmh_group_head">
-                <h2 class="nmh_group_title">品牌之部</h2>
-                <span class="nmh_group_note">fa-brands · 标志</span>
+        <section class="myq_group">
+            <div class="myq_group_head">
+                <h2 class="myq_group_title">阴文之部</h2>
+                <span class="myq_group_note">fa-regular · 线框</span>
             </div>
-            <p class="nmh_group_desc">诸家徽记，另铸一枚品牌字盘。</p>
-            <div class="nmh_glyphs">
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-github"></i><span class="nmh_glyph_name">fa-github</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-html5"></i><span class="nmh_glyph_name">fa-html5</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-css3-alt"></i><span class="nmh_glyph_name">fa-css3-alt</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-js"></i><span class="nmh_glyph_name">fa-js</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-chrome"></i><span class="nmh_glyph_name">fa-chrome</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-weixin"></i><span class="nmh_glyph_name">fa-weixin</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-weibo"></i><span class="nmh_glyph_name">fa-weibo</span></div>
-                <div class="nmh_glyph" tabindex="0"><i class="fa-brands fa-qq"></i><span class="nmh_glyph_name">fa-qq</span></div>
+            <p class="myq_group_desc">只留轮廓，如阴文之刻，字凹而底平。</p>
+            <div class="myq_glyphs">
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-heart"></i><span class="myq_glyph_name">fa-heart</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-star"></i><span class="myq_glyph_name">fa-star</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-envelope"></i><span class="myq_glyph_name">fa-envelope</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-bookmark"></i><span class="myq_glyph_name">fa-bookmark</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-user"></i><span class="myq_glyph_name">fa-user</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-calendar"></i><span class="myq_glyph_name">fa-calendar</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-file"></i><span class="myq_glyph_name">fa-file</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-regular fa-comment"></i><span class="myq_glyph_name">fa-comment</span></div>
             </div>
         </section>
 
-        <footer class="nmh_footer">
-            <span class="nmh_footer_note">一行 link 引入，全站通用</span>
-            <a class="nmh_alt_link" href="inconfont-2.html">矢量图纸版</a>
-            <a class="nmh_home_link" href="index.html">返回首页</a>
+        <section class="myq_group">
+            <div class="myq_group_head">
+                <h2 class="myq_group_title">品牌之部</h2>
+                <span class="myq_group_note">fa-brands · 标志</span>
+            </div>
+            <p class="myq_group_desc">诸家徽记，另铸一枚品牌字盘。</p>
+            <div class="myq_glyphs">
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-github"></i><span class="myq_glyph_name">fa-github</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-html5"></i><span class="myq_glyph_name">fa-html5</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-css3-alt"></i><span class="myq_glyph_name">fa-css3-alt</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-js"></i><span class="myq_glyph_name">fa-js</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-chrome"></i><span class="myq_glyph_name">fa-chrome</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-weixin"></i><span class="myq_glyph_name">fa-weixin</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-weibo"></i><span class="myq_glyph_name">fa-weibo</span></div>
+                <div class="myq_glyph" tabindex="0"><i class="fa-brands fa-qq"></i><span class="myq_glyph_name">fa-qq</span></div>
+            </div>
+        </section>
+
+        <footer class="myq_footer">
+            <span class="myq_footer_note">一行 link 引入，全站通用</span>
+            <a class="myq_alt_link" href="inconfont-2.html">矢量图纸版</a>
+            <a class="myq_home_link" href="index.html">返回首页</a>
         </footer>
 
     </main>

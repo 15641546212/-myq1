@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <!--
-  作者：倪铭浩
+  作者：马宇乾
   建立时间：2026-11-02 14:23
   使用模型：GLM-5.3-Flash
   功能名称及简介：tab_car.html —— 汽车资讯「最新上市 / 即将上市」选项卡
   说明：样式与文字按图片 4.jpg 一比一还原（车型库经典表格风格）；
-        Tab 切换逻辑复用 js/nmh_tab.js 的 nmh_initTabs 组件，
+        Tab 切换逻辑复用 js/myq_tab.js 的 myq_initTabs 组件，
         事件监听 → 清除所有选中状态 → 设置当前元素选中状态。
 -->
 <html lang="zh-CN">
@@ -16,119 +16,119 @@
 <style>
   /* ===== 按图片还原的车型库风格变量 ===== */
   :root {
-    --nmh_blue: #2e6dad;          /* 标签/选中态蓝色 */
-    --nmh_border: #c9cdd4;        /* 组件外框灰 */
-    --nmh_row_line: #e5e8ec;      /* 行分隔浅灰 */
-    --nmh_ink: #333333;           /* 正文深灰 */
-    --nmh_ink_soft: #666666;      /* 日期浅灰 */
+    --myq_blue: #2e6dad;          /* 标签/选中态蓝色 */
+    --myq_border: #c9cdd4;        /* 组件外框灰 */
+    --myq_row_line: #e5e8ec;      /* 行分隔浅灰 */
+    --myq_ink: #333333;           /* 正文深灰 */
+    --myq_ink_soft: #666666;      /* 日期浅灰 */
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     /* 图片为经典宋体小字号车型库风格 */
     font-family: SimSun, "宋体", "Microsoft YaHei", serif;
-    background: #ffffff; color: var(--nmh_ink);
+    background: #ffffff; color: var(--myq_ink);
     min-height: 100vh; padding: 40px 16px; font-size: 12px;
   }
 
   /* 顶部回首页链接（课堂规范要求，弱化样式不干扰还原效果） */
-  .nmh_home_link {
+  .myq_home_link {
     display: inline-block; margin: 0 auto 16px; font-size: 12px;
-    color: var(--nmh_blue); text-decoration: none; font-family: "Microsoft YaHei", sans-serif;
+    color: var(--myq_blue); text-decoration: none; font-family: "Microsoft YaHei", sans-serif;
   }
-  .nmh_home_link:hover { text-decoration: underline; }
-  .nmh_top { text-align: center; }
+  .myq_home_link:hover { text-decoration: underline; }
+  .myq_top { text-align: center; }
 
   /* ===== 选项卡组件：按图片一比一还原 ===== */
-  .nmh_car_tabs { width: 306px; margin: 0 auto; border: 1px solid var(--nmh_border); background: #fff; }
+  .myq_car_tabs { width: 306px; margin: 0 auto; border: 1px solid var(--myq_border); background: #fff; }
 
   /* 选项卡条 */
-  .nmh_tabs_box { display: flex; border-bottom: 1px solid var(--nmh_border); }
-  .nmh_tab {
+  .myq_tabs_box { display: flex; border-bottom: 1px solid var(--myq_border); }
+  .myq_tab {
     border: none; background: transparent; cursor: pointer;
-    font-family: inherit; font-size: 12px; color: var(--nmh_ink);
+    font-family: inherit; font-size: 12px; color: var(--myq_ink);
     padding: 6px 13px; position: relative;
   }
-  .nmh_tab + .nmh_tab { border-left: 1px solid var(--nmh_border); }   /* 标签间竖分隔线 */
-  .nmh_tab:hover { color: var(--nmh_blue); }
+  .myq_tab + .myq_tab { border-left: 1px solid var(--myq_border); }   /* 标签间竖分隔线 */
+  .myq_tab:hover { color: var(--myq_blue); }
 
   /* 选中态：白底 + 四周描边（底边压住面板边线，形成"文件页签"效果） */
-  .nmh_tab.nmh_active {
-    color: var(--nmh_blue); font-weight: bold; background: #fff;
-    border: 1px solid var(--nmh_border); border-bottom-color: #fff;
+  .myq_tab.myq_active {
+    color: var(--myq_blue); font-weight: bold; background: #fff;
+    border: 1px solid var(--myq_border); border-bottom-color: #fff;
     margin: -1px 0 -1px 0;    /* 上浮 1px 盖住条线，下探 1px 压住分隔线 */
   }
 
   /* ===== 数据表格 ===== */
-  .nmh_panel { display: none; }
-  .nmh_panel.nmh_active { display: block; }
+  .myq_panel { display: none; }
+  .myq_panel.myq_active { display: block; }
 
-  .nmh_car_table { width: 100%; border-collapse: collapse; }
-  .nmh_car_table th, .nmh_car_table td { padding: 7px 8px; text-align: left; font-weight: normal; }
-  .nmh_car_table th {
-    color: var(--nmh_blue);                 /* 表头蓝字 */
-    border-bottom: 1px solid var(--nmh_row_line);
+  .myq_car_table { width: 100%; border-collapse: collapse; }
+  .myq_car_table th, .myq_car_table td { padding: 7px 8px; text-align: left; font-weight: normal; }
+  .myq_car_table th {
+    color: var(--myq_blue);                 /* 表头蓝字 */
+    border-bottom: 1px solid var(--myq_row_line);
   }
-  .nmh_car_table td {
-    border-bottom: 1px solid var(--nmh_row_line);  /* 行分隔浅灰线 */
-    color: var(--nmh_ink);
+  .myq_car_table td {
+    border-bottom: 1px solid var(--myq_row_line);  /* 行分隔浅灰线 */
+    color: var(--myq_ink);
   }
-  .nmh_car_table tr:last-child td { border-bottom: none; }
-  .nmh_car_table .nmh_col_date { width: 72px; color: var(--nmh_ink_soft); }
-  .nmh_car_table .nmh_col_name { color: var(--nmh_ink); }
-  .nmh_car_table .nmh_col_price { width: 96px; color: var(--nmh_ink); }
+  .myq_car_table tr:last-child td { border-bottom: none; }
+  .myq_car_table .myq_col_date { width: 72px; color: var(--myq_ink_soft); }
+  .myq_car_table .myq_col_name { color: var(--myq_ink); }
+  .myq_car_table .myq_col_price { width: 96px; color: var(--myq_ink); }
 </style>
 </head>
 <body>
-<div class="nmh_top">
-  <a class="nmh_home_link" href="index.html">返回首页</a>
+<div class="myq_top">
+  <a class="myq_home_link" href="index.html">返回首页</a>
 </div>
 
 <!-- 选项卡组件（样式按 4.jpg 一比一还原） -->
-<div class="nmh_car_tabs">
+<div class="myq_car_tabs">
   <!-- 选项卡按钮条：最新上市为默认选中项 -->
-  <div class="nmh_tabs_box" id="nmh_carTabs" role="tablist">
-    <button class="nmh_tab nmh_active" data-nmh-tab="0">最新上市</button>
-    <button class="nmh_tab" data-nmh-tab="1">即将上市</button>
+  <div class="myq_tabs_box" id="myq_carTabs" role="tablist">
+    <button class="myq_tab myq_active" data-myq-tab="0">最新上市</button>
+    <button class="myq_tab" data-myq-tab="1">即将上市</button>
   </div>
 
   <!-- 内容面板：与按钮顺序一一对应 -->
-  <div id="nmh_carPanels">
+  <div id="myq_carPanels">
     <!-- 面板一：最新上市（文字数据按图片逐行还原） -->
-    <section class="nmh_panel nmh_active">
-      <table class="nmh_car_table">
+    <section class="myq_panel myq_active">
+      <table class="myq_car_table">
         <thead>
           <tr>
-            <th class="nmh_col_date">上市时间</th>
-            <th class="nmh_col_name">品牌/车型</th>
-            <th class="nmh_col_price">售价(万元)</th>
+            <th class="myq_col_date">上市时间</th>
+            <th class="myq_col_name">品牌/车型</th>
+            <th class="myq_col_price">售价(万元)</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td class="nmh_col_date">12月13日</td><td class="nmh_col_name">沃尔沃S60L</td><td class="nmh_col_price">26.98-38.49</td></tr>
-          <tr><td class="nmh_col_date">12月12日</td><td class="nmh_col_name">Jeep牧马人龙腾典藏</td><td class="nmh_col_price">47.99-59.99</td></tr>
-          <tr><td class="nmh_col_date">12月10日</td><td class="nmh_col_name">一汽大众高尔夫7</td><td class="nmh_col_price">11.89-18.29</td></tr>
-          <tr><td class="nmh_col_date">12月8日</td><td class="nmh_col_name">2014款古思特</td><td class="nmh_col_price">419.0-666.0</td></tr>
-          <tr><td class="nmh_col_date">12月5日</td><td class="nmh_col_name">起亚新佳乐</td><td class="nmh_col_price">15.98-25.18</td></tr>
-          <tr><td class="nmh_col_date">12月5日</td><td class="nmh_col_name">2014款奥德赛</td><td class="nmh_col_price">22.98-28.68</td></tr>
+          <tr><td class="myq_col_date">12月13日</td><td class="myq_col_name">沃尔沃S60L</td><td class="myq_col_price">26.98-38.49</td></tr>
+          <tr><td class="myq_col_date">12月12日</td><td class="myq_col_name">Jeep牧马人龙腾典藏</td><td class="myq_col_price">47.99-59.99</td></tr>
+          <tr><td class="myq_col_date">12月10日</td><td class="myq_col_name">一汽大众高尔夫7</td><td class="myq_col_price">11.89-18.29</td></tr>
+          <tr><td class="myq_col_date">12月8日</td><td class="myq_col_name">2014款古思特</td><td class="myq_col_price">419.0-666.0</td></tr>
+          <tr><td class="myq_col_date">12月5日</td><td class="myq_col_name">起亚新佳乐</td><td class="myq_col_price">15.98-25.18</td></tr>
+          <tr><td class="myq_col_date">12月5日</td><td class="myq_col_name">2014款奥德赛</td><td class="myq_col_price">22.98-28.68</td></tr>
         </tbody>
       </table>
     </section>
 
     <!-- 面板二：即将上市（图片未展示内容，按同风格补充） -->
-    <section class="nmh_panel">
-      <table class="nmh_car_table">
+    <section class="myq_panel">
+      <table class="myq_car_table">
         <thead>
           <tr>
-            <th class="nmh_col_date">预计时间</th>
-            <th class="nmh_col_name">品牌/车型</th>
-            <th class="nmh_col_price">预售价(万元)</th>
+            <th class="myq_col_date">预计时间</th>
+            <th class="myq_col_name">品牌/车型</th>
+            <th class="myq_col_price">预售价(万元)</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td class="nmh_col_date">12月下旬</td><td class="nmh_col_name">全新蒙特卡洛SUV</td><td class="nmh_col_price">18.00-26.00</td></tr>
-          <tr><td class="nmh_col_date">12月下旬</td><td class="nmh_col_name">2014款锐界</td><td class="nmh_col_price">29.00-42.00</td></tr>
-          <tr><td class="nmh_col_date">1月上旬</td><td class="nmh_col_name">新款汉兰达</td><td class="nmh_col_price">25.00-38.00</td></tr>
-          <tr><td class="nmh_col_date">1月中旬</td><td class="nmh_col_name">2014款普锐斯</td><td class="nmh_col_price">23.00-28.00</td></tr>
+          <tr><td class="myq_col_date">12月下旬</td><td class="myq_col_name">全新蒙特卡洛SUV</td><td class="myq_col_price">18.00-26.00</td></tr>
+          <tr><td class="myq_col_date">12月下旬</td><td class="myq_col_name">2014款锐界</td><td class="myq_col_price">29.00-42.00</td></tr>
+          <tr><td class="myq_col_date">1月上旬</td><td class="myq_col_name">新款汉兰达</td><td class="myq_col_price">25.00-38.00</td></tr>
+          <tr><td class="myq_col_date">1月中旬</td><td class="myq_col_name">2014款普锐斯</td><td class="myq_col_price">23.00-28.00</td></tr>
         </tbody>
       </table>
     </section>
@@ -136,7 +136,7 @@
 </div>
 
 <!-- Tab 逻辑：全部外部引用，页面无内联脚本 -->
-<script src="js/nmh_tab.js"></script>
-<script src="js/nmh_car_init.js"></script>
+<script src="js/myq_tab.js"></script>
+<script src="js/myq_car_init.js"></script>
 </body>
 </html>

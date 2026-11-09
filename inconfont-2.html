@@ -7,16 +7,16 @@
 <style>
     /* ========== 图标图纸 · 蓝图粉笔 ========== */
     :root {
-        --nmh_blue: #10395B;
-        --nmh_blue_deep: #0C2C48;
-        --nmh_chalk: #EDF3F8;
-        --nmh_chalk_soft: rgba(237, 243, 248, 0.72);
-        --nmh_line: rgba(237, 243, 248, 0.2);
-        --nmh_highlight: #9CC4E4;
+        --myq_blue: #10395B;
+        --myq_blue_deep: #0C2C48;
+        --myq_chalk: #EDF3F8;
+        --myq_chalk_soft: rgba(237, 243, 248, 0.72);
+        --myq_line: rgba(237, 243, 248, 0.2);
+        --myq_highlight: #9CC4E4;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-        background-color: var(--nmh_blue);
+        background-color: var(--myq_blue);
         /* 方格纸：大格 40px 叠小格 8px */
         background-image:
             linear-gradient(rgba(237, 243, 248, 0.09) 1px, transparent 1px),
@@ -24,198 +24,198 @@
             linear-gradient(rgba(237, 243, 248, 0.045) 1px, transparent 1px),
             linear-gradient(90deg, rgba(237, 243, 248, 0.045) 1px, transparent 1px);
         background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
-        color: var(--nmh_chalk);
+        color: var(--myq_chalk);
         font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         font-size: 16px;
         line-height: 1.75;
         min-height: 100vh;
     }
-    .nmh_board {
+    .myq_board {
         max-width: 1080px;
         margin: 0 auto;
         padding: 44px 28px 72px;
     }
 
     /* ---- 图头：题名 + 标题栏 ---- */
-    .nmh_head {
+    .myq_head {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
         gap: 28px;
         flex-wrap: wrap;
         padding-bottom: 26px;
-        border-bottom: 1.5px solid var(--nmh_chalk);
+        border-bottom: 1.5px solid var(--myq_chalk);
     }
-    .nmh_head_title {
+    .myq_head_title {
         font-size: 30px;
         font-weight: 600;
         letter-spacing: 0.22em;
     }
-    .nmh_head_sub {
+    .myq_head_sub {
         margin-top: 6px;
         font-size: 13px;
-        color: var(--nmh_chalk_soft);
+        color: var(--myq_chalk_soft);
         letter-spacing: 0.1em;
     }
-    .nmh_titleblock {
-        border: 1.5px solid var(--nmh_chalk);
+    .myq_titleblock {
+        border: 1.5px solid var(--myq_chalk);
         font-size: 12.5px;
         min-width: 264px;
     }
-    .nmh_tb_row {
+    .myq_tb_row {
         display: grid;
         grid-template-columns: 72px 1fr;
     }
-    .nmh_tb_row + .nmh_tb_row { border-top: 1px solid var(--nmh_line); }
-    .nmh_tb_label {
+    .myq_tb_row + .myq_tb_row { border-top: 1px solid var(--myq_line); }
+    .myq_tb_label {
         padding: 5px 12px;
-        color: var(--nmh_chalk_soft);
-        border-right: 1px solid var(--nmh_line);
+        color: var(--myq_chalk_soft);
+        border-right: 1px solid var(--myq_line);
         letter-spacing: 0.3em;
     }
-    .nmh_tb_value { padding: 5px 12px; font-family: Consolas, monospace; }
+    .myq_tb_value { padding: 5px 12px; font-family: Consolas, monospace; }
 
     /* ---- 母图：pen-tool + 尺寸标注 ---- */
-    .nmh_hero {
+    .myq_hero {
         display: flex;
         align-items: center;
         gap: 44px;
         padding: 40px 0 44px;
-        border-bottom: 1px solid var(--nmh_line);
+        border-bottom: 1px solid var(--myq_line);
         flex-wrap: wrap;
     }
-    .nmh_hero_svg {
+    .myq_hero_svg {
         flex: 0 0 auto;
         width: min(320px, 86vw);
         height: auto;
-        color: var(--nmh_chalk);
+        color: var(--myq_chalk);
     }
-    .nmh_hero_text { flex: 1 1 300px; min-width: 0; }
-    .nmh_hero_text p { max-width: 32em; }
-    .nmh_hero_text p + p { margin-top: 10px; color: var(--nmh_chalk_soft); font-size: 14.5px; }
-    .nmh_hero_code {
+    .myq_hero_text { flex: 1 1 300px; min-width: 0; }
+    .myq_hero_text p { max-width: 32em; }
+    .myq_hero_text p + p { margin-top: 10px; color: var(--myq_chalk_soft); font-size: 14.5px; }
+    .myq_hero_code {
         display: block;
         margin-top: 18px;
         font-family: Consolas, monospace;
         font-size: 13.5px;
-        color: var(--nmh_highlight);
+        color: var(--myq_highlight);
         line-height: 1.9;
     }
-    .nmh_hero_code em {
+    .myq_hero_code em {
         font-style: normal;
-        color: var(--nmh_chalk_soft);
+        color: var(--myq_chalk_soft);
     }
     /* 尺寸线描绘入场：一次编排 */
-    .nmh_dim_draw {
+    .myq_dim_draw {
         stroke-dasharray: 1;
         stroke-dashoffset: 1;
-        animation: nmh_draw 1s ease 0.25s forwards;
+        animation: myq_draw 1s ease 0.25s forwards;
     }
-    .nmh_dim_fade {
+    .myq_dim_fade {
         opacity: 0;
-        animation: nmh_fade 0.6s ease 1s forwards;
+        animation: myq_fade 0.6s ease 1s forwards;
     }
-    @keyframes nmh_draw { to { stroke-dashoffset: 0; } }
-    @keyframes nmh_fade { to { opacity: 1; } }
+    @keyframes myq_draw { to { stroke-dashoffset: 0; } }
+    @keyframes myq_fade { to { opacity: 1; } }
 
     /* ---- 图区：开放网格 + 细线注记 ---- */
-    .nmh_group { margin-top: 42px; }
-    .nmh_group_head {
+    .myq_group { margin-top: 42px; }
+    .myq_group_head {
         display: flex;
         align-items: baseline;
         gap: 16px;
         margin-bottom: 4px;
     }
-    .nmh_group_title {
+    .myq_group_title {
         font-size: 20px;
         font-weight: 500;
         letter-spacing: 0.26em;
     }
-    .nmh_group_note { font-size: 13px; color: var(--nmh_chalk_soft); }
-    .nmh_group_desc { font-size: 14px; color: var(--nmh_chalk_soft); margin-bottom: 12px; }
-    .nmh_field {
+    .myq_group_note { font-size: 13px; color: var(--myq_chalk_soft); }
+    .myq_group_desc { font-size: 14px; color: var(--myq_chalk_soft); margin-bottom: 12px; }
+    .myq_field {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
-        border-top: 1px solid var(--nmh_line);
+        border-top: 1px solid var(--myq_line);
     }
-    .nmh_cell {
+    .myq_cell {
         padding: 24px 6px 14px;
         text-align: center;
-        border-bottom: 1px solid var(--nmh_line);
+        border-bottom: 1px solid var(--myq_line);
     }
-    .nmh_cell svg {
+    .myq_cell svg {
         width: 34px;
         height: 34px;
-        color: var(--nmh_chalk);
+        color: var(--myq_chalk);
         transition: color 0.18s ease;
     }
-    .nmh_cell:hover svg { color: var(--nmh_highlight); }
-    .nmh_cell_name {
+    .myq_cell:hover svg { color: var(--myq_highlight); }
+    .myq_cell_name {
         display: block;
         margin-top: 10px;
         font-family: Consolas, monospace;
         font-size: 11.5px;
-        color: var(--nmh_chalk_soft);
+        color: var(--myq_chalk_soft);
         word-break: break-all;
         line-height: 1.4;
     }
 
     /* ---- 图签：页脚链接 ---- */
-    .nmh_footer {
+    .myq_footer {
         margin-top: 52px;
         display: flex;
         gap: 18px;
         align-items: center;
         flex-wrap: wrap;
     }
-    .nmh_footer_note { font-size: 13px; color: var(--nmh_chalk_soft); margin-right: auto; }
-    .nmh_home_link, .nmh_alt_link {
-        color: var(--nmh_chalk);
+    .myq_footer_note { font-size: 13px; color: var(--myq_chalk_soft); margin-right: auto; }
+    .myq_home_link, .myq_alt_link {
+        color: var(--myq_chalk);
         text-decoration: none;
         font-size: 15px;
         letter-spacing: 0.08em;
         padding: 9px 24px;
-        border: 1.5px solid var(--nmh_chalk);
+        border: 1.5px solid var(--myq_chalk);
         transition: background 0.15s ease;
     }
-    .nmh_home_link:hover, .nmh_alt_link:hover { background: rgba(237, 243, 248, 0.14); }
-    .nmh_home_link:focus-visible, .nmh_alt_link:focus-visible,
-    .nmh_cell:focus-visible {
-        outline: 2px dashed var(--nmh_highlight);
+    .myq_home_link:hover, .myq_alt_link:hover { background: rgba(237, 243, 248, 0.14); }
+    .myq_home_link:focus-visible, .myq_alt_link:focus-visible,
+    .myq_cell:focus-visible {
+        outline: 2px dashed var(--myq_highlight);
         outline-offset: 3px;
     }
 
     /* ---- 响应式 ---- */
     @media (max-width: 760px) {
-        .nmh_board { padding: 32px 16px 56px; }
-        .nmh_head_title { font-size: 23px; }
-        .nmh_hero { gap: 26px; padding: 30px 0 34px; }
+        .myq_board { padding: 32px 16px 56px; }
+        .myq_head_title { font-size: 23px; }
+        .myq_hero { gap: 26px; padding: 30px 0 34px; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .nmh_dim_draw { animation: none; stroke-dashoffset: 0; }
-        .nmh_dim_fade { animation: none; opacity: 1; }
-        .nmh_cell svg { transition: none; }
+        .myq_dim_draw { animation: none; stroke-dashoffset: 0; }
+        .myq_dim_fade { animation: none; opacity: 1; }
+        .myq_cell svg { transition: none; }
     }
 </style>
 </head>
 <body>
-<div class="nmh_board">
+<div class="myq_board">
 
-    <header class="nmh_head">
+    <header class="myq_head">
         <div>
-            <h1 class="nmh_head_title">图标图纸</h1>
-            <p class="nmh_head_sub">矢量图标 · Lucide · 每个图标都是一段路径</p>
+            <h1 class="myq_head_title">图标图纸</h1>
+            <p class="myq_head_sub">矢量图标 · Lucide · 每个图标都是一段路径</p>
         </div>
-        <div class="nmh_titleblock" role="table" aria-label="图纸信息">
-            <div class="nmh_tb_row"><span class="nmh_tb_label">依据</span><span class="nmh_tb_value">Lucide Icons</span></div>
-            <div class="nmh_tb_row"><span class="nmh_tb_label">制图</span><span class="nmh_tb_value">viewBox 24 x 24</span></div>
-            <div class="nmh_tb_row"><span class="nmh_tb_label">线宽</span><span class="nmh_tb_value">stroke-width 2px</span></div>
-            <div class="nmh_tb_row"><span class="nmh_tb_label">格数</span><span class="nmh_tb_value">24 图</span></div>
+        <div class="myq_titleblock" role="table" aria-label="图纸信息">
+            <div class="myq_tb_row"><span class="myq_tb_label">依据</span><span class="myq_tb_value">Lucide Icons</span></div>
+            <div class="myq_tb_row"><span class="myq_tb_label">制图</span><span class="myq_tb_value">viewBox 24 x 24</span></div>
+            <div class="myq_tb_row"><span class="myq_tb_label">线宽</span><span class="myq_tb_value">stroke-width 2px</span></div>
+            <div class="myq_tb_row"><span class="myq_tb_label">格数</span><span class="myq_tb_value">24 图</span></div>
         </div>
     </header>
 
-    <section class="nmh_hero">
-        <svg class="nmh_hero_svg" viewBox="0 0 320 300" role="img" aria-label="pen-tool 图标的工程图，标注 24 乘 24，线宽 2">
+    <section class="myq_hero">
+        <svg class="myq_hero_svg" viewBox="0 0 320 300" role="img" aria-label="pen-tool 图标的工程图，标注 24 乘 24，线宽 2">
             <!-- 母图：lucide pen-tool，24x24 放大 8 倍 -->
             <g transform="translate(36,24) scale(8)" fill="none" stroke="currentColor"
                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -233,77 +233,77 @@
             </g>
             <!-- 底部尺寸 24 -->
             <g stroke="currentColor" stroke-width="1.2">
-                <line class="nmh_dim_draw" pathLength="1" x1="36" y1="248" x2="228" y2="248"/>
+                <line class="myq_dim_draw" pathLength="1" x1="36" y1="248" x2="228" y2="248"/>
             </g>
-            <text class="nmh_dim_fade" x="132" y="242" text-anchor="middle"
+            <text class="myq_dim_fade" x="132" y="242" text-anchor="middle"
                   font-size="14" fill="currentColor" font-family="Consolas, monospace">24</text>
             <!-- 右侧尺寸 24 -->
             <g stroke="currentColor" stroke-width="1.2">
-                <line class="nmh_dim_draw" pathLength="1" x1="258" y1="24" x2="258" y2="216"/>
+                <line class="myq_dim_draw" pathLength="1" x1="258" y1="24" x2="258" y2="216"/>
             </g>
-            <text class="nmh_dim_fade" x="266" y="126" text-anchor="start"
+            <text class="myq_dim_fade" x="266" y="126" text-anchor="start"
                   font-size="14" fill="currentColor" font-family="Consolas, monospace">24</text>
             <!-- 引出注记：线宽 -->
-            <line class="nmh_dim_draw" pathLength="1" x1="66" y1="196" x2="44" y2="264"
+            <line class="myq_dim_draw" pathLength="1" x1="66" y1="196" x2="44" y2="264"
                   stroke="currentColor" stroke-width="1.2"/>
-            <text class="nmh_dim_fade" x="14" y="284" text-anchor="start"
+            <text class="myq_dim_fade" x="14" y="284" text-anchor="start"
                   font-size="13" fill="rgba(237,243,248,0.72)" font-family="Consolas, monospace">stroke-width: 2</text>
         </svg>
-        <div class="nmh_hero_text">
+        <div class="myq_hero_text">
             <p>每个图标都是一段路径，画在 24 乘 24 的方格图纸上。浏览器按「画」的方式渲染：线条、端点与拐角，皆由属性约定。</p>
             <p>同一样式可改线宽、可改颜色，矢量在任意尺寸下保持锐利。</p>
-            <code class="nmh_hero_code">&lt;i data-lucide="heart"&gt;&lt;/i&gt;<br><em>渲染为 &lt;svg viewBox="0 0 24 24"&gt;</em></code>
+            <code class="myq_hero_code">&lt;i data-lucide="heart"&gt;&lt;/i&gt;<br><em>渲染为 &lt;svg viewBox="0 0 24 24"&gt;</em></code>
         </div>
     </section>
 
-    <section class="nmh_group">
-        <div class="nmh_group_head">
-            <h2 class="nmh_group_title">常用图形</h2>
-            <span class="nmh_group_note">基础件</span>
+    <section class="myq_group">
+        <div class="myq_group_head">
+            <h2 class="myq_group_title">常用图形</h2>
+            <span class="myq_group_note">基础件</span>
         </div>
-        <p class="nmh_group_desc">与字体图标版一一对应，便于对照两种方案的差异。</p>
-        <div class="nmh_field">
-            <div class="nmh_cell" tabindex="0"><i data-lucide="house"></i><span class="nmh_cell_name">house</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="user"></i><span class="nmh_cell_name">user</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="heart"></i><span class="nmh_cell_name">heart</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="star"></i><span class="nmh_cell_name">star</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="search"></i><span class="nmh_cell_name">search</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="camera"></i><span class="nmh_cell_name">camera</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="music"></i><span class="nmh_cell_name">music</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="mail"></i><span class="nmh_cell_name">mail</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="phone"></i><span class="nmh_cell_name">phone</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="shopping-cart"></i><span class="nmh_cell_name">shopping-cart</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="lock"></i><span class="nmh_cell_name">lock</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="settings"></i><span class="nmh_cell_name">settings</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="download"></i><span class="nmh_cell_name">download</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="upload"></i><span class="nmh_cell_name">upload</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="bell"></i><span class="nmh_cell_name">bell</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="bookmark"></i><span class="nmh_cell_name">bookmark</span></div>
-        </div>
-    </section>
-
-    <section class="nmh_group">
-        <div class="nmh_group_head">
-            <h2 class="nmh_group_title">特色图形</h2>
-            <span class="nmh_group_note">构件</span>
-        </div>
-        <p class="nmh_group_desc">矢量路径的独有表达，字体字形难以企及。</p>
-        <div class="nmh_field">
-            <div class="nmh_cell" tabindex="0"><i data-lucide="feather"></i><span class="nmh_cell_name">feather</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="sparkles"></i><span class="nmh_cell_name">sparkles</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="flask-conical"></i><span class="nmh_cell_name">flask-conical</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="globe"></i><span class="nmh_cell_name">globe</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="cpu"></i><span class="nmh_cell_name">cpu</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="cloud"></i><span class="nmh_cell_name">cloud</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="rocket"></i><span class="nmh_cell_name">rocket</span></div>
-            <div class="nmh_cell" tabindex="0"><i data-lucide="compass"></i><span class="nmh_cell_name">compass</span></div>
+        <p class="myq_group_desc">与字体图标版一一对应，便于对照两种方案的差异。</p>
+        <div class="myq_field">
+            <div class="myq_cell" tabindex="0"><i data-lucide="house"></i><span class="myq_cell_name">house</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="user"></i><span class="myq_cell_name">user</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="heart"></i><span class="myq_cell_name">heart</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="star"></i><span class="myq_cell_name">star</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="search"></i><span class="myq_cell_name">search</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="camera"></i><span class="myq_cell_name">camera</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="music"></i><span class="myq_cell_name">music</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="mail"></i><span class="myq_cell_name">mail</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="phone"></i><span class="myq_cell_name">phone</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="shopping-cart"></i><span class="myq_cell_name">shopping-cart</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="lock"></i><span class="myq_cell_name">lock</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="settings"></i><span class="myq_cell_name">settings</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="download"></i><span class="myq_cell_name">download</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="upload"></i><span class="myq_cell_name">upload</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="bell"></i><span class="myq_cell_name">bell</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="bookmark"></i><span class="myq_cell_name">bookmark</span></div>
         </div>
     </section>
 
-    <footer class="nmh_footer">
-        <span class="nmh_footer_note">一笔一画，皆可度量</span>
-        <a class="nmh_alt_link" href="iconfont-1.html">活字字体版</a>
-        <a class="nmh_home_link" href="index.html">返回首页</a>
+    <section class="myq_group">
+        <div class="myq_group_head">
+            <h2 class="myq_group_title">特色图形</h2>
+            <span class="myq_group_note">构件</span>
+        </div>
+        <p class="myq_group_desc">矢量路径的独有表达，字体字形难以企及。</p>
+        <div class="myq_field">
+            <div class="myq_cell" tabindex="0"><i data-lucide="feather"></i><span class="myq_cell_name">feather</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="sparkles"></i><span class="myq_cell_name">sparkles</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="flask-conical"></i><span class="myq_cell_name">flask-conical</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="globe"></i><span class="myq_cell_name">globe</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="cpu"></i><span class="myq_cell_name">cpu</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="cloud"></i><span class="myq_cell_name">cloud</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="rocket"></i><span class="myq_cell_name">rocket</span></div>
+            <div class="myq_cell" tabindex="0"><i data-lucide="compass"></i><span class="myq_cell_name">compass</span></div>
+        </div>
+    </section>
+
+    <footer class="myq_footer">
+        <span class="myq_footer_note">一笔一画，皆可度量</span>
+        <a class="myq_alt_link" href="iconfont-1.html">活字字体版</a>
+        <a class="myq_home_link" href="index.html">返回首页</a>
     </footer>
 </div>
 

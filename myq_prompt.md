@@ -7,7 +7,7 @@
 - **提示词内容**：
 
 ```
-设定规则：从现在开始，所有CSS类名，id名、js变量都以nmh_开始，所有的提示词都在执行之前写入文件nmh_prompt.md，以附加的方式写入，不覆盖之前的内容，写入的内容包括时间、使用的模型、提示词内容。
+设定规则：从现在开始，所有CSS类名，id名、js变量都以myq_开始，所有的提示词都在执行之前写入文件myq_prompt.md，以附加的方式写入，不覆盖之前的内容，写入的内容包括时间、使用的模型、提示词内容。
 ```
 
 ---
@@ -113,7 +113,7 @@ gitee私人令牌 **********（已脱敏，原文见 2026-10-22 14:29 记录前�
 学生卡片列表渲染：遍历数据生成卡片（头像 / 五科分数 / 总分均分 / 排名）
 不及格预警：筛选有不及格科目的学生，按不及格数排序展示
 搜索：按姓名或学号实时过滤
-排序：按总分降序 / 按学号升序切换，目标效果`https://spontaneous-valkyrie-4e4229.netlify.app/target` 仅修改`c:\Users\nimin\Desktop\网页\24001010611/starter-level1.html` `c:\Users\nimin\Desktop\网页\24001010611/data.js`
+排序：按总分降序 / 按学号升序切换，目标效果`https://spontaneous-valkyrie-4e4229.netlify.app/target` 仅修改`c:\Users\nimin\Desktop\网页\24001010607/starter-level1.html` `c:\Users\nimin\Desktop\网页\24001010607/data.js`
 ```
 
 ---
@@ -133,7 +133,7 @@ gitee私人令牌 **********（已脱敏，原文见 2026-10-22 14:29 记录前�
 各科状元榜：遍历科目用 reduce 找最高分者
 筛选切换：全部 / 优秀 / 含不及格 —— 考察 getElementsByClassName 动态集合 vs querySelectorAll 静态集合
 点击卡片展开详情：事件委托 + closest + 节点关系（lastElementChild）+ classList.toggle
-班级状态提示：some / every 判断是否有不及格 / 是否全员优秀 。仅修改`c:\Users\nimin\Desktop\网页\24001010611/starter-level2.html` `c:\Users\nimin\Desktop\网页\24001010611/data.js`目标效果为：`https://spontaneous-valkyrie-4e4229.netlify.app/target`
+班级状态提示：some / every 判断是否有不及格 / 是否全员优秀 。仅修改`c:\Users\nimin\Desktop\网页\24001010607/starter-level2.html` `c:\Users\nimin\Desktop\网页\24001010607/data.js`目标效果为：`https://spontaneous-valkyrie-4e4229.netlify.app/target`
 ```
 
 ---
@@ -205,7 +205,7 @@ gitee私人令牌 **********（已脱敏，原文见 2026-10-22 14:29 记录前�
 - **提示词内容**：
 
 ```
-修改规则AGENTS.md，在新建一个html文件时，要加入注释，尤其是js部分代码函数的主要功能实现。注释内容包括：倪铭浩，建立时间，使用模型，功能名称及简介。
+修改规则AGENTS.md，在新建一个html文件时，要加入注释，尤其是js部分代码函数的主要功能实现。注释内容包括：马宇乾，建立时间，使用模型，功能名称及简介。
 ```
 
 ---

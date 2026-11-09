@@ -172,8 +172,8 @@
 
   // 计算一个学生的总分：用 reduce 把 SUBJECTS 对应的分数累加
   function getTotal(s) {
-    return SUBJECTS.reduce(function (nmh_sum, nmh_sub) {
-      return nmh_sum + s[nmh_sub.key];
+    return SUBJECTS.reduce(function (myq_sum, myq_sub) {
+      return myq_sum + s[myq_sub.key];
     }, 0);
   }
 
@@ -184,8 +184,8 @@
 
   // 取一个学生不及格的科目数组：用 filter 筛选分数 < PASS_LINE
   function getFails(s) {
-    return SUBJECTS.filter(function (nmh_sub) {
-      return s[nmh_sub.key] < PASS_LINE;
+    return SUBJECTS.filter(function (myq_sub) {
+      return s[myq_sub.key] < PASS_LINE;
     });
   }
 
@@ -203,26 +203,26 @@
    */
   function renderStats(list) {
     // 总分：reduce 累加每个学生的五科分数
-    var nmh_totalScore = list.reduce(function (nmh_sum, nmh_s) {
-      return nmh_sum + getTotal(nmh_s);
+    var myq_totalScore = list.reduce(function (myq_sum, myq_s) {
+      return myq_sum + getTotal(myq_s);
     }, 0);
     // 平均分 = 总分 / (人数 × 科目数)，保留 1 位小数
-    var nmh_avgScore = list.length
-      ? Math.round(nmh_totalScore / (list.length * SUBJECTS.length) * 10) / 10
+    var myq_avgScore = list.length
+      ? Math.round(myq_totalScore / (list.length * SUBJECTS.length) * 10) / 10
       : 0;
     // 及格人数：没有不及格科目的学生
-    var nmh_passCount = list.filter(function (nmh_s) {
-      return getFails(nmh_s).length === 0;
+    var myq_passCount = list.filter(function (myq_s) {
+      return getFails(myq_s).length === 0;
     }).length;
-    var nmh_passRate = list.length
-      ? Math.round(nmh_passCount / list.length * 100)
+    var myq_passRate = list.length
+      ? Math.round(myq_passCount / list.length * 100)
       : 0;
 
     document.getElementById("statCount").textContent = list.length;
-    document.getElementById("statTotalScore").textContent = nmh_totalScore;
-    document.getElementById("statAvgScore").textContent = nmh_avgScore;
+    document.getElementById("statTotalScore").textContent = myq_totalScore;
+    document.getElementById("statAvgScore").textContent = myq_avgScore;
     // statPassRate 内部含 <span class="stat-unit">%</span>，只改第一个文本节点
-    document.getElementById("statPassRate").firstChild.textContent = nmh_passRate;
+    document.getElementById("statPassRate").firstChild.textContent = myq_passRate;
   }
 
 
@@ -232,77 +232,77 @@
    * 排名 = 在当前 list 中的序号+1
    */
   function renderStudentCards(list) {
-    var nmh_box = document.getElementById("studentList");
-    nmh_box.innerHTML = "";
+    var myq_box = document.getElementById("studentList");
+    myq_box.innerHTML = "";
 
-    list.forEach(function (nmh_s, nmh_i) {
+    list.forEach(function (myq_s, myq_i) {
       // 卡片容器
-      var nmh_card = document.createElement("div");
-      nmh_card.className = "student-card";
-      nmh_card.setAttribute("data-id", nmh_s.id);
+      var myq_card = document.createElement("div");
+      myq_card.className = "student-card";
+      myq_card.setAttribute("data-id", myq_s.id);
 
       // 头部：头像 + 姓名/学号 + 排名徽章（前三名金色）
-      var nmh_hd = document.createElement("div");
-      nmh_hd.className = "hd";
+      var myq_hd = document.createElement("div");
+      myq_hd.className = "hd";
 
-      var nmh_avatar = document.createElement("div");
-      nmh_avatar.className = "avatar " + (nmh_s.gender === "男" ? "boy" : "girl");
-      nmh_avatar.textContent = firstName(nmh_s);
+      var myq_avatar = document.createElement("div");
+      myq_avatar.className = "avatar " + (myq_s.gender === "男" ? "boy" : "girl");
+      myq_avatar.textContent = firstName(myq_s);
 
-      var nmh_info = document.createElement("div");
-      var nmh_nameEl = document.createElement("div");
-      nmh_nameEl.className = "name";
-      nmh_nameEl.textContent = nmh_s.name;
-      var nmh_metaEl = document.createElement("div");
-      nmh_metaEl.className = "meta";
-      nmh_metaEl.textContent = nmh_s.id + " · " + nmh_s.gender;
-      nmh_info.appendChild(nmh_nameEl);
-      nmh_info.appendChild(nmh_metaEl);
+      var myq_info = document.createElement("div");
+      var myq_nameEl = document.createElement("div");
+      myq_nameEl.className = "name";
+      myq_nameEl.textContent = myq_s.name;
+      var myq_metaEl = document.createElement("div");
+      myq_metaEl.className = "meta";
+      myq_metaEl.textContent = myq_s.id + " · " + myq_s.gender;
+      myq_info.appendChild(myq_nameEl);
+      myq_info.appendChild(myq_metaEl);
 
-      var nmh_badge = document.createElement("span");
-      nmh_badge.className = "rank-badge" + (nmh_i < 3 ? " gold" : "");
-      nmh_badge.textContent = "第" + (nmh_i + 1) + "名";
+      var myq_badge = document.createElement("span");
+      myq_badge.className = "rank-badge" + (myq_i < 3 ? " gold" : "");
+      myq_badge.textContent = "第" + (myq_i + 1) + "名";
 
-      nmh_hd.appendChild(nmh_avatar);
-      nmh_hd.appendChild(nmh_info);
-      nmh_hd.appendChild(nmh_badge);
-      nmh_card.appendChild(nmh_hd);
+      myq_hd.appendChild(myq_avatar);
+      myq_hd.appendChild(myq_info);
+      myq_hd.appendChild(myq_badge);
+      myq_card.appendChild(myq_hd);
 
       // 五科分数网格
-      var nmh_grid = document.createElement("div");
-      nmh_grid.className = "score-grid";
-      SUBJECTS.forEach(function (nmh_sub) {
-        var nmh_item = document.createElement("div");
-        nmh_item.className = "score-item";
+      var myq_grid = document.createElement("div");
+      myq_grid.className = "score-grid";
+      SUBJECTS.forEach(function (myq_sub) {
+        var myq_item = document.createElement("div");
+        myq_item.className = "score-item";
 
-        var nmh_sbj = document.createElement("div");
-        nmh_sbj.className = "sbj";
-        nmh_sbj.textContent = nmh_sub.abbr;
+        var myq_sbj = document.createElement("div");
+        myq_sbj.className = "sbj";
+        myq_sbj.textContent = myq_sub.abbr;
 
-        var nmh_val = document.createElement("div");
-        nmh_val.className = ("val " + scoreClass(nmh_s[nmh_sub.key])).trim();
-        nmh_val.textContent = nmh_s[nmh_sub.key];
+        var myq_val = document.createElement("div");
+        myq_val.className = ("val " + scoreClass(myq_s[myq_sub.key])).trim();
+        myq_val.textContent = myq_s[myq_sub.key];
 
-        nmh_item.appendChild(nmh_sbj);
-        nmh_item.appendChild(nmh_val);
-        nmh_grid.appendChild(nmh_item);
+        myq_item.appendChild(myq_sbj);
+        myq_item.appendChild(myq_val);
+        myq_grid.appendChild(myq_item);
       });
-      nmh_card.appendChild(nmh_grid);
+      myq_card.appendChild(myq_grid);
 
       // 底部：总分 + 均分
-      var nmh_ft = document.createElement("div");
-      nmh_ft.className = "ft";
-      var nmh_totalEl = document.createElement("span");
-      nmh_totalEl.className = "total";
-      nmh_totalEl.textContent = "总分 " + getTotal(nmh_s);
-      var nmh_avgEl = document.createElement("span");
-      nmh_avgEl.className = "avg";
-      nmh_avgEl.textContent = "均分 " + getAvg(nmh_s);
-      nmh_ft.appendChild(nmh_totalEl);
-      nmh_ft.appendChild(nmh_avgEl);
-      nmh_card.appendChild(nmh_ft);
+      var myq_ft = document.createElement("div");
+      myq_ft.className = "ft";
+      var myq_totalEl = document.createElement("span");
+      myq_totalEl.className = "total";
+      myq_totalEl.textContent = "总分 " + getTotal(myq_s);
+      var myq_avgEl = document.createElement("span");
+      myq_avgEl.className = "avg";
+      myq_avgEl.textContent = "均分 " + getAvg(myq_s);
+      myq_ft.appendChild(myq_totalEl);
+      myq_ft.appendChild(myq_avgEl);
+      myq_card.appendChild(myq_ft);
 
-      nmh_box.appendChild(nmh_card);
+      myq_box.appendChild(myq_card);
     });
   }
 
@@ -311,48 +311,48 @@
    * 筛出有不及格科目的学生，按不及格科目数降序，写入 #failWarningList
    */
   function renderFailWarning(list) {
-    var nmh_box = document.getElementById("failWarningList");
-    nmh_box.innerHTML = "";
+    var myq_box = document.getElementById("failWarningList");
+    myq_box.innerHTML = "";
 
     // 筛选有不及格科目的学生（filter 返回新数组，sort 不会影响原 list）
-    var nmh_fails = list.filter(function (nmh_s) {
-      return getFails(nmh_s).length > 0;
+    var myq_fails = list.filter(function (myq_s) {
+      return getFails(myq_s).length > 0;
     });
     // 不及格数降序；数量相同按总分降序（与目标效果一致）
-    nmh_fails.sort(function (nmh_a, nmh_b) {
-      return (getFails(nmh_b).length - getFails(nmh_a).length) ||
-             (getTotal(nmh_b) - getTotal(nmh_a));
+    myq_fails.sort(function (myq_a, myq_b) {
+      return (getFails(myq_b).length - getFails(myq_a).length) ||
+             (getTotal(myq_b) - getTotal(myq_a));
     });
 
-    if (nmh_fails.length === 0) {
-      nmh_box.innerHTML = '<div class="empty">全员通过，无预警</div>';
+    if (myq_fails.length === 0) {
+      myq_box.innerHTML = '<div class="empty">全员通过，无预警</div>';
       return;
     }
 
-    nmh_fails.forEach(function (nmh_s) {
-      var nmh_failsOfS = getFails(nmh_s);
+    myq_fails.forEach(function (myq_s) {
+      var myq_failsOfS = getFails(myq_s);
 
-      var nmh_row = document.createElement("div");
-      nmh_row.className = "rank-row";
+      var myq_row = document.createElement("div");
+      myq_row.className = "rank-row";
 
-      var nmh_rk = document.createElement("span");
-      nmh_rk.className = "rk";
-      nmh_rk.textContent = nmh_failsOfS.length;
+      var myq_rk = document.createElement("span");
+      myq_rk.className = "rk";
+      myq_rk.textContent = myq_failsOfS.length;
 
-      var nmh_nm = document.createElement("span");
-      nmh_nm.className = "nm";
-      nmh_nm.textContent = nmh_s.name + "（" +
-        nmh_failsOfS.map(function (nmh_sub) { return nmh_sub.name; }).join("、") +
+      var myq_nm = document.createElement("span");
+      myq_nm.className = "nm";
+      myq_nm.textContent = myq_s.name + "（" +
+        myq_failsOfS.map(function (myq_sub) { return myq_sub.name; }).join("、") +
         "）";
 
-      var nmh_vl = document.createElement("span");
-      nmh_vl.className = "vl";
-      nmh_vl.textContent = getTotal(nmh_s) + "分";
+      var myq_vl = document.createElement("span");
+      myq_vl.className = "vl";
+      myq_vl.textContent = getTotal(myq_s) + "分";
 
-      nmh_row.appendChild(nmh_rk);
-      nmh_row.appendChild(nmh_nm);
-      nmh_row.appendChild(nmh_vl);
-      nmh_box.appendChild(nmh_row);
+      myq_row.appendChild(myq_rk);
+      myq_row.appendChild(myq_nm);
+      myq_row.appendChild(myq_vl);
+      myq_box.appendChild(myq_row);
     });
   }
 
@@ -362,11 +362,11 @@
    * 无关键字时返回全部学生
    */
   function search(keyword) {
-    var nmh_kw = keyword.trim().toLowerCase();
-    if (!nmh_kw) return STUDENTS.slice();
-    return STUDENTS.filter(function (nmh_s) {
-      return nmh_s.name.toLowerCase().indexOf(nmh_kw) !== -1 ||
-             nmh_s.id.toLowerCase().indexOf(nmh_kw) !== -1;
+    var myq_kw = keyword.trim().toLowerCase();
+    if (!myq_kw) return STUDENTS.slice();
+    return STUDENTS.filter(function (myq_s) {
+      return myq_s.name.toLowerCase().indexOf(myq_kw) !== -1 ||
+             myq_s.id.toLowerCase().indexOf(myq_kw) !== -1;
     });
   }
 
@@ -377,17 +377,17 @@
    */
   var currentSort = "total";
   function sortList(list, by) {
-    var nmh_arr = list.slice(); // 复制，不修改原数组
+    var myq_arr = list.slice(); // 复制，不修改原数组
     if (by === "id") {
-      nmh_arr.sort(function (nmh_a, nmh_b) {
-        return nmh_a.id > nmh_b.id ? 1 : -1;
+      myq_arr.sort(function (myq_a, myq_b) {
+        return myq_a.id > myq_b.id ? 1 : -1;
       });
     } else {
-      nmh_arr.sort(function (nmh_a, nmh_b) {
-        return getTotal(nmh_b) - getTotal(nmh_a);
+      myq_arr.sort(function (myq_a, myq_b) {
+        return getTotal(myq_b) - getTotal(myq_a);
       });
     }
-    return nmh_arr;
+    return myq_arr;
   }
 
 

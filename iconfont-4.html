@@ -6,88 +6,88 @@
 <title>需求图纸 · SVG 图标版（iconfont）</title>
 <style>
     :root {
-        --nmh_blue: #10395B;
-        --nmh_blue_deep: #0C2C48;
-        --nmh_chalk: #EDF3F8;
-        --nmh_chalk_soft: rgba(237, 243, 248, 0.72);
-        --nmh_line: rgba(237, 243, 248, 0.2);
-        --nmh_highlight: #9CC4E4;
-        --nmh_alarm: #E5484D;
+        --myq_blue: #10395B;
+        --myq_blue_deep: #0C2C48;
+        --myq_chalk: #EDF3F8;
+        --myq_chalk_soft: rgba(237, 243, 248, 0.72);
+        --myq_line: rgba(237, 243, 248, 0.2);
+        --myq_highlight: #9CC4E4;
+        --myq_alarm: #E5484D;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-        background-color: var(--nmh_blue);
+        background-color: var(--myq_blue);
         background-image:
             linear-gradient(rgba(237, 243, 248, 0.09) 1px, transparent 1px),
             linear-gradient(90deg, rgba(237, 243, 248, 0.09) 1px, transparent 1px),
             linear-gradient(rgba(237, 243, 248, 0.045) 1px, transparent 1px),
             linear-gradient(90deg, rgba(237, 243, 248, 0.045) 1px, transparent 1px);
         background-size: 40px 40px, 40px 40px, 8px 8px, 8px 8px;
-        color: var(--nmh_chalk);
+        color: var(--myq_chalk);
         font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         font-size: 16px;
         line-height: 1.75;
         min-height: 100vh;
         padding-bottom: 120px;
     }
-    .nmh_page {
+    .myq_page {
         max-width: 560px;
         margin: 0 auto;
         padding: 40px 22px 40px;
     }
-    .nmh_head_title {
+    .myq_head_title {
         font-size: 26px;
         font-weight: 600;
         letter-spacing: 0.22em;
         padding-bottom: 14px;
-        border-bottom: 1.5px solid var(--nmh_chalk);
+        border-bottom: 1.5px solid var(--myq_chalk);
     }
-    .nmh_head_sub { font-size: 14px; color: var(--nmh_chalk_soft); margin-top: 10px; }
-    .nmh_head_code {
+    .myq_head_sub { font-size: 14px; color: var(--myq_chalk_soft); margin-top: 10px; }
+    .myq_head_code {
         display: inline-block;
         margin-top: 14px;
         font-family: Consolas, monospace;
         font-size: 13px;
-        color: var(--nmh_highlight);
+        color: var(--myq_highlight);
         background: rgba(156, 196, 228, 0.1);
         padding: 5px 10px;
     }
-    .nmh_demo_note {
+    .myq_demo_note {
         margin-top: 26px;
         font-size: 14px;
-        color: var(--nmh_chalk_soft);
-        border-top: 1px solid var(--nmh_line);
+        color: var(--myq_chalk_soft);
+        border-top: 1px solid var(--myq_line);
         padding-top: 16px;
     }
-    .nmh_links { margin-top: 22px; display: flex; gap: 16px; flex-wrap: wrap; }
-    .nmh_home_link, .nmh_alt_link {
-        color: var(--nmh_chalk);
+    .myq_links { margin-top: 22px; display: flex; gap: 16px; flex-wrap: wrap; }
+    .myq_home_link, .myq_alt_link {
+        color: var(--myq_chalk);
         text-decoration: none;
         font-size: 14px;
         letter-spacing: 0.08em;
         padding: 8px 20px;
-        border: 1.5px solid var(--nmh_chalk);
+        border: 1.5px solid var(--myq_chalk);
     }
-    .nmh_home_link:hover, .nmh_alt_link:hover { background: rgba(237, 243, 248, 0.14); }
-    .nmh_home_link:focus-visible, .nmh_alt_link:focus-visible,
-    .nmh_tab:focus-visible {
-        outline: 2px dashed var(--nmh_highlight);
+    .myq_home_link:hover, .myq_alt_link:hover { background: rgba(237, 243, 248, 0.14); }
+    .myq_home_link:focus-visible, .myq_alt_link:focus-visible,
+    .myq_tab:focus-visible {
+        outline: 2px dashed var(--myq_highlight);
         outline-offset: 3px;
     }
 
     /* ==== 固定底栏：flex 自适应宽度，4 项均分 ==== */
-    .nmh_tabbar {
+    .myq_tabbar {
         position: fixed;
         left: 0;
         right: 0;
         bottom: 0;
         z-index: 10;
         display: flex;
-        background: var(--nmh_blue_deep);
-        border-top: 1px solid var(--nmh_line);
+        background: var(--myq_blue_deep);
+        border-top: 1px solid var(--myq_line);
         padding-bottom: env(safe-area-inset-bottom, 0px);
     }
-    .nmh_tab {
+    .myq_tab {
         flex: 1 1 25%;          /* 自适应宽度：4 项均分 */
         min-width: 0;
         display: flex;
@@ -96,29 +96,29 @@
         gap: 3px;
         padding: 9px 4px 8px;
         text-decoration: none;
-        color: var(--nmh_chalk_soft);
+        color: var(--myq_chalk_soft);
         -webkit-tap-highlight-color: transparent;
     }
-    .nmh_tab_icon {
+    .myq_tab_icon {
         position: relative;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         height: 28px;
     }
-    .nmh_tab_svg {
+    .myq_tab_svg {
         width: 24px;
         height: 24px;
         fill: currentColor;     /* symbol 路径继承颜色 */
         display: block;
     }
-    .nmh_tab_label { font-size: 12px; letter-spacing: 0.06em; }
-    .nmh_tab_active { color: var(--nmh_highlight); }
-    .nmh_tab_active .nmh_tab_label { font-weight: 600; }
-    .nmh_tab:active { opacity: 0.75; }
+    .myq_tab_label { font-size: 12px; letter-spacing: 0.06em; }
+    .myq_tab_active { color: var(--myq_highlight); }
+    .myq_tab_active .myq_tab_label { font-weight: 600; }
+    .myq_tab:active { opacity: 0.75; }
 
     /* ==== 徽章：数字 / 红点，钉在图标右上角 ==== */
-    .nmh_badge_num {
+    .myq_badge_num {
         position: absolute;
         top: -7px;
         right: -18px;
@@ -126,7 +126,7 @@
         height: 17px;
         padding: 0 4px;
         border-radius: 9px;
-        background: var(--nmh_alarm);
+        background: var(--myq_alarm);
         color: #FFFFFF;
         font-family: Consolas, monospace;
         font-size: 11px;
@@ -135,34 +135,34 @@
         text-align: center;
         font-style: normal;
     }
-    .nmh_badge_dot {
+    .myq_badge_dot {
         position: absolute;
         top: -1px;
         right: -10px;
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--nmh_alarm);
+        background: var(--myq_alarm);
     }
 </style>
 </head>
 <body>
-<div class="nmh_page">
+<div class="myq_page">
     <header>
-        <h1 class="nmh_head_title">需求图纸</h1>
-        <p class="nmh_head_sub">底部导航 · SVG 图标版 —— 图标由 symbol 矢量引用渲染</p>
-        <code class="nmh_head_code">&lt;svg&gt;&lt;use href="#icon-xxx"&gt;&lt;/use&gt;&lt;/svg&gt;</code>
+        <h1 class="myq_head_title">需求图纸</h1>
+        <p class="myq_head_sub">底部导航 · SVG 图标版 —— 图标由 symbol 矢量引用渲染</p>
+        <code class="myq_head_code">&lt;svg&gt;&lt;use href="#icon-xxx"&gt;&lt;/use&gt;&lt;/svg&gt;</code>
     </header>
 
-    <p class="nmh_demo_note">
+    <p class="myq_demo_note">
         iconfont.js 将全部图标以 symbol 形式注入页面，底栏图标经 use 引用对应矢量路径；
         四个项目弹性均分宽度，数字徽章与红点钉在图标右上角。点击项目可切换选中态。
     </p>
 
-    <div class="nmh_links">
-        <a class="nmh_alt_link" href="iconfont-3.html">字体图标版</a>
-        <a class="nmh_alt_link" href="iconfont-2.html">图标图纸</a>
-        <a class="nmh_home_link" href="index.html">返回首页</a>
+    <div class="myq_links">
+        <a class="myq_alt_link" href="iconfont-3.html">字体图标版</a>
+        <a class="myq_alt_link" href="iconfont-2.html">图标图纸</a>
+        <a class="myq_home_link" href="index.html">返回首页</a>
     </div>
 </div>
 
@@ -170,43 +170,43 @@
 <script src="font/iconfont.js"></script>
 
 <!-- 固定底栏：4 项，flex 均分 -->
-<nav class="nmh_tabbar" aria-label="底部导航">
-    <a class="nmh_tab nmh_tab_active" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
-            <svg class="nmh_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben10"></use></svg>
+<nav class="myq_tabbar" aria-label="底部导航">
+    <a class="myq_tab myq_tab_active" href="javascript:void(0)">
+        <span class="myq_tab_icon">
+            <svg class="myq_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben10"></use></svg>
         </span>
-        <span class="nmh_tab_label">设计</span>
+        <span class="myq_tab_label">设计</span>
     </a>
-    <a class="nmh_tab" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
-            <svg class="nmh_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben11"></use></svg>
-            <b class="nmh_badge_num">6</b>
+    <a class="myq_tab" href="javascript:void(0)">
+        <span class="myq_tab_icon">
+            <svg class="myq_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben11"></use></svg>
+            <b class="myq_badge_num">6</b>
         </span>
-        <span class="nmh_tab_label">性能</span>
+        <span class="myq_tab_label">性能</span>
     </a>
-    <a class="nmh_tab" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
-            <svg class="nmh_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben12"></use></svg>
-            <b class="nmh_badge_num">99+</b>
+    <a class="myq_tab" href="javascript:void(0)">
+        <span class="myq_tab_icon">
+            <svg class="myq_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben12"></use></svg>
+            <b class="myq_badge_num">99+</b>
         </span>
-        <span class="nmh_tab_label">接口</span>
+        <span class="myq_tab_label">接口</span>
     </a>
-    <a class="nmh_tab" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
-            <svg class="nmh_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben16"></use></svg>
-            <b class="nmh_badge_dot"></b>
+    <a class="myq_tab" href="javascript:void(0)">
+        <span class="myq_tab_icon">
+            <svg class="myq_tab_svg" aria-hidden="true"><use href="#icon-a-wendangleibiexiao_huaban1fuben16"></use></svg>
+            <b class="myq_badge_dot"></b>
         </span>
-        <span class="nmh_tab_label">安全</span>
+        <span class="myq_tab_label">安全</span>
     </a>
 </nav>
 
 <script>
     // 点击切换选中态
-    var nmh_tabs = document.querySelectorAll('.nmh_tab');
-    nmh_tabs.forEach(function (nmh_item) {
-        nmh_item.addEventListener('click', function () {
-            nmh_tabs.forEach(function (nmh_t) { nmh_t.classList.remove('nmh_tab_active'); });
-            nmh_item.classList.add('nmh_tab_active');
+    var myq_tabs = document.querySelectorAll('.myq_tab');
+    myq_tabs.forEach(function (myq_item) {
+        myq_item.addEventListener('click', function () {
+            myq_tabs.forEach(function (myq_t) { myq_t.classList.remove('myq_tab_active'); });
+            myq_item.classList.add('myq_tab_active');
         });
     });
 </script>

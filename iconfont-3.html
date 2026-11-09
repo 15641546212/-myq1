@@ -8,83 +8,83 @@
 <link rel="stylesheet" href="font/iconfont.css">
 <style>
     :root {
-        --nmh_paper: #FAF8F3;
-        --nmh_ink: #211E1B;
-        --nmh_ink_soft: #6F675D;
-        --nmh_cinnabar: #AE2E24;
-        --nmh_rule: rgba(33, 30, 27, 0.16);
+        --myq_paper: #FAF8F3;
+        --myq_ink: #211E1B;
+        --myq_ink_soft: #6F675D;
+        --myq_cinnabar: #AE2E24;
+        --myq_rule: rgba(33, 30, 27, 0.16);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-        background: var(--nmh_paper);
-        color: var(--nmh_ink);
+        background: var(--myq_paper);
+        color: var(--myq_ink);
         font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
         font-size: 16px;
         line-height: 1.75;
         min-height: 100vh;
         padding-bottom: 120px; /* 给固定底栏留位 */
     }
-    .nmh_page {
+    .myq_page {
         max-width: 560px;
         margin: 0 auto;
         padding: 40px 22px 40px;
     }
-    .nmh_head_title {
+    .myq_head_title {
         font-family: "KaiTi", "STKaiti", "SimSun", serif;
         font-size: 28px;
         font-weight: 400;
         letter-spacing: 0.18em;
         padding-bottom: 14px;
-        border-bottom: 2px solid var(--nmh_ink);
+        border-bottom: 2px solid var(--myq_ink);
     }
-    .nmh_head_sub { font-size: 14px; color: var(--nmh_ink_soft); margin-top: 10px; }
-    .nmh_head_code {
+    .myq_head_sub { font-size: 14px; color: var(--myq_ink_soft); margin-top: 10px; }
+    .myq_head_code {
         display: inline-block;
         margin-top: 14px;
         font-family: Consolas, monospace;
         font-size: 13px;
-        color: var(--nmh_cinnabar);
+        color: var(--myq_cinnabar);
         background: rgba(174, 46, 36, 0.06);
         padding: 5px 10px;
     }
-    .nmh_demo_note {
+    .myq_demo_note {
         margin-top: 26px;
         font-size: 14px;
-        color: var(--nmh_ink_soft);
-        border-top: 1px solid var(--nmh_rule);
+        color: var(--myq_ink_soft);
+        border-top: 1px solid var(--myq_rule);
         padding-top: 16px;
     }
-    .nmh_links { margin-top: 22px; display: flex; gap: 26px; flex-wrap: wrap; }
-    .nmh_home_link, .nmh_alt_link {
-        color: var(--nmh_ink);
+    .myq_links { margin-top: 22px; display: flex; gap: 26px; flex-wrap: wrap; }
+    .myq_home_link, .myq_alt_link {
+        color: var(--myq_ink);
         text-decoration: none;
         font-size: 15px;
         padding-bottom: 3px;
-        border-bottom: 2px solid var(--nmh_ink);
+        border-bottom: 2px solid var(--myq_ink);
     }
-    .nmh_home_link:hover, .nmh_alt_link:hover {
-        color: var(--nmh_cinnabar);
-        border-color: var(--nmh_cinnabar);
+    .myq_home_link:hover, .myq_alt_link:hover {
+        color: var(--myq_cinnabar);
+        border-color: var(--myq_cinnabar);
     }
-    .nmh_home_link:focus-visible, .nmh_alt_link:focus-visible,
-    .nmh_tab:focus-visible {
-        outline: 2px dashed var(--nmh_cinnabar);
+    .myq_home_link:focus-visible, .myq_alt_link:focus-visible,
+    .myq_tab:focus-visible {
+        outline: 2px dashed var(--myq_cinnabar);
         outline-offset: 3px;
     }
 
     /* ==== 固定底栏：flex 自适应宽度，4 项均分 ==== */
-    .nmh_tabbar {
+    .myq_tabbar {
         position: fixed;
         left: 0;
         right: 0;
         bottom: 0;
         z-index: 10;
         display: flex;
-        background: var(--nmh_paper);
-        border-top: 1px solid var(--nmh_rule);
+        background: var(--myq_paper);
+        border-top: 1px solid var(--myq_rule);
         padding-bottom: env(safe-area-inset-bottom, 0px);
     }
-    .nmh_tab {
+    .myq_tab {
         flex: 1 1 25%;          /* 自适应宽度：4 项均分 */
         min-width: 0;
         display: flex;
@@ -93,10 +93,10 @@
         gap: 3px;
         padding: 9px 4px 8px;
         text-decoration: none;
-        color: var(--nmh_ink_soft);
+        color: var(--myq_ink_soft);
         -webkit-tap-highlight-color: transparent;
     }
-    .nmh_tab_icon {
+    .myq_tab_icon {
         position: relative;
         display: inline-flex;
         align-items: center;
@@ -105,13 +105,13 @@
         font-size: 24px;
         line-height: 1;
     }
-    .nmh_tab_label { font-size: 12px; letter-spacing: 0.06em; }
-    .nmh_tab_active { color: var(--nmh_cinnabar); }
-    .nmh_tab_active .nmh_tab_label { font-weight: 600; }
-    .nmh_tab:active { opacity: 0.75; }
+    .myq_tab_label { font-size: 12px; letter-spacing: 0.06em; }
+    .myq_tab_active { color: var(--myq_cinnabar); }
+    .myq_tab_active .myq_tab_label { font-weight: 600; }
+    .myq_tab:active { opacity: 0.75; }
 
     /* ==== 徽章：数字 / 红点，钉在图标右上角 ==== */
-    .nmh_badge_num {
+    .myq_badge_num {
         position: absolute;
         top: -7px;
         right: -16px;
@@ -119,7 +119,7 @@
         height: 17px;
         padding: 0 4px;
         border-radius: 9px;
-        background: var(--nmh_cinnabar);
+        background: var(--myq_cinnabar);
         color: #FAF8F3;
         font-family: Consolas, monospace;
         font-size: 11px;
@@ -128,73 +128,73 @@
         text-align: center;
         font-style: normal;
     }
-    .nmh_badge_dot {
+    .myq_badge_dot {
         position: absolute;
         top: -1px;
         right: -9px;
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--nmh_cinnabar);
+        background: var(--myq_cinnabar);
     }
 </style>
 </head>
 <body>
-<div class="nmh_page">
+<div class="myq_page">
     <header>
-        <h1 class="nmh_head_title">需求图谱</h1>
-        <p class="nmh_head_sub">底部导航 · 字体图标版 —— 图标由 iconfont 字体文件渲染</p>
-        <code class="nmh_head_code">&lt;i class="iconfont icon-xxx"&gt;&lt;/i&gt;</code>
+        <h1 class="myq_head_title">需求图谱</h1>
+        <p class="myq_head_sub">底部导航 · 字体图标版 —— 图标由 iconfont 字体文件渲染</p>
+        <code class="myq_head_code">&lt;i class="iconfont icon-xxx"&gt;&lt;/i&gt;</code>
     </header>
 
-    <p class="nmh_demo_note">
+    <p class="myq_demo_note">
         底栏固定于视口底部，四个项目以弹性布局均分宽度；数字徽章与红点钉在图标右上角。
         点击下列项目可切换选中态。
     </p>
 
-    <div class="nmh_links">
-        <a class="nmh_alt_link" href="iconfont-4.html">SVG 图纸版</a>
-        <a class="nmh_alt_link" href="iconfont-1.html">字学图谱</a>
-        <a class="nmh_home_link" href="index.html">返回首页</a>
+    <div class="myq_links">
+        <a class="myq_alt_link" href="iconfont-4.html">SVG 图纸版</a>
+        <a class="myq_alt_link" href="iconfont-1.html">字学图谱</a>
+        <a class="myq_home_link" href="index.html">返回首页</a>
     </div>
 </div>
 
 <!-- 固定底栏：4 项，flex 均分 -->
-<nav class="nmh_tabbar" aria-label="底部导航">
-    <a class="nmh_tab nmh_tab_active" href="javascript:void(0)">
-        <span class="nmh_tab_icon"><i class="iconfont icon-a-wendangleibiexiao_huaban1fuben10"></i></span>
-        <span class="nmh_tab_label">设计</span>
+<nav class="myq_tabbar" aria-label="底部导航">
+    <a class="myq_tab myq_tab_active" href="javascript:void(0)">
+        <span class="myq_tab_icon"><i class="iconfont icon-a-wendangleibiexiao_huaban1fuben10"></i></span>
+        <span class="myq_tab_label">设计</span>
     </a>
-    <a class="nmh_tab" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
+    <a class="myq_tab" href="javascript:void(0)">
+        <span class="myq_tab_icon">
             <i class="iconfont icon-a-wendangleibiexiao_huaban1fuben11"></i>
-            <b class="nmh_badge_num">6</b>
+            <b class="myq_badge_num">6</b>
         </span>
-        <span class="nmh_tab_label">性能</span>
+        <span class="myq_tab_label">性能</span>
     </a>
-    <a class="nmh_tab" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
+    <a class="myq_tab" href="javascript:void(0)">
+        <span class="myq_tab_icon">
             <i class="iconfont icon-a-wendangleibiexiao_huaban1fuben12"></i>
-            <b class="nmh_badge_num">99+</b>
+            <b class="myq_badge_num">99+</b>
         </span>
-        <span class="nmh_tab_label">接口</span>
+        <span class="myq_tab_label">接口</span>
     </a>
-    <a class="nmh_tab" href="javascript:void(0)">
-        <span class="nmh_tab_icon">
+    <a class="myq_tab" href="javascript:void(0)">
+        <span class="myq_tab_icon">
             <i class="iconfont icon-a-wendangleibiexiao_huaban1fuben16"></i>
-            <b class="nmh_badge_dot"></b>
+            <b class="myq_badge_dot"></b>
         </span>
-        <span class="nmh_tab_label">安全</span>
+        <span class="myq_tab_label">安全</span>
     </a>
 </nav>
 
 <script>
     // 点击切换选中态
-    var nmh_tabs = document.querySelectorAll('.nmh_tab');
-    nmh_tabs.forEach(function (nmh_item) {
-        nmh_item.addEventListener('click', function () {
-            nmh_tabs.forEach(function (nmh_t) { nmh_t.classList.remove('nmh_tab_active'); });
-            nmh_item.classList.add('nmh_tab_active');
+    var myq_tabs = document.querySelectorAll('.myq_tab');
+    myq_tabs.forEach(function (myq_item) {
+        myq_item.addEventListener('click', function () {
+            myq_tabs.forEach(function (myq_t) { myq_t.classList.remove('myq_tab_active'); });
+            myq_item.classList.add('myq_tab_active');
         });
     });
 </script>
