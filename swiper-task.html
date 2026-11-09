@@ -91,7 +91,7 @@
     <h1>Swiper 轮播组件 · <b>大国重器光影展（学生版）</b></h1>
     <p>HTML 骨架和 CSS 样式已经全部搭好，图片也备齐了——但这个页面的轮播<b>一个都不会动</b>！
     因为所有 <b>&lt;script&gt; 里的 JS 初始化代码都被抽走了</b>。你的任务：把 4 个轮播全部"救活"。</p>
-    <div class="wy-goals"><i>任务 1 · 救活最小轮播</i><i>任务 2 · 装上圆点和箭头</i><i>任务 3 · 让它自己翻页</i><i>任务 4 · 六种效果随心换</i></div>
+    <div class="wy-goals"><i>任务 1 · 救活最小轮播</i><i>任务 2 · 装上圆点和箭头</i><i>任务 3 · 让它自己翻页</i><i>任务 4 · 八种效果随心换</i></div>
   </div>
 
   <div class="wy-rule">
@@ -195,14 +195,14 @@
   <div class="wy-sec">
     <div class="wy-sec-head">
       <span class="wy-no">4</span>
-      <h2>六种效果随心换<small>effect 参数 + 进阶：按钮实时切换</small></h2>
+      <h2>八种效果随心换<small>effect 参数 + slidesPerView 多图 + 进阶：按钮实时切换</small></h2>
     </div>
-    <p class="wy-txt">改一个 <code>effect</code> 参数，轮播立刻换一种"性格"：slide / fade / cube / coverflow / flip / cards。上面的 6 个按钮已经绑好了点击事件（读取 <code>btn.dataset.fx</code>），JS 还需要你补两段。</p>
+    <p class="wy-txt">改一个 <code>effect</code> 参数，轮播立刻换一种"性格"：slide / fade / cube / coverflow / flip / cards / creative；第 8 个按钮则演示 <code>slidesPerView</code> 多图并排 + <code>mousewheel</code> 滚轮切换。上面的 8 个按钮已经绑好了点击事件（读取 <code>btn.dataset.fx</code>），JS 还需要你补两段。</p>
     <div class="wy-req">
       <h3>✍️ 任务 4 要求</h3>
       <p><b>基础分</b>：初始化 <code>#wySw4</code>，实现循环 + 自动播放（3.2 秒）+ 圆点分页器（#wyPag4），初始效果为 <code>'slide'</code>，动画时长 800 毫秒。</p>
-      <p><b>进阶分</b>：补全按钮点击事件中的 TODO——实现点击按钮<b>切换效果</b>。提示：Swiper 动态换 effect 不能只改参数，需要<b>先销毁旧实例再重建</b>（destroy + new）。</p>
-      <span class="wy-star">⭐ 验证标准：基础分——轮播自动翻页；进阶分——点 cube 按钮变 3D 立方体、点 fade 变淡入淡出</span>
+      <p><b>进阶分</b>：补全按钮点击事件中的 TODO——实现点击按钮<b>切换效果</b>。提示：Swiper 动态换 effect 不能只改参数，需要<b>先销毁旧实例再重建</b>（destroy + new）。第 8 个按钮 <code>slidesPerView</code> 不是 effect，需特殊处理：<code>effect</code> 用 <code>'slide'</code>、<code>slidesPerView</code> 设为 3（参考官方 demo 110-slides-per-view），并保留 <code>mousewheel</code> 滚轮切换。</p>
+      <span class="wy-star">⭐ 验证标准：基础分——轮播自动翻页；进阶分——点 cube 变 3D 立方体、点 fade 变淡入淡出、点"多图滚轮"显示三张并排且滚轮可切换</span>
     </div>
     <div class="wy-fx">
       <button class="wy-on" data-fx="slide">slide 平推（默认·稳重）</button>
@@ -212,6 +212,7 @@
       <button data-fx="flip">flip 翻页（复古）</button>
       <button data-fx="cards">cards 卡片（俏皮）</button>
       <button data-fx="creative">creative 电影墙（第 7 种 · 进阶）</button>
+      <button data-fx="slidesPerView">多图滚轮（第 8 种 · slidesPerView + mousewheel）</button>
     </div>
     <div class="wy-demo">
       <span class="wy-demo-tag">🎛️ 演示四 · 效果实验台（点按钮切换 effect）</span>
@@ -317,10 +318,14 @@
 
       // TODO 3：用新 effect 重建实例（把其它配置原样保留）
       //         effect 名从按钮的 data-fx 属性读取（btn.dataset.fx）
+      //         第 8 个按钮 "slidesPerView" 不是 effect，而是多图模式：effect 用 slide，slidesPerView 设为 3，并开启 mousewheel 滚轮切换
+      var myq_isMulti = btn.dataset.fx === "slidesPerView";
       wySw4 = new Swiper("#wySw4", {
         loop: true,
-        effect: btn.dataset.fx,
+        effect: myq_isMulti ? "slide" : btn.dataset.fx,
         speed: 800,
+        slidesPerView: myq_isMulti ? 3 : 1,
+        spaceBetween: myq_isMulti ? 20 : 0,
         autoplay: { delay: 3200, disableOnInteraction: false },
         pagination: { el: "#wyPag4", clickable: true },
         // mousewheel 与初始配置保持一致（阈值过滤连滚，一格一张不跳页）
