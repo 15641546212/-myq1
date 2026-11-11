@@ -467,3 +467,10 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 - 3.2 秒自动翻页 → autoplay: { delay: 3200 }
 - 圆点分页器可点击 → pagination: { clickable: true }
 - 初始效果为 cube → effect: 'cube'
+
+---
+时间：2026-11-11 16:22:09
+模型：Trae
+提示词：
+我要的是这种（附截图：01编号标题+副标题、引言段、两轮卡片含状态验证行、代码块在底部、参数表含手动操作后不停止行）
+
