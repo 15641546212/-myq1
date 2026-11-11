@@ -81,6 +81,36 @@
   .wy-back a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,43,91,.15)}
 
   footer{text-align:center;margin-top:34px;color:#9ca3af;font-size:13px;line-height:2}
+
+  /* 提示词工程 · 两轮对照 */
+  .myq-prompt-block{margin:20px 0 6px;background:#fafbff;border:1.5px solid #e0e7ff;border-radius:16px;padding:18px 20px}
+  .myq-prompt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+  .myq-prompt-head h3{font-size:16px;color:#0f2b5b;display:flex;align-items:center;gap:8px}
+  .myq-prompt-link{font-size:13px;color:#1d5bbf;text-decoration:none;background:#fff;border:1px solid #c7d8f8;padding:5px 14px;border-radius:999px;transition:all .2s}
+  .myq-prompt-link:hover{background:#1d5bbf;color:#fff}
+  .myq-rounds{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:640px){.myq-rounds{grid-template-columns:1fr}}
+  .myq-card{background:#fff;border-radius:12px;padding:14px;border:1px solid #e8ecf5}
+  .myq-card-bad{border-color:#fecaca}
+  .myq-card-good{border-color:#bbf7d0}
+  .myq-card-tag{display:inline-block;font-size:11px;padding:2px 10px;border-radius:999px;margin-bottom:8px}
+  .myq-tag-bad{background:#fef2f2;color:#dc2626}
+  .myq-tag-good{background:#f0fdf4;color:#16a34a}
+  .myq-card h4{font-size:15px;color:#111827;margin-bottom:6px}
+  .myq-card p{font-size:12.5px;color:#6b7280;line-height:1.7;margin-bottom:10px}
+  .myq-card .swiper{border-radius:10px;height:150px;overflow:hidden}
+  .myq-card .swiper-slide{position:relative;height:150px}
+  .myq-card .swiper-slide img{width:100%;height:100%;object-fit:cover;display:block}
+  .myq-card .swiper-pagination{bottom:6px}
+  .myq-card .swiper-pagination-bullet{background:#fff;opacity:.5}
+  .myq-card .swiper-pagination-bullet-active{background:#e8890c;opacity:1}
+  .myq-code{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:10px 12px;font-family:Consolas,monospace;font-size:12px;line-height:1.7;margin-top:10px;overflow-x:auto;white-space:pre}
+  .myq-code .myq-kw{color:#c084fc}
+  .myq-code .myq-str{color:#86efac}
+  .myq-param-table{width:100%;margin-top:16px;border-collapse:collapse;font-size:13px}
+  .myq-param-table th,.myq-param-table td{border:1px solid #e8ecf5;padding:8px 12px;text-align:left}
+  .myq-param-table th{background:#f1f5f9;color:#334155;font-weight:600}
+  .myq-param-table td code{background:#eef2ff;color:#1d4ed8;padding:1px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:12px}
 </style>
 </head>
 <body>
@@ -127,6 +157,63 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- 提示词工程 · 两轮对照：效果与代码文字一起展示 -->
+    <div class="myq-prompt-block">
+      <div class="myq-prompt-head">
+        <h3>💡 提示词工程 · 两轮对照</h3>
+        <a href="myq_prompt.md" class="myq-prompt-link" target="_blank">📝 查看 myq_prompt 提示词记录 →</a>
+      </div>
+      <div class="myq-rounds">
+        <!-- 第 1 轮：漏需求 -->
+        <div class="myq-card myq-card-bad">
+          <span class="myq-card-tag myq-tag-bad">第 1 轮 · 漏需求</span>
+          <h4>圆点只能看，不能点</h4>
+          <p>提示词只写了"圆点分页器"，AI 理解为"把圆点画出来"，于是只给了 <code>el</code>，没给 <code>clickable</code>。</p>
+          <div class="swiper" id="myqSwiperBad">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达魔都号"></div>
+            </div>
+            <div class="swiper-pagination" id="myqPagBad"></div>
+          </div>
+          <div class="myq-code">pagination: {
+  el: '<span class="myq-str">#myqPagBad</span>'
+}</div>
+        </div>
+        <!-- 第 2 轮：补齐需求 -->
+        <div class="myq-card myq-card-good">
+          <span class="myq-card-tag myq-tag-good">第 2 轮 · 补齐需求</span>
+          <h4>圆点是遥控器，不是装饰</h4>
+          <p>第二轮改写成"圆点必须能点击直接跳转，不是只能看"。同一个 AI，立刻补上了 <code>clickable: true</code>。</p>
+          <div class="swiper" id="myqSwiperGood">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"></div>
+              <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达魔都号"></div>
+            </div>
+            <div class="swiper-pagination" id="myqPagGood"></div>
+          </div>
+          <div class="myq-code">pagination: {
+  el: '<span class="myq-str">#myqPagGood</span>',
+  clickable: <span class="myq-kw">true</span>
+}</div>
+        </div>
+      </div>
+      <!-- 把中文需求翻译成参数 -->
+      <h4 style="margin-top:16px;color:#0f2b5b;font-size:14px">02 · 把中文需求翻译成参数</h4>
+      <p style="font-size:12.5px;color:#6b7280;margin:6px 0 0">答辩时最容易被追问的是"这句话对应哪个参数"。这张表就是交卷前该背下来的东西。</p>
+      <table class="myq-param-table">
+        <thead><tr><th>老师的要求</th><th>对应参数</th><th>为什么</th></tr></thead>
+        <tbody>
+          <tr><td>无缝循环</td><td><code>loop: true</code></td><td>首尾相接，滑到最后一张还能继续</td></tr>
+          <tr><td>3.2 秒自动翻页</td><td><code>autoplay: { delay: 3200 }</code></td><td>delay 单位是毫秒</td></tr>
+          <tr><td>圆点分页器可点击</td><td><code>pagination: { clickable: true }</code></td><td>缺了 clickable 圆点只是装饰</td></tr>
+          <tr><td>初始效果为 cube</td><td><code>effect: 'cube'</code></td><td>Swiper 内置 7 种 effect</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -259,6 +346,16 @@
   // ── 任务 1：初始化 #wySw1，让它至少可以拖动 ──
   // TODO: 在这里写你的代码
     var wySw1 = new Swiper("#wySw1", {});
+
+  // ── 提示词工程 · 两轮对照：演示"漏 clickable" vs "补齐 clickable" ──
+  // 第 1 轮（漏需求）：只给 el，不给 clickable —— 圆点只能看不能点
+    var myqSwiperBad = new Swiper("#myqSwiperBad", {
+      pagination: { el: "#myqPagBad" },   // 没有 clickable，圆点只是装饰
+    });
+  // 第 2 轮（补齐需求）：加上 clickable: true —— 圆点可点击跳转
+    var myqSwiperGood = new Swiper("#myqSwiperGood", {
+      pagination: { el: "#myqPagGood", clickable: true },  // 补齐 clickable
+    });
 
   // ── 任务 2：初始化 #wySw2，循环 + 600ms + 圆点可点 + 箭头切换 ──
   // TODO: 在这里写你的代码

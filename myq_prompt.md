@@ -442,3 +442,28 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 提示词：
 参考100-space-between文件，新增一个Swiper，且使用mousewheel 滚轮切换作为演示四的第 8 个按钮
 
+
+---
+时间：2026-11-11 16:11:42
+模型：Trae
+提示词：
+任务一做出如此效果至少两轮 效果和 代码文字一起显示出来，并在myq-prompt显示出来并在任务一留一个myq-promp入口
+
+
+## 提示词工程 · 两轮对照（swiper-task.html 任务一）
+
+**第 1 轮提示词（漏需求）：**
+"帮我写一个 Swiper 轮播，需要圆点分页器。"
+→ AI 输出：pagination: { el: '#myqPagBad' }
+→ 问题：只写了 el，没写 clickable，圆点只能看不能点。
+
+**第 2 轮提示词（补齐需求）：**
+"圆点分页器必须能点击直接跳转到对应幻灯片，不是只能看的装饰。"
+→ AI 输出：pagination: { el: '#myqPagGood', clickable: true }
+→ 修正：补齐 clickable: true，圆点可点击跳转。
+
+**把中文需求翻译成参数：**
+- 无缝循环 → loop: true
+- 3.2 秒自动翻页 → autoplay: { delay: 3200 }
+- 圆点分页器可点击 → pagination: { clickable: true }
+- 初始效果为 cube → effect: 'cube'
