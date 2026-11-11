@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="马宇乾的课堂提示词日志">
+    <title>提示词日志 · 马宇乾</title>
+    <!--
+      作者：马宇乾
+      建立时间：2026-11-11 16:43
+      使用模型：Trae
+      功能名称及简介：提示词日志页面 —— 读取 myq_prompt.md 并以卡片形式展示全部提示词记录（时间、模型、原文）
+    -->
+    <style>
+        :root {
+            --ink: #18332f;
+            --green: #245b4f;
+            --mint: #dce9df;
+            --coral: #e9785c;
+            --cream: #f7f1e7;
+            --paper: #fffdf8;
+            --line: #d8d5c9;
+            --muted: #6e746d;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: linear-gradient(120deg, #f7f1e7 0%, #fffdf8 55%, #e9f0e6 100%);
+            font-family: "Songti SC", "STSong", Georgia, serif;
+            line-height: 1.7;
+        }
+        a { color: inherit; text-decoration: none; }
+        .myq-wrap { width: min(880px, calc(100% - 44px)); margin: 0 auto; }
+
+        /* 顶部导航 */
+        .myq-header { padding: 22px 0; background: var(--green); color: #fffdf8; }
+        .myq-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .myq-brand { display: flex; align-items: center; gap: 12px; font-size: 16px; }
+        .myq-brand-mark { display: grid; width: 36px; height: 36px; place-items: center; color: var(--green); background: var(--coral); border-radius: 50%; font-family: Georgia, serif; font-size: 18px; font-weight: bold; }
+        .myq-home-link { font-size: 13px; color: #ffd2c6; border-bottom: 1px solid transparent; transition: border-color .2s; }
+        .myq-home-link:hover { border-color: #ffd2c6; }
+
+        /* 标题区 */
+        .myq-hero { padding: 48px 0 28px; }
+        .myq-eyebrow { margin: 0 0 10px; color: var(--coral); font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; letter-spacing: 3px; }
+        .myq-hero h1 { margin: 0; font-size: clamp(32px, 6vw, 52px); line-height: 1.15; font-weight: 600; }
+        .myq-hero p { max-width: 600px; margin: 16px 0 0; color: var(--muted); font-size: 15px; }
+        .myq-stats { display: flex; gap: 10px; margin-top: 24px; }
+        .myq-stat { padding: 9px 15px; border-left: 3px solid var(--coral); background: rgba(255,255,255,.62); }
+        .myq-stat strong { display: block; font-family: Arial, sans-serif; font-size: 20px; line-height: 1.1; }
+        .myq-stat span { color: var(--muted); font-size: 12px; }
+
+        /* 日志列表 */
+        .myq-list { padding: 10px 0 60px; }
+        .myq-entry { margin-bottom: 18px; padding: 22px 26px; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; box-shadow: 6px 6px 0 rgba(36,91,79,.08); }
+        .myq-entry-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px dashed var(--line); }
+        .myq-entry-time { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: var(--green); }
+        .myq-entry-model { font-size: 12px; color: var(--muted); background: var(--mint); padding: 3px 10px; border-radius: 999px; }
+        .myq-entry-label { font-size: 12px; color: var(--coral); font-family: Arial, sans-serif; font-weight: bold; margin: 0 0 6px; letter-spacing: 1px; }
+        .myq-entry-content { margin: 0; padding: 14px 16px; background: #faf8f3; border-left: 3px solid var(--coral); border-radius: 0 6px 6px 0; font-family: Consolas, "Courier New", monospace; font-size: 13px; line-height: 1.75; white-space: pre-wrap; word-break: break-word; color: #2d3436; }
+
+        /* 加载/错误状态 */
+        .myq-loading, .myq-error { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
+        .myq-error { color: var(--coral); }
+
+        footer { padding: 22px 0 30px; color: var(--muted); border-top: 1px solid var(--line); font-family: Arial, sans-serif; font-size: 12px; }
+
+        @media (max-width: 640px) {
+            .myq-wrap { width: min(100% - 28px, 620px); }
+            .myq-entry { padding: 16px 18px; }
+            .myq-entry-content { font-size: 12.5px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="myq-header">
+        <div class="myq-wrap">
+            <div class="myq-topbar">
+                <a class="myq-brand" href="index.html" aria-label="返回课堂首页">
+                    <span class="myq-brand-mark">M</span>
+                    <span>马宇乾 / 课堂档案</span>
+                </a>
+                <a class="myq-home-link" href="index.html">← 返回首页</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="myq-wrap">
+        <section class="myq-hero">
+            <p class="myq-eyebrow">PROMPT LOG / 提示词留痕</p>
+            <h1>提示词日志</h1>
+            <p>本站全部提示词的追加式留痕：时间、使用模型与原文。项目规则与开发过程可全程追溯。</p>
+            <div class="myq-stats">
+                <div class="myq-stat"><strong id="myq-count">—</strong><span>条记录</span></div>
+                <div class="myq-stat"><strong>myq_prompt.md</strong><span>数据源</span></div>
+            </div>
+        </section>
+
+        <section class="myq-list" id="myq-list">
+            <div class="myq-loading">正在读取提示词记录…</div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="myq-wrap">马宇乾的《高级网页设计》课堂实践 · Local code · No CDN · 2026</div>
+    </footer>
+
+    <script>
+    /* 作者：马宇乾 | 建立时间：2026-11-11 16:43 | 使用模型：Trae
+       功能：myq_renderPromptLog —— 抓取 myq_prompt.md，解析时间/模型/原文，渲染为卡片列表 */
+    function myq_renderPromptLog(myq_text) {
+        var myq_listEl = document.getElementById('myq-list');
+        var myq_countEl = document.getElementById('myq-count');
+        // 按 "---" 或 "## " 分割条目，兼容两种历史格式
+        var myq_blocks = myq_text.split(/\n---\n/);
+        var myq_entries = [];
+
+        myq_blocks.forEach(function(myq_block) {
+            // 跳过空块和纯标题
+            if (!myq_block.trim() || myq_block.trim().indexOf('# ') === 0) return;
+
+            // 提取时间
+            var myq_timeMatch = myq_block.match(/时间[：:]\s*(.+)/);
+            var myq_time = myq_timeMatch ? myq_timeMatch[1].trim() : '';
+            if (!myq_time) {
+                // 兼容旧格式 "## 2026-10-22 13:42"
+                var myq_h2Match = myq_block.match(/^##\s+(.+)/m);
+                if (myq_h2Match) myq_time = myq_h2Match[1].trim();
+            }
+            if (!myq_time) return; // 没有时间的跳过
+
+            // 提取模型
+            var myq_modelMatch = myq_block.match(/模型[：:]\s*(.+)/);
+            var myq_model = myq_modelMatch ? myq_modelMatch[1].trim() : '未记录';
+
+            // 提取提示词原文：优先取 ``` 代码块内容，否则取"提示词"后面的文本
+            var myq_content = '';
+            var myq_codeMatch = myq_block.match(/```[\s\S]*?\n([\s\S]*?)\n```/);
+            if (myq_codeMatch) {
+                myq_content = myq_codeMatch[1].trim();
+            } else {
+                var myq_promptIdx = myq_block.search(/提示词/);
+                if (myq_promptIdx !== -1) {
+                    myq_content = myq_block.slice(myq_promptIdx).replace(/^提示词[：:内容]*\n?/, '').trim();
+                }
+            }
+            if (!myq_content) myq_content = '（无提示词原文）';
+
+            myq_entries.push({ time: myq_time, model: myq_model, content: myq_content });
+        });
+
+        // 按时间倒序（最新在前）
+        myq_entries.sort(function(a, b) { return b.time.localeCompare(a.time); });
+
+        // 更新计数
+        myq_countEl.textContent = myq_entries.length;
+
+        // 渲染卡片
+        if (myq_entries.length === 0) {
+            myq_listEl.innerHTML = '<div class="myq-error">暂无提示词记录</div>';
+            return;
+        }
+        myq_listEl.innerHTML = myq_entries.map(function(myq_e) {
+            return '<article class="myq-entry">' +
+                '<div class="myq-entry-head">' +
+                    '<span class="myq-entry-time">' + myq_e.time + '</span>' +
+                    '<span class="myq-entry-model">' + myq_e.model + '</span>' +
+                '</div>' +
+                '<p class="myq-entry-label">提示词原文</p>' +
+                '<pre class="myq-entry-content">' + myq_escapeHtml(myq_e.content) + '</pre>' +
+            '</article>';
+        }).join('');
+    }
+
+    /* 作者：马宇乾 | 建立时间：2026-11-11 16:43 | 使用模型：Trae
+       功能：myq_escapeHtml —— 转义 HTML 特殊字符，防止提示词中的标签被解析 */
+    function myq_escapeHtml(myq_str) {
+        var myq_div = document.createElement('div');
+        myq_div.textContent = myq_str;
+        return myq_div.innerHTML;
+    }
+
+    /* 作者：马宇乾 | 建立时间：2026-11-11 16:43 | 使用模型：Trae
+       功能：页面加载时抓取 myq_prompt.md 并渲染；失败时显示错误提示 */
+    window.addEventListener('DOMContentLoaded', function() {
+        fetch('myq_prompt.md')
+            .then(function(res) {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.text();
+            })
+            .then(myq_renderPromptLog)
+            .catch(function(err) {
+                document.getElementById('myq-list').innerHTML =
+                    '<div class="myq-error">读取提示词日志失败：' + err.message + '（请通过 HTTP 服务器访问本页面）</div>';
+            });
+    });
+    </script>
+</body>
+</html>
