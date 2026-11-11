@@ -197,11 +197,11 @@
       <span class="wy-no">4</span>
       <h2>八种效果随心换<small>effect 参数 + slidesPerView 多图 + 进阶：按钮实时切换</small></h2>
     </div>
-    <p class="wy-txt">改一个 <code>effect</code> 参数，轮播立刻换一种"性格"：slide / fade / cube / coverflow / flip / cards / creative；第 8 个按钮则演示 <code>slidesPerView</code> 多图并排 + <code>mousewheel</code> 滚轮切换。上面的 8 个按钮已经绑好了点击事件（读取 <code>btn.dataset.fx</code>），JS 还需要你补两段。</p>
+    <p class="wy-txt">改一个 <code>effect</code> 参数，轮播立刻换一种"性格"：slide / fade / cube / coverflow / flip / cards / creative；第 8 个按钮则演示 <code>mousewheel</code> 滚轮切换（参考官方 demo <code>100-space-between</code>，多图并排 + 空格 + 滚轮翻页）。上面的 8 个按钮已经绑好了点击事件（读取 <code>btn.dataset.fx</code>），JS 还需要你补两段。</p>
     <div class="wy-req">
       <h3>✍️ 任务 4 要求</h3>
       <p><b>基础分</b>：初始化 <code>#wySw4</code>，实现循环 + 自动播放（3.2 秒）+ 圆点分页器（#wyPag4），初始效果为 <code>'slide'</code>，动画时长 800 毫秒。</p>
-      <p><b>进阶分</b>：补全按钮点击事件中的 TODO——实现点击按钮<b>切换效果</b>。提示：Swiper 动态换 effect 不能只改参数，需要<b>先销毁旧实例再重建</b>（destroy + new）。第 8 个按钮 <code>slidesPerView</code> 不是 effect，需特殊处理：<code>effect</code> 用 <code>'slide'</code>、<code>slidesPerView</code> 设为 3（参考官方 demo 110-slides-per-view），并保留 <code>mousewheel</code> 滚轮切换。</p>
+      <p><b>进阶分</b>：补全按钮点击事件中的 TODO——实现点击按钮<b>切换效果</b>。提示：Swiper 动态换 effect 不能只改参数，需要<b>先销毁旧实例再重建</b>（destroy + new）。第 8 个按钮 <code>slidesPerView</code> 不是 effect，需特殊处理：切换到一个独立的 <b>mousewheel 滚轮切换 Swiper</b>（<code>#myqSw4Wheel</code>），参考官方 demo <code>100-space-between</code> 配置 <code>spaceBetween: 30</code>、<code>slidesPerView: 3</code>，并开启 <code>mousewheel</code> 滚轮翻页。</p>
       <span class="wy-star">⭐ 验证标准：基础分——轮播自动翻页；进阶分——点 cube 变 3D 立方体、点 fade 变淡入淡出、点"多图滚轮"显示三张并排且滚轮可切换</span>
     </div>
     <div class="wy-fx">
@@ -212,7 +212,7 @@
       <button data-fx="flip">flip 翻页（复古）</button>
       <button data-fx="cards">cards 卡片（俏皮）</button>
       <button data-fx="creative">creative 电影墙（第 7 种 · 进阶）</button>
-      <button data-fx="slidesPerView">多图滚轮（第 8 种 · slidesPerView + mousewheel）</button>
+      <button data-fx="slidesPerView">多图滚轮（第 8 种 · spaceBetween + mousewheel）</button>
     </div>
     <div class="wy-demo">
       <span class="wy-demo-tag">🎛️ 演示四 · 效果实验台（点按钮切换 effect）</span>
@@ -227,6 +227,20 @@
             <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号"><div class="wy-cap"><h3>爱达·魔都号</h3><p>第六件展品 · 光影展新成员</p></div></div>
           </div>
           <div class="swiper-pagination" id="wyPag4"></div>
+        </div>
+      </div>
+      <!-- 第 8 个按钮专属：mousewheel 滚轮切换演示（参考官方 demo 100-space-between） -->
+      <div class="wy-swiper" id="myqSw4WheelBox" style="display:none;margin-top:14px">
+        <div class="swiper" id="myqSw4Wheel">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"><div class="wy-cap"><h3>天宫空间站</h3><p>滚轮向下 → 切换下一张</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组"><div class="wy-cap"><h3>复兴号动车组</h3><p>spaceBetween: 30 · 三张并排</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"><div class="wy-cap"><h3>C919 大飞机</h3><p>mousewheel 接管滚轮事件</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"><div class="wy-cap"><h3>奋斗者号</h3><p>一格滚轮 = 一张</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="wy-cap"><h3>中国天眼 FAST</h3><p>thresholdDelta 过滤微抖</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号"><div class="wy-cap"><h3>爱达·魔都号</h3><p>滚轮切换 · 无需点击</p></div></div>
+          </div>
+          <div class="swiper-pagination" id="myqPag4Wheel"></div>
         </div>
       </div>
     </div>
@@ -300,50 +314,77 @@
     });
 
 
-  // ── 任务 4 进阶：补全按钮点击事件，实现六种效果实时切换 ──
+  // 第 8 个按钮专属：独立 mousewheel 滚轮切换 Swiper 实例（参考官方 demo 100-space-between）
+  var myqSw4Wheel = null;
+
+  // ── 任务 4 进阶：补全按钮点击事件，实现效果实时切换 ──
   // 提示 1：动态换 effect 只改参数是无效的，必须销毁旧实例再重建（destroy + new）
   // 提示 2：按钮上已有 data-fx 属性，用 btn.dataset.fx 读取要切换的效果名
+  // 提示 3：第 8 个按钮 "slidesPerView" 切换到独立的 #myqSw4Wheel 演示 mousewheel 滚轮切换
   document.querySelectorAll('.wy-fx button').forEach(function(btn){
     btn.addEventListener('click', function(){
       // TODO 1：先给当前按钮加 wy-on 类、其余按钮去掉 wy-on（高亮当前按钮）
-      //         思路与 Tab 选项卡一致：先清除所有选中状态，再设置当前元素
       document.querySelectorAll('.wy-fx button').forEach(function(b){
         b.classList.remove('wy-on');
       });
       btn.classList.add('wy-on');
 
-      // TODO 2：销毁旧的 wySw4 实例
-      //         destroy(删除实例引用, 清除行内样式)——动态换 effect 只改参数无效，必须销毁重建
-      wySw4.destroy(true, true);
+      var myq_isWheel = btn.dataset.fx === "slidesPerView";
+      var myq_sw4Box = document.getElementById('wySw4').parentElement; // wySw4 的外层 .wy-swiper
+      var myq_wheelBox = document.getElementById('myqSw4WheelBox');    // 独立 mousewheel 演示区
 
-      // TODO 3：用新 effect 重建实例（把其它配置原样保留）
-      //         effect 名从按钮的 data-fx 属性读取（btn.dataset.fx）
-      //         第 8 个按钮 "slidesPerView" 不是 effect，而是多图模式：effect 用 slide，slidesPerView 设为 3，并开启 mousewheel 滚轮切换
-      var myq_isMulti = btn.dataset.fx === "slidesPerView";
-      wySw4 = new Swiper("#wySw4", {
-        loop: true,
-        effect: myq_isMulti ? "slide" : btn.dataset.fx,
-        speed: 800,
-        slidesPerView: myq_isMulti ? 3 : 1,
-        spaceBetween: myq_isMulti ? 20 : 0,
-        autoplay: { delay: 3200, disableOnInteraction: false },
-        pagination: { el: "#wyPag4", clickable: true },
-        // mousewheel 与初始配置保持一致（阈值过滤连滚，一格一张不跳页）
-        mousewheel: {
-          forceToAxis: false,
-          invert: false,
-          sensitivity: 1,
-          thresholdDelta: 30,
-          thresholdTime: 200,
-          releaseOnEdges: true,
-        },
-        // creative（电影墙）专属参数，与初始配置保持一致（其它效果会忽略它）
-        creativeEffect: {
-          prev: { shadow: true, translate: ["-125%", 0, -800], rotate: [0, 0, -90] },
-          next: { shadow: true, translate: ["125%", 0, -800], rotate: [0, 0, 90] },
-        },
-      });
-
+      if (myq_isWheel) {
+        // ── 第 8 个按钮：切换到独立 mousewheel 滚轮切换 Swiper ──
+        myq_sw4Box.style.display = 'none';      // 隐藏 wySw4
+        myq_wheelBox.style.display = '';        // 显示 mousewheel 演示区
+        if (wySw4) { wySw4.destroy(true, true); wySw4 = null; }  // 释放 wySw4
+        // 初始化（或重建）mousewheel Swiper，参考 100-space-between：spaceBetween:30 + slidesPerView:3
+        if (myqSw4Wheel) { myqSw4Wheel.destroy(true, true); }
+        myqSw4Wheel = new Swiper("#myqSw4Wheel", {
+          loop: true,
+          slidesPerView: 3,                     // 参考 100-space-between：三张并排
+          spaceBetween: 30,                     // 参考 100-space-between：间距 30px
+          pagination: { el: "#myqPag4Wheel", clickable: true },
+          // mousewheel 滚轮翻页：参数调校让手感自然（每项原理见行尾注释）
+          mousewheel: {
+            forceToAxis: false,      // 常规鼠标滚轮用默认；触控板横滑时改为 true 更跟手
+            invert: false,           // 滚轮向下 = 下一张（符合直觉，不反转）
+            sensitivity: 1,          // 灵敏度 1：一格滚轮 = 一张，过大会一滚跳多张
+            thresholdDelta: 30,      // 滚动增量 < 30 忽略：过滤触控板微抖，避免误触
+            thresholdTime: 200,      // 200ms 内的连续滚动只算一次：防止高速滚动连翻多张
+            releaseOnEdges: true,    // 到达边界时把滚轮还给页面（loop 模式无边界）
+          },
+        });
+      } else {
+        // ── 其它按钮：重建 wySw4，隐藏 mousewheel 演示区 ──
+        myq_wheelBox.style.display = 'none';    // 隐藏 mousewheel 演示区
+        myq_sw4Box.style.display = '';          // 显示 wySw4
+        if (myqSw4Wheel) { myqSw4Wheel.destroy(true, true); myqSw4Wheel = null; }
+        // TODO 2：销毁旧的 wySw4 实例（动态换 effect 必须销毁重建）
+        if (wySw4) { wySw4.destroy(true, true); }
+        // TODO 3：用新 effect 重建实例（把其它配置原样保留）
+        wySw4 = new Swiper("#wySw4", {
+          loop: true,
+          effect: btn.dataset.fx,
+          speed: 800,
+          autoplay: { delay: 3200, disableOnInteraction: false },
+          pagination: { el: "#wyPag4", clickable: true },
+          // mousewheel 与初始配置保持一致（阈值过滤连滚，一格一张不跳页）
+          mousewheel: {
+            forceToAxis: false,
+            invert: false,
+            sensitivity: 1,
+            thresholdDelta: 30,
+            thresholdTime: 200,
+            releaseOnEdges: true,
+          },
+          // creative（电影墙）专属参数，与初始配置保持一致（其它效果会忽略它）
+          creativeEffect: {
+            prev: { shadow: true, translate: ["-125%", 0, -800], rotate: [0, 0, -90] },
+            next: { shadow: true, translate: ["125%", 0, -800], rotate: [0, 0, 90] },
+          },
+        });
+      }
     });
   });
 </script>

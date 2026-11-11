@@ -428,3 +428,17 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 ```
 
 ---
+
+---
+时间：2026-11-09 17:06:47
+模型：Trae
+提示词：
+删除
+
+
+---
+时间：2026-11-11 15:53:51
+模型：Trae
+提示词：
+参考100-space-between文件，新增一个Swiper，且使用mousewheel 滚轮切换作为演示四的第 8 个按钮
+
