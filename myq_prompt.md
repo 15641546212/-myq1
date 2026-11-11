@@ -488,3 +488,10 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 提示词：
 根据我的代码看是否有与之对应的模块给我生成
 
+
+---
+时间：2026-11-11 16:50:48
+模型：Trae
+提示词：
+应该把原版的md文件链接到index文件中
+
