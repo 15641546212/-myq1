@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="古诗词展示 —— 上图下文结构">
+    <title>古诗词展示 · 上图下文</title>
+    <!--
+      作者：马宇乾
+      建立时间：2026-11-12 13:47
+      使用模型：Trae
+      功能名称及简介：古诗词展示页面 —— 从本地服务器(3004)获取 db.json 的 poems 数据，以上图下文卡片结构渲染图片、标题、内容
+    -->
+    <style>
+        :root {
+            --ink: #18332f;
+            --green: #245b4f;
+            --mint: #dce9df;
+            --coral: #e9785c;
+            --cream: #f7f1e7;
+            --paper: #fffdf8;
+            --line: #d8d5c9;
+            --muted: #6e746d;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: linear-gradient(120deg, #f7f1e7 0%, #fffdf8 55%, #e9f0e6 100%);
+            font-family: "Songti SC", "STSong", Georgia, serif;
+            line-height: 1.7;
+        }
+        a { color: inherit; text-decoration: none; }
+        .myq-wrap { width: min(1100px, calc(100% - 44px)); margin: 0 auto; }
+
+        /* 顶部导航 */
+        .myq-header { padding: 22px 0; background: var(--green); color: #fffdf8; }
+        .myq-topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .myq-brand { display: flex; align-items: center; gap: 12px; font-size: 16px; }
+        .myq-brand-mark { display: grid; width: 36px; height: 36px; place-items: center; color: var(--green); background: var(--coral); border-radius: 50%; font-family: Georgia, serif; font-size: 18px; font-weight: bold; }
+        .myq-home-link { font-size: 13px; color: #ffd2c6; border-bottom: 1px solid transparent; transition: border-color .2s; }
+        .myq-home-link:hover { border-color: #ffd2c6; }
+
+        /* 标题区 */
+        .myq-hero { padding: 48px 0 28px; }
+        .myq-eyebrow { margin: 0 0 10px; color: var(--coral); font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; letter-spacing: 3px; }
+        .myq-hero h1 { margin: 0; font-size: clamp(32px, 6vw, 52px); line-height: 1.15; font-weight: 600; }
+        .myq-hero p { max-width: 600px; margin: 16px 0 0; color: var(--muted); font-size: 15px; }
+
+        /* 卡片网格：上图下文 */
+        .myq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            padding: 10px 0 60px;
+        }
+        .myq-card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 6px 6px 0 rgba(36,91,79,.08);
+            transition: transform .25s, box-shadow .25s;
+            display: flex;
+            flex-direction: column;
+        }
+        .myq-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 8px 10px 0 rgba(36,91,79,.12);
+        }
+        /* 图片在上 */
+        .myq-card-img {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: var(--mint);
+        }
+        .myq-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .4s;
+        }
+        .myq-card:hover .myq-card-img img { transform: scale(1.05); }
+        /* 文字在下 */
+        .myq-card-body { padding: 18px 20px 22px; }
+        .myq-card-title {
+            margin: 0 0 10px;
+            font-size: 20px;
+            color: var(--green);
+            font-weight: 600;
+            border-left: 3px solid var(--coral);
+            padding-left: 10px;
+        }
+        .myq-card-content {
+            margin: 0;
+            font-size: 15px;
+            color: #3d4440;
+            line-height: 1.9;
+        }
+
+        /* 加载与错误 */
+        .myq-loading, .myq-error {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+            font-size: 15px;
+            grid-column: 1 / -1;
+        }
+        .myq-error { color: var(--coral); }
+
+        footer { padding: 22px 0 30px; color: var(--muted); border-top: 1px solid var(--line); font-family: Arial, sans-serif; font-size: 12px; }
+
+        @media (max-width: 640px) {
+            .myq-wrap { width: min(100% - 28px, 620px); }
+            .myq-card-img { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="myq-header">
+        <div class="myq-wrap">
+            <div class="myq-topbar">
+                <a class="myq-brand" href="index.html" aria-label="返回课堂首页">
+                    <span class="myq-brand-mark">M</span>
+                    <span>马宇乾 / 课堂档案</span>
+                </a>
+                <a class="myq-home-link myq_home_link" href="index.html">← 返回首页</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="myq-wrap">
+        <section class="myq-hero">
+            <p class="myq-eyebrow">POEMS / 古诗词展示</p>
+            <h1>古诗词 · 上图下文</h1>
+            <p>数据来自本地服务器 <code>db/db.json</code> 的 <code>poems</code> 字段，每张卡片上方为配图，下方为标题与内容。</p>
+        </section>
+
+        <section class="myq-grid" id="myq-grid">
+            <div class="myq-loading">正在从 http://localhost:3004 加载诗词数据…</div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="myq-wrap">马宇乾的《高级网页设计》课堂实践 · 数据来自 db/db.json · 2026</div>
+    </footer>
+
+    <script>
+    /* 作者：马宇乾 | 建立时间：2026-11-12 13:47 | 使用模型：Trae
+       功能：myq_fetchPoems —— 从 http://localhost:3004/poems 获取诗词数据并调用渲染函数 */
+    function myq_fetchPoems() {
+        fetch('http://localhost:3004/poems')
+            .then(function (res) {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            })
+            .then(function (myq_resp) {
+                // 兼容两种返回结构：直接数组 或 { code, data }
+                var myq_list = Array.isArray(myq_resp) ? myq_resp : (myq_resp.data || []);
+                myq_renderPoems(myq_list);
+            })
+            .catch(function (err) {
+                document.getElementById('myq-grid').innerHTML =
+                    '<div class="myq-error">加载失败：' + err.message + '。请确认已在 db 目录下执行 <code>node server.js</code>（端口 3004）。</div>';
+            });
+    }
+
+    /* 作者：马宇乾 | 建立时间：2026-11-12 13:47 | 使用模型：Trae
+       功能：myq_renderPoems —— 将诗词数组渲染为上图下文卡片并插入页面 */
+    function myq_renderPoems(myq_poems) {
+        var myq_grid = document.getElementById('myq-grid');
+        if (!myq_poems || myq_poems.length === 0) {
+            myq_grid.innerHTML = '<div class="myq-error">暂无诗词数据</div>';
+            return;
+        }
+        myq_grid.innerHTML = myq_poems.map(function (myq_item) {
+            // 图片字段兼容 pic / image
+            var myq_img = myq_item.pic || myq_item.image || '';
+            var myq_title = myq_item.title || '无题';
+            var myq_content = myq_item.content || '';
+            return '<article class="myq-card">' +
+                '<div class="myq-card-img"><img src="' + myq_img + '" alt="' + myq_escapeHtml(myq_title) + '" loading="lazy"></div>' +
+                '<div class="myq-card-body">' +
+                    '<h2 class="myq-card-title">' + myq_escapeHtml(myq_title) + '</h2>' +
+                    '<p class="myq-card-content">' + myq_escapeHtml(myq_content) + '</p>' +
+                '</div>' +
+            '</article>';
+        }).join('');
+    }
+
+    /* 作者：马宇乾 | 建立时间：2026-11-12 13:47 | 使用模型：Trae
+       功能：myq_escapeHtml —— 转义 HTML 特殊字符，防止数据中的标签被浏览器解析 */
+    function myq_escapeHtml(myq_str) {
+        var myq_div = document.createElement('div');
+        myq_div.textContent = String(myq_str);
+        return myq_div.innerHTML;
+    }
+
+    // 页面加载后拉取数据
+    window.addEventListener('DOMContentLoaded', myq_fetchPoems);
+    </script>
+</body>
+</html>
