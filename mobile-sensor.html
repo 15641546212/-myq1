@@ -1,0 +1,314 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-16 14:50
+  使用模型：Trae
+  功能名称及简介：移动端摇一摇抽菜谱 —— 监听 devicemotion 计算合成加速度，超阈值触发随机抽菜，含降级方案
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>摇一摇抽菜谱 · 马宇乾</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+    color: #fff;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  .myq_home_link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    z-index: 1000;
+    background: rgba(0,0,0,0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+  }
+  .myq_title {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 10px;
+  }
+  .myq_title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .myq_title p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 6px;
+  }
+  /* 手机图标 */
+  .myq_phone {
+    font-size: 80px;
+    margin: 30px 0;
+    animation: myq_shake_hint 1.5s ease-in-out infinite;
+  }
+  @keyframes myq_shake_hint {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
+  }
+  /* 结果卡片 */
+  .myq_result {
+    background: #fff;
+    color: #333;
+    border-radius: 16px;
+    padding: 24px 20px;
+    width: 100%;
+    max-width: 320px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+  }
+  .myq_result .myq_dish_emoji {
+    font-size: 56px;
+    margin-bottom: 10px;
+  }
+  .myq_result .myq_dish_name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ff6b6b;
+    margin-bottom: 8px;
+  }
+  .myq_result .myq_dish_desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+  }
+  .myq_result .myq_placeholder {
+    font-size: 16px;
+    color: #999;
+  }
+  /* 弹出动画 */
+  .myq_pop {
+    animation: myq_pop_in 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+  @keyframes myq_pop_in {
+    0% { transform: scale(0.3); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  /* 按钮 */
+  .myq_btn {
+    background: #fff;
+    color: #ff6b6b;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    transition: transform 0.15s;
+  }
+  .myq_btn:active { transform: scale(0.95); }
+  /* 不支持提示 */
+  .myq_unsupported {
+    background: rgba(0,0,0,0.5);
+    color: #ffd54f;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    text-align: center;
+    max-width: 320px;
+    display: none;
+  }
+  /* 状态栏 */
+  .myq_status {
+    margin-top: 20px;
+    font-size: 12px;
+    opacity: 0.8;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<a href="./index.html" class="myq_home_link">← 返回首页</a>
+
+<div class="myq_title">
+  <h1>摇一摇抽菜谱</h1>
+  <p>摇一摇手机，抽今日菜谱 🍳</p>
+</div>
+
+<div class="myq_phone" id="myqPhone">📱</div>
+
+<!-- 不支持提示，默认隐藏 -->
+<div class="myq_unsupported" id="myqUnsupported">
+  当前设备不支持摇一摇，请用手机打开
+</div>
+
+<!-- 结果展示区 -->
+<div class="myq_result" id="myqResult">
+  <div class="myq_placeholder">摇动手机，抽取今日菜谱</div>
+</div>
+
+<!-- 降级按钮：不支持或未授权时显示 -->
+<button class="myq_btn" id="myqFallbackBtn" style="display:none">点我抽一次</button>
+
+<!-- 状态栏：实时显示合成加速度，便于调试 -->
+<div class="myq_status" id="myqStatus">加速度：-- m/s²</div>
+
+<script>
+/* 作者：马宇乾 | 建立时间：2026-11-16 14:50 | 使用模型：Trae
+   功能：摇一摇抽菜谱 —— devicemotion 合成加速度超阈值触发随机抽菜，含降级方案 */
+
+(function () {
+  "use strict";
+
+  // ===== 1. 获取 DOM 元素 =====
+  var myq_phone = document.getElementById("myqPhone");
+  var myq_result = document.getElementById("myqResult");
+  var myq_unsupported = document.getElementById("myqUnsupported");
+  var myq_fallback_btn = document.getElementById("myqFallbackBtn");
+  var myq_status = document.getElementById("myqStatus");
+
+  // ===== 2. 菜谱数据（4 道菜，与 mobile-gesture.html 保持一致）=====
+  var myq_dishes = [
+    { name: "红烧狮子头", emoji: "🍖", desc: "淮扬名菜，肥瘦相间的肉丸慢火细炖，入口即化。" },
+    { name: "蒜蓉粉丝虾", emoji: "🦐", desc: "鲜活大虾配金黄蒜蓉与晶莹粉丝，蒜香与鲜甜融合。" },
+    { name: "翡翠白玉羹", emoji: "🥬", desc: "菠菜汁碧绿汤底配嫩滑豆腐丁，清淡养生。" },
+    { name: "蜜汁叉烧", emoji: "🍖", desc: "梅花肉以蜂蜜叉烧酱腌制，烤至外焦里嫩。" }
+  ];
+
+  // ===== 3. 常量：阈值与冷却时间 =====
+  var myq_threshold = 18;       // 合成加速度阈值（m/s²），静止时约 9.8，摇动时远超 18
+  var myq_cooldown = 1500;      // 冷却时间 1.5 秒，防止一次摇动重复触发
+
+  // ===== 4. 状态变量 =====
+  var myq_isCooling = false;    // 是否处于冷却期
+  var myq_supported = false;    // 设备是否支持 devicemotion
+
+  // ===== 5. 随机抽取一道菜并展示 =====
+  function myq_pickDish() {
+    var myq_idx = Math.floor(Math.random() * myq_dishes.length);
+    var myq_dish = myq_dishes[myq_idx];
+    // 重置动画：先移除，强制重排后再添加，保证每次都播放
+    myq_result.classList.remove("myq_pop");
+    void myq_result.offsetWidth;
+    myq_result.innerHTML =
+      '<div class="myq_dish_emoji">' + myq_dish.emoji + '</div>' +
+      '<div class="myq_dish_name">' + myq_dish.name + '</div>' +
+      '<div class="myq_dish_desc">' + myq_dish.desc + '</div>';
+    myq_result.classList.add("myq_pop");
+  }
+
+  // ===== 6. 摇一摇触发逻辑 =====
+  function myq_onShake() {
+    if (myq_isCooling) return;       // 冷却中，忽略
+    myq_isCooling = true;             // 进入冷却
+    myq_pickDish();                   // 抽菜
+    // 冷却结束后解锁
+    setTimeout(function () { myq_isCooling = false; }, myq_cooldown);
+  }
+
+  // ===== 7. devicemotion 回调：计算合成加速度 =====
+  function myq_handleMotion(e) {
+    var myq_acc = e.accelerationIncludingGravity;
+    // 部分设备可能返回 null，需判空
+    if (!myq_acc || myq_acc.x == null || myq_acc.y == null || myq_acc.z == null) return;
+
+    // 合成加速度 = 三个分量的模长
+    var myq_mag = Math.sqrt(
+      myq_acc.x * myq_acc.x +
+      myq_acc.y * myq_acc.y +
+      myq_acc.z * myq_acc.z
+    );
+
+    // 实时显示加速度（调试用）
+    myq_status.textContent = "加速度：" + myq_mag.toFixed(2) + " m/s²";
+
+    // 超过阈值判定为摇动
+    if (myq_mag > myq_threshold) {
+      myq_onShake();
+    }
+  }
+
+  // ===== 8. 检测设备支持并启动监听 =====
+  function myq_initSensor() {
+    // 检测是否支持 DeviceMotionEvent
+    if (typeof DeviceMotionEvent === "undefined") {
+      myq_showUnsupported();
+      return;
+    }
+
+    // iOS 13+ 需要通过用户手势请求权限
+    if (typeof DeviceMotionEvent.requestPermission === "function") {
+      // 显示"开启摇一摇"按钮，由用户点击触发权限请求
+      myq_fallback_btn.style.display = "block";
+      myq_fallback_btn.textContent = "开启摇一摇";
+      myq_fallback_btn.onclick = function () {
+        DeviceMotionEvent.requestPermission().then(function (myq_state) {
+          if (myq_state === "granted") {
+            window.addEventListener("devicemotion", myq_handleMotion);
+            myq_fallback_btn.style.display = "none";
+            myq_supported = true;
+          } else {
+            myq_showUnsupported();
+          }
+        }).catch(function () {
+          myq_showUnsupported();
+        });
+      };
+    } else {
+      // 非 iOS 13+：直接监听
+      window.addEventListener("devicemotion", myq_handleMotion);
+      myq_supported = true;
+    }
+
+    // 监听后 1.5 秒内如果没有收到任何加速度数据，认为不支持
+    setTimeout(function () {
+      if (!myq_supported && myq_status.textContent === "加速度：-- m/s²") {
+        myq_showUnsupported();
+      }
+    }, 1500);
+  }
+
+  // ===== 9. 显示不支持提示 + 降级按钮 =====
+  function myq_showUnsupported() {
+    myq_unsupported.style.display = "block";
+    myq_fallback_btn.style.display = "block";
+    myq_fallback_btn.textContent = "点我抽一次";
+    myq_fallback_btn.onclick = myq_onShake;  // 降级：点击也能抽菜
+  }
+
+  // ===== 10. 页面加载后初始化 =====
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", myq_initSensor);
+  } else {
+    myq_initSensor();
+  }
+
+})();
+
+/* ===== 为什么必须做降级（说明）=====
+   1. 桌面浏览器（Chrome/Edge/Firefox）没有加速度传感器，devicemotion 不会触发；
+   2. iOS 13+ 要求通过用户手势调用 DeviceMotionEvent.requestPermission() 才能获取运动数据，
+      且必须在 HTTPS 安全上下文下，否则直接报错；
+   3. 部分安卓浏览器或微信内置浏览器可能不暴露 accelerationIncludingGravity，或返回 null；
+   4. 因此不能假设"只要监听 devicemotion 就一定能用"，必须：
+      - 先检测 typeof DeviceMotionEvent；
+      - iOS 走 requestPermission 流程；
+      - 监听后超时无数据则判定不支持；
+      - 提供"点我抽一次"按钮，保证任何设备都能体验核心功能。
+*/
+</script>
+</body>
+</html>

@@ -533,3 +533,9 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 模型：Trae
 提示词：
 在项目中新建 mobile-zoom.html，实现移动端图片查看器
+
+---
+时间：2026-11-16 14:50:00
+模型：Trae
+提示词：
+在项目中新建 mobile-sensor.html，实现摇一摇功能
