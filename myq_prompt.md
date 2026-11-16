@@ -515,3 +515,9 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 模型：Trae
 提示词：
 在项目中新建移动端页面 mobile-gesture.html：1、页面显示一张美食卡片，共 4 道菜（菜名、简介、渐变背景），底部显示第 1/4 张；2、监听 touchstart / touchend，用 changedTouches[0] 计算横向位移，阈值 40px；3、左滑切到下一张，右滑切到上一张，边界时给出提示文字已经是第一张/最后一张；4、卡片容器加 touch-action: pan-y，保证纵向还能滚动页面；5、切换时加 0.3s 过渡动画，并防止快速连滑一次跳两张（加 300ms 冷却）；6、类名、id、JS 变量一律以 myq_ 开头，文件头写上姓名学号。
+
+---
+时间：2026-11-16 14:25:00
+模型：Trae
+提示词：
+提交到git上
