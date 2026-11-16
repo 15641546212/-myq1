@@ -1,0 +1,256 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-16 15:00
+  使用模型：Trae
+  功能名称及简介：移动端手势滑动美食卡片 —— 4 道菜上图下文，左右滑动切换，含边界提示与冷却防连滑
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>移动端手势滑动 · 美食卡片</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f0e1;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  /* 返回首页 */
+  .myq_home_link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    color: #4caf50;
+    text-decoration: none;
+    font-size: 14px;
+    z-index: 1000;
+  }
+  /* 顶部标题 */
+  .myq_header {
+    padding: 20px 16px 12px;
+    text-align: center;
+    color: #3e2723;
+  }
+  .myq_header h1 { font-size: 22px; font-weight: 700; }
+  .myq_header p { font-size: 13px; color: #8d6e63; margin-top: 4px; }
+  /* 卡片容器：核心约束 */
+  .myq_card_wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow: hidden;
+    touch-action: pan-y;       /* 纵向仍可滚动页面，横向交给 JS */
+    user-select: none;
+  }
+  /* 卡片轨道：所有卡片横向排列，通过 translateX 切换 */
+  .myq_track {
+    display: flex;
+    width: 100%;
+    max-width: 360px;
+    transition: transform 0.3s ease;  /* 0.3s 过渡动画 */
+    will-change: transform;
+  }
+  /* 单张卡片 */
+  .myq_card {
+    flex: 0 0 100%;
+    min-width: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    background: #fff;
+  }
+  .myq_dish_img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  .myq_dish_info {
+    padding: 16px;
+  }
+  .myq_dish_name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #3e2723;
+    margin-bottom: 8px;
+  }
+  .myq_dish_desc {
+    font-size: 13px;
+    color: #6d4c41;
+    line-height: 1.6;
+  }
+  /* 底部计数 */
+  .myq_footer {
+    padding: 16px;
+    text-align: center;
+    font-size: 15px;
+    color: #5d4037;
+    font-weight: 600;
+  }
+  /* 边界提示 */
+  .myq_tip {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .myq_tip.myq_show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<a href="./index.html" class="myq_home_link">← 返回首页</a>
+
+<header class="myq_header">
+  <h1>今日美食推荐</h1>
+  <p>左右滑动切换菜品</p>
+</header>
+
+<!-- 卡片容器 -->
+<div class="myq_card_wrap" id="myqCardWrap">
+  <div class="myq_track" id="myqTrack">
+    <!-- 卡片由 JS 动态生成 -->
+  </div>
+</div>
+
+<!-- 底部计数 -->
+<div class="myq_footer">第 <span id="myqCurrent">1</span> / <span id="myqTotal">4</span> 张</div>
+
+<!-- 边界提示 -->
+<div class="myq_tip" id="myqTip"></div>
+
+<script>
+/* 作者：马宇乾 | 建立时间：2026-11-16 15:00 | 使用模型：Trae
+   功能：移动端手势滑动美食卡片 —— touchstart/touchend 计算位移，阈值40px，0.3s过渡+300ms冷却 */
+
+(function () {
+  "use strict";
+
+  // ===== 1. 菜品数据：使用 img/ 目录下已有的美食照片 =====
+  var myq_dishes = [
+    { name: "红烧狮子头", desc: "淮扬名菜，肥瘦相间的肉丸慢火细炖，入口即化，汤汁浓郁。", img: "img/myq_lionhead_1.jpg" },
+    { name: "蒜蓉粉丝虾", desc: "鲜活大虾配金黄蒜蓉与晶莹粉丝，蒜香与海鲜鲜甜完美融合。", img: "img/myq_shrimp_1.jpg" },
+    { name: "翡翠白玉羹", desc: "菠菜汁调出碧绿汤底，搭配嫩滑豆腐丁，清淡养生又开胃。", img: "img/myq_soup_1.jpg" },
+    { name: "蜜汁叉烧", desc: "梅花肉以蜂蜜叉烧酱腌制，明火烤至外焦里嫩，甜咸交织。", img: "img/myq_charsiu_1.jpg" }
+  ];
+
+  // ===== 2. 获取 DOM 元素 =====
+  var myq_track = document.getElementById("myqTrack");
+  var myq_wrap = document.getElementById("myqCardWrap");
+  var myq_current = document.getElementById("myqCurrent");
+  var myq_total = document.getElementById("myqTotal");
+  var myq_tip = document.getElementById("myqTip");
+
+  // ===== 3. 状态变量 =====
+  var myq_index = 0;           // 当前卡片索引
+  var myq_startX = 0;          // touchstart 时的 X 坐标
+  var myq_startY = 0;          // touchstart 时的 Y 坐标（用于判断横滑还是纵滑）
+  var myq_isAnimating = false; // 是否正在切换动画中（冷却锁）
+  var myq_cooldown = 300;      // 冷却时间 300ms，防止快速连滑一次跳两张
+  var myq_threshold = 40;      // 横向位移阈值 40px，超过才判定为切换
+
+  // ===== 4. 渲染卡片 =====
+  function myqRender() {
+    myq_track.innerHTML = myq_dishes.map(function (d) {
+      return '<div class="myq_card">' +
+               '<img class="myq_dish_img" src="' + d.img + '" alt="' + d.name + '" loading="lazy">' +
+               '<div class="myq_dish_info">' +
+                 '<div class="myq_dish_name">' + d.name + '</div>' +
+                 '<div class="myq_dish_desc">' + d.desc + '</div>' +
+               '</div>' +
+             '</div>';
+    }).join("");
+    myq_total.textContent = myq_dishes.length;
+  }
+
+  // ===== 5. 更新显示：移动轨道 + 更新计数 =====
+  function myqUpdate() {
+    myq_track.style.transform = "translateX(" + (-myq_index * 100) + "%)";
+    myq_current.textContent = myq_index + 1;
+  }
+
+  // ===== 6. 显示边界提示 =====
+  function myqShowTip(msg) {
+    myq_tip.textContent = msg;
+    myq_tip.classList.add("myq_show");
+    setTimeout(function () { myq_tip.classList.remove("myq_show"); }, 1200);
+  }
+
+  // ===== 7. 切到下一张 =====
+  function myqNext() {
+    if (myq_index < myq_dishes.length - 1) {
+      myq_index++;
+      myqUpdate();
+    } else {
+      myqShowTip("已经是最后一张啦 👉");
+    }
+  }
+
+  // ===== 8. 切到上一张 =====
+  function myqPrev() {
+    if (myq_index > 0) {
+      myq_index--;
+      myqUpdate();
+    } else {
+      myqShowTip("已经是第一张啦 👈");
+    }
+  }
+
+  // ===== 9. touchstart：记录起始坐标 =====
+  myq_wrap.addEventListener("touchstart", function (e) {
+    if (myq_isAnimating) return;
+    myq_startX = e.changedTouches[0].clientX;
+    myq_startY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  // ===== 10. touchend：计算位移并切换 =====
+  myq_wrap.addEventListener("touchend", function (e) {
+    if (myq_isAnimating) return;
+
+    var myq_endX = e.changedTouches[0].clientX;
+    var myq_endY = e.changedTouches[0].clientY;
+    var myq_deltaX = myq_endX - myq_startX;
+    var myq_deltaY = myq_endY - myq_startY;
+
+    // 只有横向位移明显大于纵向位移，才判定为横滑
+    if (Math.abs(myq_deltaX) < Math.abs(myq_deltaY)) return;
+
+    // 超过阈值才切换
+    if (Math.abs(myq_deltaX) < myq_threshold) return;
+
+    // 加锁，进入冷却
+    myq_isAnimating = true;
+
+    if (myq_deltaX < 0) {
+      myqNext();   // 左滑 → 下一张
+    } else {
+      myqPrev();   // 右滑 → 上一张
+    }
+
+    // 冷却结束解锁（与 0.3s 过渡动画时长匹配）
+    setTimeout(function () { myq_isAnimating = false; }, myq_cooldown);
+  }, { passive: true });
+
+  // ===== 11. 初始化 =====
+  myqRender();
+  myqUpdate();
+
+})();
+</script>
+</body>
+</html>
