@@ -81,51 +81,6 @@
   .wy-back a:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(15,43,91,.15)}
 
   footer{text-align:center;margin-top:34px;color:#9ca3af;font-size:13px;line-height:2}
-
-  /* 提示词工程 · 两轮对照 */
-  .myq-prompt-block{margin:20px 0 6px;background:#fafbff;border:1.5px solid #e0e7ff;border-radius:16px;padding:20px 22px}
-  .myq-prompt-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:10px}
-  .myq-prompt-title{display:flex;align-items:center;gap:12px}
-  .myq-prompt-no{flex:none;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#0f2b5b,#1d5bbf);color:#fff;font-size:15px;font-weight:bold;display:flex;align-items:center;justify-content:center}
-  .myq-prompt-no-sm{width:26px;height:26px;font-size:13px;border-radius:8px}
-  .myq-prompt-head h3{font-size:17px;color:#0f2b5b;margin:0}
-  .myq-prompt-head h3 small{display:block;font-weight:normal;color:#6b7280;font-size:12.5px;margin-top:2px}
-  .myq-prompt-link{font-size:13px;color:#1d5bbf;text-decoration:none;background:#fff;border:1px solid #c7d8f8;padding:6px 16px;border-radius:999px;transition:all .2s;white-space:nowrap}
-  .myq-prompt-link:hover{background:#1d5bbf;color:#fff}
-  .myq-prompt-intro{font-size:13.5px;color:#4b5563;line-height:1.9;margin:0 0 16px}
-  .myq-prompt-intro code{background:#eef2ff;color:#1d4ed8;padding:1px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:12px}
-  .myq-rounds{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:640px){.myq-rounds{grid-template-columns:1fr}}
-  .myq-card{background:#fff;border-radius:14px;padding:16px;border:1px solid #e8ecf5;min-width:0;overflow:hidden}
-  .myq-card-bad{border-color:#fecaca}
-  .myq-card-good{border-color:#bbf7d0}
-  .myq-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-  .myq-round-label{font-size:12.5px;color:#6b7280;font-weight:600}
-  .myq-card-tag{display:inline-block;font-size:11px;padding:2px 10px;border-radius:999px}
-  .myq-tag-bad{background:#fef2f2;color:#dc2626}
-  .myq-tag-good{background:#f0fdf4;color:#16a34a}
-  .myq-card h4{font-size:15px;color:#111827;margin:0 0 6px}
-  .myq-card p{font-size:12.5px;color:#6b7280;line-height:1.7;margin:0 0 10px}
-  .myq-card p code{background:#f3f4f6;color:#374151;padding:1px 5px;border-radius:4px;font-family:Consolas,monospace;font-size:11.5px}
-  .myq-card .swiper{border-radius:10px;height:160px;overflow:hidden}
-  .myq-card .swiper-slide{position:relative;height:160px}
-  .myq-card .swiper-slide img{width:100%;height:100%;object-fit:cover;display:block}
-  .myq-card .swiper-pagination{bottom:8px}
-  .myq-card .swiper-pagination-bullet{background:#fff;opacity:.5;width:6px;height:6px}
-  .myq-card .swiper-pagination-bullet-active{background:#3b82f6;opacity:1;width:6px;height:6px}
-  .myq-status{font-size:12px;margin:10px 0;padding:7px 10px;border-radius:7px;line-height:1.5}
-  .myq-status-bad{background:#fef2f2;color:#dc2626}
-  .myq-status-good{background:#f0fdf4;color:#16a34a}
-  .myq-status b{font-weight:700}
-  .myq-code{background:#1e293b;color:#e2e8f0;border-radius:10px;padding:12px 14px;font-family:Consolas,monospace;font-size:12px;line-height:1.7;margin-top:10px;overflow-x:auto;white-space:pre}
-  .myq-code .myq-kw{color:#c084fc}
-  .myq-code .myq-str{color:#86efac}
-  .myq-param-title{display:flex;align-items:center;gap:10px;margin-top:20px}
-  .myq-param-title h4{font-size:14px;color:#0f2b5b;margin:0}
-  .myq-param-table{width:100%;margin-top:12px;border-collapse:collapse;font-size:13px}
-  .myq-param-table th,.myq-param-table td{border:1px solid #e8ecf5;padding:9px 12px;text-align:left}
-  .myq-param-table th{background:#f1f5f9;color:#334155;font-weight:600}
-  .myq-param-table td code{background:#eef2ff;color:#1d4ed8;padding:1px 6px;border-radius:4px;font-family:Consolas,monospace;font-size:12px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -136,7 +91,7 @@
     <h1>Swiper 轮播组件 · <b>大国重器光影展（学生版）</b></h1>
     <p>HTML 骨架和 CSS 样式已经全部搭好，图片也备齐了——但这个页面的轮播<b>一个都不会动</b>！
     因为所有 <b>&lt;script&gt; 里的 JS 初始化代码都被抽走了</b>。你的任务：把 4 个轮播全部"救活"。</p>
-    <div class="wy-goals"><i>任务 1 · 救活最小轮播</i><i>任务 2 · 装上圆点和箭头</i><i>任务 3 · 让它自己翻页</i><i>任务 4 · 八种效果随心换</i></div>
+    <div class="wy-goals"><i>任务 1 · 救活最小轮播</i><i>任务 2 · 装上圆点和箭头</i><i>任务 3 · 让它自己翻页</i><i>任务 4 · 六种效果随心换</i></div>
   </div>
 
   <div class="wy-rule">
@@ -172,81 +127,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- 提示词工程 · 两轮对照：效果与代码文字一起展示 -->
-    <div class="myq-prompt-block">
-      <div class="myq-prompt-head">
-        <div class="myq-prompt-title">
-          <span class="myq-prompt-no">01</span>
-          <div>
-            <h3>提示词工程 · 两轮对照</h3>
-            <small>效果 + 代码 + 验证，一眼看懂提示词迭代的力量</small>
-          </div>
-        </div>
-        <a href="myq_prompt.md" class="myq-prompt-link" target="_blank">📝 查看 myq_prompt 提示词记录 →</a>
-      </div>
-      <p class="myq-prompt-intro">以任务一「圆点分页器可点击」为例：第 1 轮提示词只写"圆点分页器"，AI 漏了 <code>clickable</code>；第 2 轮补一句"圆点必须能点击跳转"，AI 立刻补上。下方两个轮播可直接操作验证。</p>
-      <div class="myq-rounds">
-        <!-- 第 1 轮：漏需求 -->
-        <div class="myq-card myq-card-bad">
-          <div class="myq-card-head">
-            <span class="myq-round-label">第 1 轮</span>
-            <span class="myq-card-tag myq-tag-bad">漏了需求</span>
-          </div>
-          <h4>圆点只能看，不能点</h4>
-          <p>提示词只写了"圆点分页器"，AI 理解为"把圆点画出来"，只给了 <code>el</code>，没给 <code>clickable</code>。</p>
-          <div class="swiper" id="myqSwiperBad">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
-              <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"></div>
-              <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达魔都号"></div>
-            </div>
-            <div class="swiper-pagination" id="myqPagBad"></div>
-          </div>
-          <div class="myq-status myq-status-bad">点第 3 个圆点 → <b>没有跳转</b>（圆点只是装饰）</div>
-          <div class="myq-code">pagination: {
-  el: '<span class="myq-str">#myqPagBad</span>'
-}</div>
-        </div>
-        <!-- 第 2 轮：补齐需求 -->
-        <div class="myq-card myq-card-good">
-          <div class="myq-card-head">
-            <span class="myq-round-label">第 2 轮</span>
-            <span class="myq-card-tag myq-tag-good">补齐需求</span>
-          </div>
-          <h4>圆点是遥控器，不是装饰</h4>
-          <p>把需求改写成"圆点必须能点击直接跳转，不是只能看"。同一个 AI，立刻补上了 <code>clickable: true</code>。</p>
-          <div class="swiper" id="myqSwiperGood">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"></div>
-              <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"></div>
-              <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达魔都号"></div>
-            </div>
-            <div class="swiper-pagination" id="myqPagGood"></div>
-          </div>
-          <div class="myq-status myq-status-good">点第 3 个圆点 → <b>已跳转到第 3 张</b>（圆点可点击）</div>
-          <div class="myq-code">pagination: {
-  el: '<span class="myq-str">#myqPagGood</span>',
-  clickable: <span class="myq-kw">true</span>
-}</div>
-        </div>
-      </div>
-      <!-- 把中文需求翻译成参数 -->
-      <div class="myq-param-title">
-        <span class="myq-prompt-no myq-prompt-no-sm">02</span>
-        <h4>把中文需求翻译成参数</h4>
-      </div>
-      <table class="myq-param-table">
-        <thead><tr><th>老师的要求</th><th>对应参数</th><th>说明</th></tr></thead>
-        <tbody>
-          <tr><td>无缝循环</td><td><code>loop: true</code></td><td>首尾相接，滑到最后一张后接第一张</td></tr>
-          <tr><td>3.2 秒自动翻页</td><td><code>autoplay: { delay: 3200 }</code></td><td>delay 单位毫秒，3200 = 3.2 秒</td></tr>
-          <tr><td>手动操作后不停止</td><td><code>autoplay: { disableOnInteraction: false }</code></td><td>默认 true，用户滑动后自动播放就停止</td></tr>
-          <tr><td>圆点分页器可点击</td><td><code>pagination: { clickable: true }</code></td><td>默认 false，圆点只显示不可点</td></tr>
-          <tr><td>初始效果为 cube</td><td><code>effect: 'cube'</code></td><td>Swiper 内置 7 种 effect</td></tr>
-        </tbody>
-      </table>
     </div>
   </div>
 
@@ -315,14 +195,14 @@
   <div class="wy-sec">
     <div class="wy-sec-head">
       <span class="wy-no">4</span>
-      <h2>八种效果随心换<small>effect 参数 + slidesPerView 多图 + 进阶：按钮实时切换</small></h2>
+      <h2>六种效果随心换<small>effect 参数 + 进阶：按钮实时切换</small></h2>
     </div>
-    <p class="wy-txt">改一个 <code>effect</code> 参数，轮播立刻换一种"性格"：slide / fade / cube / coverflow / flip / cards / creative；第 8 个按钮则演示 <code>mousewheel</code> 滚轮切换（参考官方 demo <code>100-space-between</code>，多图并排 + 空格 + 滚轮翻页）。上面的 8 个按钮已经绑好了点击事件（读取 <code>btn.dataset.fx</code>），JS 还需要你补两段。</p>
+    <p class="wy-txt">改一个 <code>effect</code> 参数，轮播立刻换一种"性格"：slide / fade / cube / coverflow / flip / cards。上面的 6 个按钮已经绑好了点击事件（读取 <code>btn.dataset.fx</code>），JS 还需要你补两段。</p>
     <div class="wy-req">
       <h3>✍️ 任务 4 要求</h3>
       <p><b>基础分</b>：初始化 <code>#wySw4</code>，实现循环 + 自动播放（3.2 秒）+ 圆点分页器（#wyPag4），初始效果为 <code>'slide'</code>，动画时长 800 毫秒。</p>
-      <p><b>进阶分</b>：补全按钮点击事件中的 TODO——实现点击按钮<b>切换效果</b>。提示：Swiper 动态换 effect 不能只改参数，需要<b>先销毁旧实例再重建</b>（destroy + new）。第 8 个按钮 <code>slidesPerView</code> 不是 effect，需特殊处理：切换到一个独立的 <b>mousewheel 滚轮切换 Swiper</b>（<code>#myqSw4Wheel</code>），参考官方 demo <code>100-space-between</code> 配置 <code>spaceBetween: 30</code>、<code>slidesPerView: 3</code>，并开启 <code>mousewheel</code> 滚轮翻页。</p>
-      <span class="wy-star">⭐ 验证标准：基础分——轮播自动翻页；进阶分——点 cube 变 3D 立方体、点 fade 变淡入淡出、点"多图滚轮"显示三张并排且滚轮可切换</span>
+      <p><b>进阶分</b>：补全按钮点击事件中的 TODO——实现点击按钮<b>切换效果</b>。提示：Swiper 动态换 effect 不能只改参数，需要<b>先销毁旧实例再重建</b>（destroy + new）。</p>
+      <span class="wy-star">⭐ 验证标准：基础分——轮播自动翻页；进阶分——点 cube 按钮变 3D 立方体、点 fade 变淡入淡出</span>
     </div>
     <div class="wy-fx">
       <button class="wy-on" data-fx="slide">slide 平推（默认·稳重）</button>
@@ -332,7 +212,6 @@
       <button data-fx="flip">flip 翻页（复古）</button>
       <button data-fx="cards">cards 卡片（俏皮）</button>
       <button data-fx="creative">creative 电影墙（第 7 种 · 进阶）</button>
-      <button data-fx="slidesPerView">多图滚轮（第 8 种 · spaceBetween + mousewheel）</button>
     </div>
     <div class="wy-demo">
       <span class="wy-demo-tag">🎛️ 演示四 · 效果实验台（点按钮切换 effect）</span>
@@ -347,20 +226,6 @@
             <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号"><div class="wy-cap"><h3>爱达·魔都号</h3><p>第六件展品 · 光影展新成员</p></div></div>
           </div>
           <div class="swiper-pagination" id="wyPag4"></div>
-        </div>
-      </div>
-      <!-- 第 8 个按钮专属：mousewheel 滚轮切换演示（参考官方 demo 100-space-between） -->
-      <div class="wy-swiper" id="myqSw4WheelBox" style="display:none;margin-top:14px">
-        <div class="swiper" id="myqSw4Wheel">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"><div class="wy-cap"><h3>天宫空间站</h3><p>滚轮向下 → 切换下一张</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组"><div class="wy-cap"><h3>复兴号动车组</h3><p>spaceBetween: 30 · 三张并排</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"><div class="wy-cap"><h3>C919 大飞机</h3><p>mousewheel 接管滚轮事件</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"><div class="wy-cap"><h3>奋斗者号</h3><p>一格滚轮 = 一张</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="wy-cap"><h3>中国天眼 FAST</h3><p>thresholdDelta 过滤微抖</p></div></div>
-            <div class="swiper-slide"><img src="swiper-imgs/adora_1.jpg" alt="爱达·魔都号"><div class="wy-cap"><h3>爱达·魔都号</h3><p>滚轮切换 · 无需点击</p></div></div>
-          </div>
-          <div class="swiper-pagination" id="myqPag4Wheel"></div>
         </div>
       </div>
     </div>
@@ -379,29 +244,6 @@
   // ── 任务 1：初始化 #wySw1，让它至少可以拖动 ──
   // TODO: 在这里写你的代码
     var wySw1 = new Swiper("#wySw1", {});
-
-  // ── 提示词工程 · 两轮对照：演示"漏 clickable" vs "补齐 clickable" ──
-  // 第 1 轮（漏需求）：只给 el，不给 clickable —— 圆点只能看不能点
-    var myqSwiperBad = new Swiper("#myqSwiperBad", {
-      pagination: { el: "#myqPagBad" },   // 没有 clickable，圆点只是装饰
-    });
-  // 第 2 轮（补齐需求）：加上 clickable: true —— 圆点可点击跳转
-    var myqSwiperGood = new Swiper("#myqSwiperGood", {
-      pagination: { el: "#myqPagGood", clickable: true },  // 补齐 clickable
-    });
-  // 状态行动态验证：点击圆点时更新"没有跳转 / 已跳转"提示
-    var myqBadStatus = document.querySelector('.myq-status-bad');
-    var myqGoodStatus = document.querySelector('.myq-status-good');
-    // 第 1 轮：圆点不可点击，slideChange 不会触发，点击圆点时提示"没有跳转"
-    document.querySelectorAll('#myqPagBad .swiper-pagination-bullet').forEach(function(dot, i){
-      dot.addEventListener('click', function(){
-        myqBadStatus.innerHTML = '点第 ' + (i + 1) + ' 个圆点 → <b>没有跳转</b>（圆点只是装饰）';
-      });
-    });
-    // 第 2 轮：圆点可点击，slideChange 触发后提示"已跳转到第 X 张"
-    myqSwiperGood.on('slideChange', function(){
-      myqGoodStatus.innerHTML = '点第 ' + (myqSwiperGood.activeIndex + 1) + ' 个圆点 → <b>已跳转到第 ' + (myqSwiperGood.activeIndex + 1) + ' 张</b>（圆点可点击）';
-    });
 
   // ── 任务 2：初始化 #wySw2，循环 + 600ms + 圆点可点 + 箭头切换 ──
   // TODO: 在这里写你的代码
@@ -457,77 +299,46 @@
     });
 
 
-  // 第 8 个按钮专属：独立 mousewheel 滚轮切换 Swiper 实例（参考官方 demo 100-space-between）
-  var myqSw4Wheel = null;
-
-  // ── 任务 4 进阶：补全按钮点击事件，实现效果实时切换 ──
+  // ── 任务 4 进阶：补全按钮点击事件，实现六种效果实时切换 ──
   // 提示 1：动态换 effect 只改参数是无效的，必须销毁旧实例再重建（destroy + new）
   // 提示 2：按钮上已有 data-fx 属性，用 btn.dataset.fx 读取要切换的效果名
-  // 提示 3：第 8 个按钮 "slidesPerView" 切换到独立的 #myqSw4Wheel 演示 mousewheel 滚轮切换
   document.querySelectorAll('.wy-fx button').forEach(function(btn){
     btn.addEventListener('click', function(){
       // TODO 1：先给当前按钮加 wy-on 类、其余按钮去掉 wy-on（高亮当前按钮）
+      //         思路与 Tab 选项卡一致：先清除所有选中状态，再设置当前元素
       document.querySelectorAll('.wy-fx button').forEach(function(b){
         b.classList.remove('wy-on');
       });
       btn.classList.add('wy-on');
 
-      var myq_isWheel = btn.dataset.fx === "slidesPerView";
-      var myq_sw4Box = document.getElementById('wySw4').parentElement; // wySw4 的外层 .wy-swiper
-      var myq_wheelBox = document.getElementById('myqSw4WheelBox');    // 独立 mousewheel 演示区
+      // TODO 2：销毁旧的 wySw4 实例
+      //         destroy(删除实例引用, 清除行内样式)——动态换 effect 只改参数无效，必须销毁重建
+      wySw4.destroy(true, true);
 
-      if (myq_isWheel) {
-        // ── 第 8 个按钮：切换到独立 mousewheel 滚轮切换 Swiper ──
-        myq_sw4Box.style.display = 'none';      // 隐藏 wySw4
-        myq_wheelBox.style.display = '';        // 显示 mousewheel 演示区
-        if (wySw4) { wySw4.destroy(true, true); wySw4 = null; }  // 释放 wySw4
-        // 初始化（或重建）mousewheel Swiper，参考 100-space-between：spaceBetween:30 + slidesPerView:3
-        if (myqSw4Wheel) { myqSw4Wheel.destroy(true, true); }
-        myqSw4Wheel = new Swiper("#myqSw4Wheel", {
-          loop: true,
-          slidesPerView: 3,                     // 参考 100-space-between：三张并排
-          spaceBetween: 30,                     // 参考 100-space-between：间距 30px
-          pagination: { el: "#myqPag4Wheel", clickable: true },
-          // mousewheel 滚轮翻页：参数调校让手感自然（每项原理见行尾注释）
-          mousewheel: {
-            forceToAxis: false,      // 常规鼠标滚轮用默认；触控板横滑时改为 true 更跟手
-            invert: false,           // 滚轮向下 = 下一张（符合直觉，不反转）
-            sensitivity: 1,          // 灵敏度 1：一格滚轮 = 一张，过大会一滚跳多张
-            thresholdDelta: 30,      // 滚动增量 < 30 忽略：过滤触控板微抖，避免误触
-            thresholdTime: 200,      // 200ms 内的连续滚动只算一次：防止高速滚动连翻多张
-            releaseOnEdges: true,    // 到达边界时把滚轮还给页面（loop 模式无边界）
-          },
-        });
-      } else {
-        // ── 其它按钮：重建 wySw4，隐藏 mousewheel 演示区 ──
-        myq_wheelBox.style.display = 'none';    // 隐藏 mousewheel 演示区
-        myq_sw4Box.style.display = '';          // 显示 wySw4
-        if (myqSw4Wheel) { myqSw4Wheel.destroy(true, true); myqSw4Wheel = null; }
-        // TODO 2：销毁旧的 wySw4 实例（动态换 effect 必须销毁重建）
-        if (wySw4) { wySw4.destroy(true, true); }
-        // TODO 3：用新 effect 重建实例（把其它配置原样保留）
-        wySw4 = new Swiper("#wySw4", {
-          loop: true,
-          effect: btn.dataset.fx,
-          speed: 800,
-          autoplay: { delay: 3200, disableOnInteraction: false },
-          pagination: { el: "#wyPag4", clickable: true },
-          // mousewheel 与初始配置保持一致（阈值过滤连滚，一格一张不跳页）
-          mousewheel: {
-            forceToAxis: false,
-            invert: false,
-            sensitivity: 1,
-            thresholdDelta: 30,
-            thresholdTime: 200,
-            releaseOnEdges: true,
-          },
-          // creative（电影墙）专属参数，与初始配置保持一致（其它效果会忽略它）
-          creativeEffect: {
-            prev: { shadow: true, translate: ["-125%", 0, -800], rotate: [0, 0, -90] },
-            next: { shadow: true, translate: ["125%", 0, -800], rotate: [0, 0, 90] },
-          },
-        });
-      }
+      // TODO 3：用新 effect 重建实例（把其它配置原样保留）
+      //         effect 名从按钮的 data-fx 属性读取（btn.dataset.fx）
+      wySw4 = new Swiper("#wySw4", {
+        loop: true,
+        effect: btn.dataset.fx,
+        speed: 800,
+        autoplay: { delay: 3200, disableOnInteraction: false },
+        pagination: { el: "#wyPag4", clickable: true },
+        // mousewheel 与初始配置保持一致（阈值过滤连滚，一格一张不跳页）
+        mousewheel: {
+          forceToAxis: false,
+          invert: false,
+          sensitivity: 1,
+          thresholdDelta: 30,
+          thresholdTime: 200,
+          releaseOnEdges: true,
+        },
+        // creative（电影墙）专属参数，与初始配置保持一致（其它效果会忽略它）
+        creativeEffect: {
+          prev: { shadow: true, translate: ["-125%", 0, -800], rotate: [0, 0, -90] },
+          next: { shadow: true, translate: ["125%", 0, -800], rotate: [0, 0, 90] },
+        },
+      });
+
     });
   });
 </script>

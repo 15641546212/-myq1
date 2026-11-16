@@ -4,21 +4,21 @@
 
 ---
 
-## 规则 1：命名前缀 `myq_`
+## 规则 1：命名前缀 `wy_`
 
-所有 **CSS 类名 / ID、JavaScript 变量、函数、对象属性** 必须以 `myq_` 开头。
+所有 **CSS 类名 / ID、JavaScript 变量、函数、对象属性** 必须以 `wy_` 开头。
 
 ### 适用
 
 | 场景 | 正确 | 错误 |
 |------|------|------|
-| CSS 类 | `.myq_module { }` | `.module { }` |
-| CSS ID | `#myq_main { }` | `#main { }` |
-| JS 变量 | `let myq_count = 0` | `let count = 0` |
-| JS 函数 | `function myq_render() { }` | `function render() { }` |
-| JS 对象属性 | `myq_config.myq_theme` | `config.theme` |
-| HTML class | `class="myq_header myq_active"` | `class="header active"` |
-| HTML id | `id="myq_nav"` | `id="nav"` |
+| CSS 类 | `.wy_module { }` | `.module { }` |
+| CSS ID | `#wy_main { }` | `#main { }` |
+| JS 变量 | `let wy_count = 0` | `let count = 0` |
+| JS 函数 | `function wy_render() { }` | `function render() { }` |
+| JS 对象属性 | `wy_config.wy_theme` | `config.theme` |
+| HTML class | `class="wy_header wy_active"` | `class="header active"` |
+| HTML id | `id="wy_nav"` | `id="nav"` |
 
 ### 不适用
 
@@ -29,9 +29,9 @@
 
 ---
 
-## 规则 2：提示词日志 `myq_prompt.md`
+## 规则 2：提示词日志 `wy_prompt.md`
 
-**每次执行用户提示词之前**，必须先将提示词追加写入项目根目录的 `myq_prompt.md`。
+**每次执行用户提示词之前**，必须先将提示词追加写入项目根目录的 `wy_prompt.md`。
 
 ### 写入格式
 
@@ -81,7 +81,7 @@
 ### 最简写法
 
 ```html
-<a href="./index.html" class="myq_back-home">返回首页</a>
+<a href="./index.html" class="wy_back-home">返回首页</a>
 ```
 
 ### 例外（不需要加）
@@ -98,6 +98,6 @@
 
 | # | 触发时机 | 核心动作 |
 |---|---------|---------|
-| 1 | 写 CSS / JS / HTML 标识符时 | 所有类名、ID、变量、函数以 `myq_` 开头 |
-| 2 | 收到每条用户提示词时 | 先追加写入 `myq_prompt.md` 再执行 |
+| 1 | 写 CSS / JS / HTML 标识符时 | 所有类名、ID、变量、函数以 `wy_` 开头 |
+| 2 | 收到每条用户提示词时 | 先追加写入 `wy_prompt.md` 再执行 |
 | 3 | 创建新 HTML 文件时 | 必须包含 `index.html` 的返回链接 |

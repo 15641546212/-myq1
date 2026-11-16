@@ -3,5 +3,3 @@
 .gitee-token.local
 # Trae 分享功能自动生成的压缩包，不入库
 .trae-html-share-packages/
-# db 数据服务器依赖，不入库
-db/node_modules/
