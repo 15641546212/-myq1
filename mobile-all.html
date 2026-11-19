@@ -1,0 +1,133 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-19 10:00
+  使用模型：Trae
+  功能名称及简介：移动端练习三合一汇总页 —— 用 iframe 同时嵌入手势滑动、双指缩放、摇一摇三个练习，打开一页全部可见
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>移动端交互三合一 · 马宇乾</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f5f0e1;
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #3e2723;
+  }
+  /* 返回首页 */
+  .myq_home_link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    color: #4caf50;
+    text-decoration: none;
+    font-size: 14px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.9);
+    padding: 6px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  /* 顶部标题 */
+  .myq_header {
+    padding: 50px 16px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+    color: #fff;
+  }
+  .myq_header h1 { font-size: 24px; font-weight: 700; }
+  .myq_header p { font-size: 13px; opacity: 0.9; margin-top: 6px; }
+  /* 每个练习区块 */
+  .myq_section {
+    margin: 16px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .myq_section_title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #3e2723;
+    color: #fff;
+  }
+  .myq_section_title h2 { font-size: 16px; font-weight: 600; }
+  .myq_section_title a {
+    color: #ffd54f;
+    font-size: 12px;
+    text-decoration: none;
+  }
+  /* iframe 容器：固定高度，内部可滚动 */
+  .myq_frame_box {
+    width: 100%;
+    height: 520px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .myq_frame_box iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+  .myq_footer {
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #8d6e63;
+  }
+</style>
+</head>
+<body>
+
+<a href="./index.html" class="myq_home_link">← 返回首页</a>
+
+<header class="myq_header">
+  <h1>移动端交互三合一</h1>
+  <p>手势滑动 · 双指缩放 · 摇一摇，一页全览</p>
+</header>
+
+<!-- 练习一：手势滑动美食卡片 -->
+<section class="myq_section">
+  <div class="myq_section_title">
+    <h2>🍳 ① 手势滑动 · 美食卡片</h2>
+    <a href="mobile-gesture.html" target="_blank">新窗口打开 →</a>
+  </div>
+  <div class="myq_frame_box">
+    <iframe src="mobile-gesture.html" title="手势滑动美食卡片"></iframe>
+  </div>
+</section>
+
+<!-- 练习二：双指缩放图片查看器 -->
+<section class="myq_section">
+  <div class="myq_section_title">
+    <h2>🔍 ② 双指缩放 · 图片查看器</h2>
+    <a href="mobile-zoom.html" target="_blank">新窗口打开 →</a>
+  </div>
+  <div class="myq_frame_box">
+    <iframe src="mobile-zoom.html" title="双指缩放图片查看器"></iframe>
+  </div>
+</section>
+
+<!-- 练习三：摇一摇抽菜谱 -->
+<section class="myq_section">
+  <div class="myq_section_title">
+    <h2>📱 ③ 摇一摇 · 抽菜谱</h2>
+    <a href="mobile-sensor.html" target="_blank">新窗口打开 →</a>
+  </div>
+  <div class="myq_frame_box">
+    <iframe src="mobile-sensor.html" title="摇一摇抽菜谱"></iframe>
+  </div>
+</section>
+
+<footer class="myq_footer">
+  马宇乾 24001010607 · 移动端交互练习汇总
+</footer>
+
+</body>
+</html>
