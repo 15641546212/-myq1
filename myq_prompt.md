@@ -545,3 +545,9 @@ https://spontaneous-valkyrie-4e4229.netlify.app/swiper-lesson 参考该网页的
 模型：Trae
 提示词：
 这三个放在一个卡面里 打开都能看到
+
+---
+时间：2026-11-19 10:30:00
+模型：Trae
+提示词：
+把这个视频放到这个页面里面

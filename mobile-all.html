@@ -81,6 +81,25 @@
     font-size: 12px;
     color: #8d6e63;
   }
+  /* 视频展示区 */
+  .myq_video_section {
+    margin: 16px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .myq_video_section .myq_section_title { background: #ff6b6b; }
+  .myq_video_box {
+    width: 100%;
+    background: #000;
+  }
+  .myq_video_box video {
+    width: 100%;
+    display: block;
+    max-height: 60vh;
+    object-fit: contain;
+  }
 </style>
 </head>
 <body>
@@ -91,6 +110,16 @@
   <h1>移动端交互三合一</h1>
   <p>手势滑动 · 双指缩放 · 摇一摇，一页全览</p>
 </header>
+
+<!-- 演示视频 -->
+<section class="myq_video_section">
+  <div class="myq_section_title">
+    <h2>🎬 演示视频</h2>
+  </div>
+  <div class="myq_video_box">
+    <video src="video/myq_demo.mp4" controls playsinline preload="metadata"></video>
+  </div>
+</section>
 
 <!-- 练习一：手势滑动美食卡片 -->
 <section class="myq_section">
