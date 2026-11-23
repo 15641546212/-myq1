@@ -1,0 +1,297 @@
+<!--
+  作者：马宇乾
+  建立时间：2026-11-23 10:00
+  使用模型：Trae
+  功能名称及简介：AI 功能展示页 —— 用截图展示 AI 聊天（可切换模型继续对话）、知识库问答、图像识别、语音识别四大功能，每个截图配一句话介绍
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 功能展示 · 马宇乾</title>
+<style>
+  /* 基础重置 */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+  }
+  /* 返回首页 */
+  .myq_home_link {
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 1000;
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: 14px;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    backdrop-filter: blur(8px);
+  }
+  .myq_home_link:hover { background: rgba(56, 189, 248, 0.15); }
+  /* 顶部标题 */
+  .myq_header {
+    text-align: center;
+    padding: 60px 20px 30px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  }
+  .myq_header .myq_badge {
+    display: inline-block;
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    padding: 4px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .myq_header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .myq_header p {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-top: 8px;
+  }
+  /* 功能区块 */
+  .myq_feature {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 20px;
+  }
+  .myq_feature_title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #f1f5f9;
+  }
+  .myq_feature_title .myq_icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .myq_feature_title .myq_tag {
+    font-size: 12px;
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 400;
+  }
+  /* 截图网格 */
+  .myq_shot_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+  }
+  .myq_shot_card {
+    background: #1e293b;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: zoom-in;
+  }
+  .myq_shot_card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+  .myq_shot_card img {
+    width: 100%;
+    display: block;
+    background: #0f172a;
+  }
+  .myq_shot_caption {
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #cbd5e1;
+    border-top: 1px solid rgba(148, 163, 184, 0.12);
+  }
+  /* 单图（非聊天三连）拉大一点 */
+  .myq_shot_grid.myq_single {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+  }
+  /* 灯箱 */
+  .myq_lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    cursor: zoom-out;
+  }
+  .myq_lightbox.active { display: flex; }
+  .myq_lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  }
+  .myq_lightbox .myq_close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    color: #fff;
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .myq_footer {
+    text-align: center;
+    padding: 30px 20px 40px;
+    font-size: 12px;
+    color: #64748b;
+    border-top: 1px solid rgba(148, 163, 184, 0.1);
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<a href="./index.html" class="myq_home_link">← 返回首页</a>
+
+<header class="myq_header">
+  <span class="myq_badge">AI 应用 · 多功能对比</span>
+  <h1>AI 功能展示</h1>
+  <p>AI 聊天 · 知识库问答 · 图像识别 · 语音识别 —— 四大能力截图一览</p>
+</header>
+
+<!-- 功能一：AI 聊天（可切换模型继续对话） -->
+<section class="myq_feature">
+  <div class="myq_feature_title">
+    <span class="myq_icon" style="background:rgba(56,189,248,0.18)">💬</span>
+    AI 聊天（切换模型可继续对话）
+    <span class="myq_tag">多模型对话</span>
+  </div>
+  <div class="myq_shot_grid">
+    <figure class="myq_shot_card" data-src="img/myq_ai_chat_1.png">
+      <img src="img/myq_ai_chat_1.png" alt="AI聊天-DeepSeek模型">
+      <figcaption class="myq_shot_caption">在 DeepSeek 模型下提问"营业时间"概念，AI 给出条理清晰的结构化解答。</figcaption>
+    </figure>
+    <figure class="myq_shot_card" data-src="img/myq_ai_chat_2.png">
+      <img src="img/myq_ai_chat_2.png" alt="AI聊天-切换三七豆模型">
+      <figcaption class="myq_shot_caption">切换到「三七豆 · Condor Flow」模型后，历史对话完整保留，可继续追问同一话题。</figcaption>
+    </figure>
+    <figure class="myq_shot_card" data-src="img/myq_ai_chat_3.png">
+      <img src="img/myq_ai_chat_3.png" alt="AI聊天-继续问北京建国菜">
+      <figcaption class="myq_shot_caption">在同一对话流中继续询问"北京建国菜都有什么"，模型列出多道菜品及各自特点。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 功能二：知识库问答 -->
+<section class="myq_feature">
+  <div class="myq_feature_title">
+    <span class="myq_icon" style="background:rgba(129,140,248,0.18)">📚</span>
+    知识库问答
+    <span class="myq_tag">RAG 检索增强</span>
+  </div>
+  <div class="myq_shot_grid myq_single">
+    <figure class="myq_shot_card" data-src="img/myq_kb_qa.png">
+      <img src="img/myq_kb_qa.png" alt="知识库问答系统">
+      <figcaption class="myq_shot_caption">上传本地文档构建专属知识库，提问时先从知识库检索相关片段，再由大模型生成答案。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 功能三：图像识别 -->
+<section class="myq_feature">
+  <div class="myq_feature_title">
+    <span class="myq_icon" style="background:rgba(52,211,153,0.18)">🖼️</span>
+    图像识别
+    <span class="myq_tag">视觉理解</span>
+  </div>
+  <div class="myq_shot_grid myq_single">
+    <figure class="myq_shot_card" data-src="img/myq_image_recog.png">
+      <img src="img/myq_image_recog.png" alt="图像识别">
+      <figcaption class="myq_shot_caption">上传一张电脑界面截图，模型自动识别画面内容，并用中文文字详细描述图中信息。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 功能四：语音识别 -->
+<section class="myq_feature">
+  <div class="myq_feature_title">
+    <span class="myq_icon" style="background:rgba(251,146,60,0.18)">🎤</span>
+    语音识别
+    <span class="myq_tag">语音转文字</span>
+  </div>
+  <div class="myq_shot_grid myq_single">
+    <figure class="myq_shot_card" data-src="img/myq_audio_recog.png">
+      <img src="img/myq_audio_recog.png" alt="语音识别">
+      <figcaption class="myq_shot_caption">上传一段录音，调用七牛云语音识别服务，将音频内容实时转写成文字并标注时间信息。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<footer class="myq_footer">
+  马宇乾 24001010607 · AI 功能展示页
+</footer>
+
+<!-- 灯箱：点击截图放大查看 -->
+<div class="myq_lightbox" id="myqLightbox">
+  <button class="myq_close" id="myqCloseBtn" aria-label="关闭">×</button>
+  <img id="myqLightboxImg" src="" alt="放大查看">
+</div>
+
+<script>
+  /* 作者：马宇乾 | 建立时间：2026-11-23 10:00 | 使用模型：Trae
+     功能：myq_initLightbox —— 点击截图卡片在灯箱中放大显示，点击空白或关闭按钮退出 */
+  function myq_initLightbox() {
+    var myq_lightbox = document.getElementById('myqLightbox');
+    var myq_lightboxImg = document.getElementById('myqLightboxImg');
+    var myq_closeBtn = document.getElementById('myqCloseBtn');
+    // 给所有截图卡片绑定点击事件
+    var myq_cards = document.querySelectorAll('.myq_shot_card');
+    myq_cards.forEach(function (myq_card) {
+      myq_card.addEventListener('click', function () {
+        var myq_src = myq_card.getAttribute('data-src');
+        myq_lightboxImg.src = myq_src;
+        myq_lightbox.classList.add('active');
+      });
+    });
+    // 关闭灯箱
+    function myq_close() {
+      myq_lightbox.classList.remove('active');
+      myq_lightboxImg.src = '';
+    }
+    myq_closeBtn.addEventListener('click', myq_close);
+    myq_lightbox.addEventListener('click', function (e) {
+      if (e.target === myq_lightbox) { myq_close(); }
+    });
+    // ESC 键关闭
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && myq_lightbox.classList.contains('active')) { myq_close(); }
+    });
+  }
+  myq_initLightbox();
+</script>
+
+</body>
+</html>
